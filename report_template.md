@@ -1,8 +1,13 @@
 ---
 title: 'Agile Development Processes Project Report'
 author:
-- Magnus Ågren
-- Terese Besker
+- Johan Andersson
+- David Fogelberg
+- Sam Halali
+- Gunnar Gunnarsson
+- Nandha gopal elangovan
+- ,,
+- ,,
 ---
 
 This is a basic template for the project report. Fill it out over the course of the project.
