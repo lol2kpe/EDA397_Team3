@@ -6,8 +6,8 @@ author:
 - Sam Halali
 - Gunnar Gunnarsson
 - Nandha gopal elangovan
-- ,,
-- ,,
+- Miguel Angel Sanchez Cifo
+- Jonathan Granström
 ---
 
 This is a basic template for the project report. Fill it out over the course of the project.
