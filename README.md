@@ -4,4 +4,4 @@ Android application for finding doctors and other healthcare services where you 
 
 
 **Useful links**
-* http://nvie.com/posts/a-succesful-git-branching-model/
+* http://nvie.com/posts/a-successful-git-branching-model/ 
