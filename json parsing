@@ -1,0 +1,29 @@
+public class DisplayListview extends AppCompatActivity {
+      String json_string;
+      JSONObject jsonObject;
+      JSONArray jsonArray;
+
+      @Override
+protected void oncreate(Bundle savedInstancestate) {
+     super.oncreate(savedInstancestate);
+     setContentview(R.layout.display_listview_layout);
+     json_string = getIntent().getExtras().getstring("json_data");
+     try {
+         jsonObject =new JSONObject(json_string);
+         jsonArray = jsonObject.getJSONArray ("server _response");
+         int count =0;
+string Hospitaltype,Latitude,Longitude,Rating,Comments,Openinghours,Address,Phonenumber;
+ while (count<jsonArray.length())
+{
+JSONObject Jo =jsonArray.getJSONObject(count);
+  Hospitaltype= Jo.getstring("Hospitaltype");
+  Latitude= Jo.getstring("Latitude");
+  Longitude= Jo.getstring("Longitude");
+  Rating= Jo.getstring("Rating");
+  Comments= Jo.getstring("Comments");
+  Openinghours= Jo.getstring("Openinghours");
+  Address= Jo.getstring("Address");
+  Phonenumber= Jo.getstring("Phonenumber");
+ 
+count ++
+}
