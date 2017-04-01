@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+begin
+  load File.expand_path('../spring', __FILE__)
+rescue LoadError => e
+  raise unless e.message.include?('spring')
+end
+APP_PATH = File.expand_path('../config/application', __dir__)
+require_relative '../config/boot'
+
+if ARGV.first == 's' || ARGV.first == 'server'
+  require 'rails/commands/server'
+  module Rails
+    class Server
+      def default_options
+        super.merge(Host:  '192.168.0.142', Port: 3001)
+      end
+    end
+  end
+end
+
+require 'rails/commands'
