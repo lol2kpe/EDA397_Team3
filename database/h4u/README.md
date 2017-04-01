@@ -1,9 +1,24 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Server info
+Server can be accessed on
+*lol2kpe.asuscomm.com:3001*
 
-Things you may want to cover:
+Accessing tables by adding 
+    /name
+after the host adress.
+*example: lol2kpe.asuscomm.com:3001/name*
+
+Accessing json-objects by adding
+    .json
+after the name.
+*example: lol2kpe.asuscomm.com/name.json*
+
+Added tables:
+* hospitals
+
+
+## TODO in readme: 
 
 * Ruby version
 
