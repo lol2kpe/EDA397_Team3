@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Defines the menu item that will appear on the menu_main in the FilterActivity -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Clear filter action -->
+    <item
+        android:id="@+id/toolbar_action_clear_filter"
+        android:title="@string/toolbar_clear_filter"
+        app:showAsAction="always"/>
+</menu>

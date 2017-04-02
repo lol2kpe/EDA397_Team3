@@ -1,6 +1,7 @@
 package com.lol2kpe.h4u;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,15 +20,16 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		//Sets the customized toolbar as the app bar for this activity
-		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+		//Sets the customized menu_main as the app bar for this activity
+		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_main);
 		setSupportActionBar(toolbar);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu (Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.toolbar, menu);
+		inflater.inflate(R.menu.menu_main, menu);
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -35,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.toolbar_action_filter:
-                showFilterDialog();
+                startActivity(new Intent(getApplicationContext(), FilterActivity.class));
+                //showFilterDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

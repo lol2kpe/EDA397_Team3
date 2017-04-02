@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- Temporary filter options -->
-    <string-array name="dialog_filter_options">
-        <item>Health center</item>
-        <item>Dentist</item>
-    </string-array>
-</resources>

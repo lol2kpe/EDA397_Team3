@@ -1,9 +1,21 @@
 <resources>
     <string name="app_name">h4u</string>
-    <!-- Toolbar actions strings -->
-    <string name="toolbar_action_filter_title">Filter</string>
+    <string name="activity_filter_title">Filter</string>
+
+    <!-- Main activity toolbar  -->
+    <string name="toolbar_filter">Filter</string>
+
+    <!-- Filter activity toolbar -->
+    <string name="toolbar_clear_filter">Clear filter</string>
+
     <!-- Filter dialog strings -->
     <string name="dialog_filter_title">Filter options</string>
     <string name="dialog_filter_ok">SET</string>
     <string name="dialog_filter_cancel">CANCEL</string>
+    <!-- Temporary filter options -->
+    <string-array name="dialog_filter_options">
+        <item>Health center</item>
+        <item>Dentist</item>
+    </string-array>
+
 </resources>
