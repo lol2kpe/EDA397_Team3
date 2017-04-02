@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">h4u</string>
-    <!-- Toolbar actions -->
+    <!-- Toolbar actions strings -->
     <string name="toolbar_action_filter_title">Filter</string>
+    <!-- Filter dialog strings -->
+    <string name="dialog_filter_title">Filter options</string>
+    <string name="dialog_filter_ok">SET</string>
+    <string name="dialog_filter_cancel">CANCEL</string>
 </resources>
