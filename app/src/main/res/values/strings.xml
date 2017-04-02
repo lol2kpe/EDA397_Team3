@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">h4u</string>
+    <!-- Toolbar actions -->
+    <string name="toolbar_action_filter_title">Filter</string>
 </resources>
