@@ -16,29 +16,31 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 /**
- * Created by jonat on 2017-04-02.
+ * Created by Jonathan Granström on 2017-04-02.
  */
 
 public class FilterActivity extends AppCompatActivity {
 
-    private Spinner spinnerType;
+    private Spinner spinnerType;    // The spinner menu for the "type" filter option
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_filter);
+        // Set the toolbar for the FilterActivity
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_filter);
         setSupportActionBar(toolbar);
 
         // Enable the up action to the toolbar (the "<-" arrow)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        spinnerType = (Spinner) findViewById(R.id.spinner_type);
+        // Set the spinner for the "type"-option (e.g., Health center, Dentist)
+        spinnerType = (Spinner)findViewById(R.id.spinner_type);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.activity_filter_options, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
+                R.array.activity_filter_option_type_options, android.R.layout.simple_spinner_item);
+        // Specifies the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinnerType.setAdapter(adapter);
@@ -49,8 +51,8 @@ public class FilterActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu (Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_filter, menu);
-
         return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override
@@ -62,6 +64,7 @@ public class FilterActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+
     }
 
     public void clearFilter (MenuItem item) {
@@ -74,6 +77,7 @@ public class FilterActivity extends AppCompatActivity {
             setResult(Activity.RESULT_CANCELED, resultIntent);
         }
         finish();
+
     }
 
     public void returnActivityResult(View view) {
@@ -92,5 +96,7 @@ public class FilterActivity extends AppCompatActivity {
             setResult(Activity.RESULT_CANCELED, resultIntent);
         }
         finish();
+
     }
+
 }

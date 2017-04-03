@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.toolbar_action_filter:
-            	Intent getFilterResults = new Intent(getApplicationContext(), FilterActivity.class);
+            	Intent getFilterResults = new Intent(getApplicationContext(),
+                        FilterActivity.class);
 				startActivityForResult(getFilterResults, PICK_FILTER_OPTIONS_REQUEST );
                 return true;
             default:
@@ -52,16 +53,20 @@ public class MainActivity extends AppCompatActivity {
 				String returnAction = data.getStringExtra("action");
 				if (returnAction.equals("set")) {
 					String returnValue = data.getStringExtra("type");
-					Toast.makeText(getApplicationContext(), "Showing type: " + returnValue, Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),
+                            "Showing type: " + returnValue, Toast.LENGTH_SHORT).show();
 				} else if (returnAction.equals("reset")) {
-					Toast.makeText(getApplicationContext(), "Filter cleared", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(),
+                            "Filter cleared", Toast.LENGTH_SHORT).show();
 				} else if (returnAction.equals("fail")) {
-					Toast.makeText(getApplicationContext(), "ERROR: Couldn't complete filter action!", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(),
+                            "ERROR: Couldn't complete filter action!", Toast.LENGTH_LONG).show();
 				}
 			}
 			// If the user cancelled, or the request failed, do something...
 			else if (resultCode == RESULT_CANCELED) {
-				Toast.makeText(getApplicationContext(), "Canceled", Toast.LENGTH_LONG). show();
+				Toast.makeText(getApplicationContext(),
+                        "Canceled", Toast.LENGTH_LONG). show();
 			}
 		}
 	}

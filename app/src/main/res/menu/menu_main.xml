@@ -6,7 +6,7 @@
     <!-- Filter action -->
     <item
         android:id="@+id/toolbar_action_filter"
-        android:icon="@drawable/ic_filter_list_black_24dp"
         android:title="@string/toolbar_filter"
+        android:icon="@drawable/ic_filter_list_black_24dp"
         app:showAsAction="always"/>
 </menu>
