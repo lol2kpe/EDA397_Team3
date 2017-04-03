@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
  * Created by davidfogelberg on 2017-04-02.
  */
 
-public class TestHospitalHelper {
+public class TestHospital {
 
 
     @Test
