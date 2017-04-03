@@ -1,6 +1,5 @@
 package com.lol2kpe.h4u;
 
-import android.app.Activity;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -26,6 +25,7 @@ public class UserLocationMonitor{
                 .getSystemService(
                         Context.LOCATION_SERVICE
                 );
+        //TODO handle different providers efficiently
         UserLocationMonitor monitor = new UserLocationMonitor(locationManager)
                 .addProvider(NETWORK_PROVIDER)
                 .addProvider(GPS_PROVIDER);
@@ -33,6 +33,8 @@ public class UserLocationMonitor{
     }
     private UserLocationMonitor(LocationManager locationManager){
         this.locationManager = locationManager;
+        //Set the last known location as init value, might be out-of-date
+        this.location = locationManager.getLastKnownLocation(GPS_PROVIDER);
     }
 
     private UserLocationMonitor addProvider(String provider){
