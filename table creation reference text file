@@ -1,0 +1,35 @@
+Table creation - MySQL
+
+Without comments attribute:
+
+CREATE TABLE Place (
+	ID INT(5) PRIMARY KEY AUTO_INCREMENT,
+	Type VARCHAR(20) NOT NULL,
+	Latitude INT(20) NOT NULL,
+	Longitude INT(20) NOT NULL,
+	Rating INT(2) NOT NULL,
+	Opening_hours VARCHAR(100) NOT NULL,
+	Address VARCHAR(200) NOT NULL,
+	Phone_Number INT(15)
+);
+
+With comments attribute:
+
+CREATE TABLE Place (
+	ID INT(5) PRIMARY KEY AUTO_INCREMENT,
+	Type VARCHAR(20) NOT NULL,
+	Latitude INT(20) NOT NULL,
+	Longitude INT(20) NOT NULL,
+	Rating INT(2) NOT NULL,
+	Opening_hours VARCHAR(100) NOT NULL,
+	Address VARCHAR(200) NOT NULL,
+	Phone_Number INT(15)
+);
+
+CREATE TABLE Comments (
+	ID INT(5) AUTO_INCREMENT,
+	Comment VARCHAR(500),
+	Place INT(5),
+	PRIMARY KEY (ID, PLACE),
+	FOREIGN KEY (Place) REFERENCES Place(ID) ON DELETE CASCADE
+);

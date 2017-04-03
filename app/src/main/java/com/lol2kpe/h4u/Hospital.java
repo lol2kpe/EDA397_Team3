@@ -4,31 +4,34 @@ package com.lol2kpe.h4u;
  * Created by davidfogelberg on 2017-04-02.
  */
 
-public class HospitalHelper {
+public class Hospital {
 
     String name;
+    int id;
     String hospitalType;
     String latitude;
     String longitude;
     int rating;
-    String comment;
     String openingHours;
     String address;
     String phoneNumber;
-    public HospitalHelper(String name, String hospitalType, String latitude, String longitude, int rating, String comment,
-                          String openingHours, String address, String phoneNumber){
+    public Hospital(String name, int id, String hospitalType, String latitude, String longitude, int rating,
+                    String openingHours, String address, String phoneNumber){
         this.name = name;
+        this.id = id;
         this.hospitalType = hospitalType;
         this.latitude = latitude;
         this.longitude = longitude;
         this.rating = rating;
-        this.comment = comment;
         this.openingHours = openingHours;
         this.address = address;
         this.phoneNumber = phoneNumber;
     }
     public String getName () {
         return name;
+    }
+    public int getId () {
+        return id;
     }
     public String getHospitalType() {
         return hospitalType;
@@ -42,9 +45,6 @@ public class HospitalHelper {
     public int getRating() {
         return rating;
     }
-    public String getComment() {
-        return comment;
-    }
     public String getOpeningHours() {
         return openingHours;
     }
@@ -54,36 +54,45 @@ public class HospitalHelper {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-    public void setName (String name) {
+    public Hospital setName (String name) {
         this.name = name;
+        return this;
     }
-    public void setHospitalType(String hospitalType) {
+    public Hospital setId (int id) {
+        this.id = id;
+        return this;
+    }
+    public Hospital setHospitalType(String hospitalType) {
         this.hospitalType = hospitalType;
+        return this;
     }
-    public void setLatitude(String latitude) {
+    public Hospital setLatitude(String latitude) {
         this.latitude = latitude;
+        return this;
     }
-    public void setLongitude(String longitude) {
+    public Hospital setLongitude(String longitude) {
         this.longitude = longitude;
+        return this;
     }
-    public void setRating(int rating) {
+    public Hospital setRating(int rating) {
         this.rating = rating;
+        return this;
     }
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-    public void setOpeningHours(String openingHours) {
+    public Hospital setOpeningHours(String openingHours) {
         this.openingHours = openingHours;
+        return this;
     }
-    public void setAddress(String address) {
+    public Hospital setAddress(String address) {
         this.address = address;
+        return this;
     }
-    public void setPhoneNumber (String phoneNumber) {
+    public Hospital setPhoneNumber (String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
     @Override
     public String toString() {
-        return "" + name  + "\n" + hospitalType + "\n" + latitude + "\n" + longitude +
-                "\n" + rating + "\n" + comment + "\n" + openingHours + "\n" + address + "\n" + phoneNumber;
+        return "" + name  + "\n"+ id + "\n" + hospitalType + "\n" + latitude + "\n" + longitude +
+                "\n" + rating + "\n" + openingHours + "\n" + address + "\n" + phoneNumber;
     }
 }
