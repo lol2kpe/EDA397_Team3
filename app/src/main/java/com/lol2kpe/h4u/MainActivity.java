@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		UserLocationMonitor monitor = UserLocationMonitor.getMonitor(this);
+		UserLocationMonitor monitor = UserLocationMonitor.getMonitor(this.getApplicationContext());
 		Location location;
 		while((location = monitor.getLocation()) == null);
 		Toast.makeText(getApplicationContext(),

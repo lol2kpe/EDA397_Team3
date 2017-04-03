@@ -11,7 +11,7 @@ import android.os.Bundle;
  * Created by sam on 2017-04-03.
  */
 
-public class UserLocationMonitor {
+public class UserLocationMonitor{
     public static final String NETWORK_PROVIDER = LocationManager.NETWORK_PROVIDER;
     public static final String GPS_PROVIDER = LocationManager.GPS_PROVIDER;
     //Get the location as frequently as possible
@@ -21,8 +21,8 @@ public class UserLocationMonitor {
     private LocationManager locationManager;
     private UserLocationListener userLocationListener = new UserLocationListener();
 
-    public static UserLocationMonitor getMonitor(Activity activity){
-        LocationManager locationManager = (LocationManager) activity
+    public static UserLocationMonitor getMonitor(Context context){
+        LocationManager locationManager = (LocationManager) context
                 .getSystemService(
                         Context.LOCATION_SERVICE
                 );
@@ -42,7 +42,6 @@ public class UserLocationMonitor {
                 this.userLocationListener);
         return this;
     }
-    //Maybe return new location to freeze
     public Location getLocation(){
         return this.location != null ? new Location(this.location) : null;
     }
