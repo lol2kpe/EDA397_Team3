@@ -10,10 +10,11 @@
 
     <!-- Filter dialog strings -->
     <string name="dialog_filter_title">Filter options</string>
-    <string name="dialog_filter_ok">SET</string>
-    <string name="dialog_filter_cancel">CANCEL</string>
+    <string name="activity_filter_set">SET</string>
+    <string name="activity_filter_cancel">CANCEL</string>
     <!-- Temporary filter options -->
-    <string-array name="dialog_filter_options">
+    <string-array name="activity_filter_options">
+        <item>All</item>
         <item>Health center</item>
         <item>Dentist</item>
     </string-array>

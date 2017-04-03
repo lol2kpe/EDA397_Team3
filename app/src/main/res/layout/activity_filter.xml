@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.lol2kpe.h4u.MainActivity">
 
@@ -16,35 +17,57 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/content_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_filter"
+        android:layout_above="@+id/button_area"
         android:paddingTop="16dp"
         android:paddingLeft="16dp"
-        android:text="Type" />
+        android:paddingRight="16dp">
 
-    <Spinner
+        <TextView
+            android:id="@+id/text_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Type" />
+
+        <Spinner
+            android:id="@+id/spinner_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/button_area"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="16dp"
         android:paddingLeft="16dp"
-        android:id="@+id/type_spinner"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_toEndOf="@+id/textView" />
+        android:paddingRight="16dp">
 
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:rating="5.0"
-        android:stepSize="1.0"
-        android:numStars="5"
-        android:layout_below="@+id/toolbar_filter"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="89dp"
-        android:id="@+id/ratingBar" />
+        <Button
+            android:id="@+id/button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/button_set"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="@string/activity_filter_cancel"
+            android:onClick="returnActivityResult"/>
 
->
+        <Button
+            android:id="@+id/button_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="@string/activity_filter_set"
+            android:onClick="returnActivityResult"/>
 
+    </RelativeLayout>
 
 </RelativeLayout>
