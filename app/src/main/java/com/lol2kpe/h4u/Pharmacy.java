@@ -4,25 +4,25 @@ package com.lol2kpe.h4u;
  * Created by davidfogelberg on 2017-04-02.
  */
 
-public class PharmacyHelper {
+public class Pharmacy {
 
     String name;
+    int id;
     String pharmacyType;
     String latitude;
     String longitude;
     int rating;
-    String comment;
     String openingHours;
     String address;
     String phoneNumber;
-    public PharmacyHelper(String name, String pharmacyType, String latitude, String longitude, int rating, String comment,
-                          String openingHours, String address, String phoneNumber){
+    public Pharmacy(String name, int id, String pharmacyType, String latitude, String longitude, int rating,
+                    String openingHours, String address, String phoneNumber){
         this.name = name;
+        this.id = id;
         this.pharmacyType = pharmacyType;
         this.latitude = latitude;
         this.longitude = longitude;
         this.rating = rating;
-        this.comment = comment;
         this.openingHours = openingHours;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -30,6 +30,7 @@ public class PharmacyHelper {
     public String getName () {
         return name;
     }
+    public int getId(){return id;}
     public String getPharmacyType() {
         return pharmacyType;
     }
@@ -42,9 +43,6 @@ public class PharmacyHelper {
     public int getRating() {
         return rating;
     }
-    public String getComment() {
-        return comment;
-    }
     public String getOpeningHours() {
         return openingHours;
     }
@@ -54,36 +52,41 @@ public class PharmacyHelper {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-    public void setName (String name) {
+    public Pharmacy setName (String name) {
         this.name = name;
+        return this;
     }
-    public void setPharmacyType(String pharmacyType) {
+    public Pharmacy setPharmacyType(String pharmacyType) {
         this.pharmacyType = pharmacyType;
+        return this;
     }
-    public void setLatitude(String latitude) {
+    public Pharmacy setLatitude(String latitude) {
         this.latitude = latitude;
+        return this;
     }
-    public void setLongitude(String longitude) {
+    public Pharmacy setLongitude(String longitude) {
         this.longitude = longitude;
+        return this;
     }
-    public void setRating(int rating) {
+    public Pharmacy setRating(int rating) {
         this.rating = rating;
+        return this;
     }
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-    public void setOpeningHours(String openingHours) {
+    public Pharmacy setOpeningHours(String openingHours) {
         this.openingHours = openingHours;
+        return this;
     }
-    public void setAddress(String address) {
+    public Pharmacy setAddress(String address) {
         this.address = address;
+        return this;
     }
-    public void setPhoneNumber (String phoneNumber) {
+    public Pharmacy setPhoneNumber (String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
     @Override
     public String toString() {
-        return "" + name  + "\n" + pharmacyType + "\n" + latitude + "\n" + longitude +
-                "\n" + rating + "\n" + comment + "\n" + openingHours + "\n" + address + "\n" + phoneNumber;
+        return "" + name  + "\n"+ id + "\n" + pharmacyType + "\n" + latitude + "\n" + longitude +
+                "\n" + rating + "\n" + openingHours + "\n" + address + "\n" + phoneNumber;
     }
 }

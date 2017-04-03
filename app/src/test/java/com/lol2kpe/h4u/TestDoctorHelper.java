@@ -13,14 +13,14 @@ public class TestDoctorHelper {
 
     @Test
     public void testGetName() throws Exception {
-        DoctorHelper doctorHelper = new DoctorHelper("David","surgeon", 10, "Göteborg 5999", "075-888865","Göteborg Sahlgrenska");
-        assertEquals(doctorHelper.getName(), "David");
+        Doctor doctor = new Doctor("David","surgeon", 10, "Göteborg 5999", "075-888865","Göteborg Sahlgrenska");
+        assertEquals(doctor.getName(), "David");
     }
     @Test
     public void testSetName() throws Exception {
-        DoctorHelper doctorHelper = new DoctorHelper("David","surgeon", 10, "Göteborg 5999", "075-888865","Göteborg Sahlgrenska");
-        doctorHelper.setName("Erik");
-        assertEquals(doctorHelper.getName(), "Erik");
+        Doctor doctor = new Doctor("David","surgeon", 10, "Göteborg 5999", "075-888865","Göteborg Sahlgrenska");
+        doctor.setName("Erik");
+        assertEquals(doctor.getName(), "Erik");
     }
 
 }

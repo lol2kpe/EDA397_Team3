@@ -4,7 +4,7 @@ package com.lol2kpe.h4u;
  * Created by davidfogelberg on 2017-04-02.
  */
 
-public class DoctorHelper {
+public class Doctor {
     String name;
     String doctorType;
     int rating;
@@ -12,7 +12,7 @@ public class DoctorHelper {
     String phoneNumber;
     String hospitalName;
 
-    public DoctorHelper(String name, String doctorType, int rating, String hospitalAddress, String phoneNumber, String hospitalName) {
+    public Doctor(String name, String doctorType, int rating, String hospitalAddress, String phoneNumber, String hospitalName) {
         this.name = name;
         this.doctorType = doctorType;
         this.rating = rating;
@@ -45,28 +45,29 @@ public class DoctorHelper {
         return hospitalName;
     }
 
-    public void setName(String name) {
+    public Doctor setName(String name) {
         this.name = name;
+        return this;
     }
-
-    public void setDoctorType(String doctorType) {
+    public Doctor setDoctorType(String doctorType) {
         this.doctorType = doctorType;
+        return this;
     }
-
-    public void setRating(int rating) {
+    public Doctor setRating(int rating) {
         this.rating = rating;
+        return this;
     }
-
-    public void setHospitalAddress(String hospitalAddress) {
+    public Doctor setHospitalAddress(String hospitalAddress) {
         this.hospitalAddress = hospitalAddress;
+        return this;
     }
-
-    public void setPhoneNumber(String phoneNumber) {
+    public Doctor setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
-
-    public void setHospitalName(String hospitalName) {
+    public Doctor setHospitalName(String hospitalName) {
         this.hospitalName = hospitalName;
+        return this;
     }
     @Override
     public String toString() {
