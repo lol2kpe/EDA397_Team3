@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170401160514) do
+ActiveRecord::Schema.define(version: 20170404134834) do
 
   create_table "hospitals", force: :cascade do |t|
     t.string   "name"
     t.string   "hospitalType"
-    t.string   "latitude"
-    t.string   "longitude"
+    t.float    "latitude"
+    t.float    "longitude"
     t.integer  "rating"
     t.string   "comments"
     t.string   "openingHours"
