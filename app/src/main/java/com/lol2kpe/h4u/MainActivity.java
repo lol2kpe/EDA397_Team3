@@ -82,14 +82,13 @@ public class MainActivity extends AppCompatActivity {
         String type = filterPrefs.getString(
                 getResources().getString(R.string.filter_preferences_type), "");
 
-        if (type.equals("All")) {
-            Toast.makeText(getApplicationContext(), "Showing all", Toast.LENGTH_SHORT).show();
-        } else if (type.equals("Hospitals")) {
-            Toast.makeText(getApplicationContext(), "Showing hospitals",
-                    Toast.LENGTH_SHORT).show();
+        if (type.equals("Hospitals")) {
+            Toast.makeText(getApplicationContext(), "Showing all hospitals", Toast.LENGTH_SHORT).show();
+        } else if (type.equals("Dentists")) {
+            Toast.makeText(getApplicationContext(), "Could not find any dentists", Toast.LENGTH_SHORT).show();
             // TODO: Get hospital objects and send each objects to the MarkerFactory
         } else {
-            Toast.makeText(getApplicationContext(), "No dentists could be found",
+            Toast.makeText(getApplicationContext(), "Showing all",
                     Toast.LENGTH_SHORT).show();
         }
     }
