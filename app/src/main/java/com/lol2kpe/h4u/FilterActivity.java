@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,21 +12,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
-
 import java.io.IOException;
-
-import static android.R.id.edit;
 
 /**
  * Created by Jonathan Granström on 2017-04-02.
  */
 
 public class FilterActivity extends AppCompatActivity {
-
-    public static final String FILTER_PREFERENCES = "filterpreferences";
-    private String FILTER_PREFERENCE_TYPE = "type";
 
     private Spinner spinnerType;    // The spinner menu for the "type" filter option
     private ArrayAdapter<CharSequence> adapter;
@@ -50,7 +42,8 @@ public class FilterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Set the shared preference file and editor
-        filterPreferences = getSharedPreferences(FILTER_PREFERENCES, MODE_PRIVATE );
+        filterPreferences = getSharedPreferences(
+                getResources().getString(R.string.filter_preferences), MODE_PRIVATE);
         filterPrefEditor = filterPreferences.edit();
 
         // Set the spinner for the "type"-option (e.g., Health center, Dentist)
@@ -111,9 +104,9 @@ public class FilterActivity extends AppCompatActivity {
      * the user has chosen.
      */
     private void setFilterSelections() {
-        if(filterPreferences.contains(FILTER_PREFERENCE_TYPE)) {
-            spinnerType.setSelection(adapter
-                    .getPosition(filterPreferences.getString(FILTER_PREFERENCE_TYPE, "")));
+        if(filterPreferences.contains(getResources().getString(R.string.filter_preferences_type))) {
+            spinnerType.setSelection(adapter.getPosition(filterPreferences.getString(
+                    getResources().getString(R.string.filter_preferences_type), "")));
         } else {
             spinnerType.setSelection(0);
         }
@@ -147,9 +140,10 @@ public class FilterActivity extends AppCompatActivity {
     public void setFilterPreferences (View view) {
         try {
             if(view.getId() == R.id.button_set) {
-                filterPrefEditor.putString(FILTER_PREFERENCE_TYPE,
-                        spinnerType.getSelectedItem().toString());
+                filterPrefEditor.putString(getResources().getString(
+                        R.string.filter_preferences_type), spinnerType.getSelectedItem().toString());
                 filterPrefEditor.commit();
+                setResult(Activity.RESULT_OK, null);
             } else {
                 throw new IOException();
             }

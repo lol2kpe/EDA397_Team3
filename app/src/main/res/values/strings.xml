@@ -15,8 +15,12 @@
     <string name="activity_filter_option_type">Type</string>
     <string-array name="activity_filter_option_type_options">
         <item>All</item>
-        <item>Health center</item>
-        <item>Dentist</item>
+        <item>Hospitals</item>
+        <item>Dentists</item>
     </string-array>
+
+    <!-- Filter preferences xml-file name -->
+    <string name="filter_preferences">filter_preferences</string>
+    <string name="filter_preferences_type">type</string>
 
 </resources>

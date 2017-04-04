@@ -1,7 +1,7 @@
 package com.lol2kpe.h4u;
 
-<<<<<<< HEAD
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,14 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
-=======
-import android.location.Location;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
-
-import com.lol2kpe.h4u.userlocation.UserLocationMonitor;
->>>>>>> refs/remotes/origin/develop
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
 		//Sets the customized menu_main as the app bar for this activity
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_main);
 		setSupportActionBar(toolbar);
@@ -42,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 	public boolean onCreateOptionsMenu (Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_main, menu);
-
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -53,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
 	 * @param item
 	 * @return
 	 */
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.toolbar_action_filter:
-            	Intent getFilterResults = new Intent(getApplicationContext(),
-                        FilterActivity.class);
+            	Intent getFilterResults = new Intent(getApplicationContext(), FilterActivity.class);
 				startActivityForResult(getFilterResults, PICK_FILTER_OPTIONS_REQUEST );
                 return true;
             default:
@@ -66,18 +56,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Receives results from the FilterActivity.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// Check which request MainActivity is responding to
 		if (requestCode == PICK_FILTER_OPTIONS_REQUEST) {
 			// Make sure the request was successful
 			if (resultCode == RESULT_OK) {
-				String returnValue = data.getStringExtra("type");
-				Toast.makeText(getApplicationContext(),
-						"Showing type: " + returnValue, Toast.LENGTH_SHORT).show();
-				// TODO: Use filter data from FilterActivity to display proper items on the map
+                setMarkers();
 			}
 		}
 	}
 
+    /**
+     * Filter the selections made in the FilterActivity.
+     */
+    public void setMarkers() {
+        SharedPreferences filterPrefs = getSharedPreferences(
+                getResources().getString(R.string.filter_preferences), MODE_PRIVATE);
+        String type = filterPrefs.getString(
+                getResources().getString(R.string.filter_preferences_type), "");
+
+        if (type.equals("All")) {
+            Toast.makeText(getApplicationContext(), "Showing all", Toast.LENGTH_SHORT).show();
+        } else if (type.equals("Hospitals")) {
+            Toast.makeText(getApplicationContext(), "Showing hospitals",
+                    Toast.LENGTH_SHORT).show();
+            // TODO: Get hospital objects and send each objects to the MarkerFactory
+        } else {
+            Toast.makeText(getApplicationContext(), "No dentists could be found",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
 }
