@@ -9,13 +9,13 @@ public class Pharmacy {
     String name;
     int id;
     String pharmacyType;
-    String latitude;
-    String longitude;
+    Double latitude;
+    Double longitude;
     int rating;
     String openingHours;
     String address;
     String phoneNumber;
-    public Pharmacy(String name, int id, String pharmacyType, String latitude, String longitude, int rating,
+    public Pharmacy(String name, int id, String pharmacyType, Double latitude, Double longitude, int rating,
                     String openingHours, String address, String phoneNumber){
         this.name = name;
         this.id = id;
@@ -34,10 +34,10 @@ public class Pharmacy {
     public String getPharmacyType() {
         return pharmacyType;
     }
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
     public int getRating() {
@@ -60,11 +60,11 @@ public class Pharmacy {
         this.pharmacyType = pharmacyType;
         return this;
     }
-    public Pharmacy setLatitude(String latitude) {
+    public Pharmacy setLatitude(Double latitude) {
         this.latitude = latitude;
         return this;
     }
-    public Pharmacy setLongitude(String longitude) {
+    public Pharmacy setLongitude(Double longitude) {
         this.longitude = longitude;
         return this;
     }
