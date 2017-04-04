@@ -9,13 +9,13 @@ public class Hospital {
     String name;
     int id;
     String hospitalType;
-    String latitude;
-    String longitude;
+    Double latitude;
+    Double longitude;
     int rating;
     String openingHours;
     String address;
     String phoneNumber;
-    public Hospital(String name, int id, String hospitalType, String latitude, String longitude, int rating,
+    public Hospital(String name, int id, String hospitalType, Double latitude, Double longitude, int rating,
                     String openingHours, String address, String phoneNumber){
         this.name = name;
         this.id = id;
@@ -36,10 +36,10 @@ public class Hospital {
     public String getHospitalType() {
         return hospitalType;
     }
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
     public int getRating() {
@@ -66,11 +66,11 @@ public class Hospital {
         this.hospitalType = hospitalType;
         return this;
     }
-    public Hospital setLatitude(String latitude) {
+    public Hospital setLatitude(Double latitude) {
         this.latitude = latitude;
         return this;
     }
-    public Hospital setLongitude(String longitude) {
+    public Hospital setLongitude(Double longitude) {
         this.longitude = longitude;
         return this;
     }
