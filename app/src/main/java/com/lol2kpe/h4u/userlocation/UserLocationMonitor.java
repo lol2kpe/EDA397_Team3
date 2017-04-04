@@ -1,4 +1,4 @@
-package com.lol2kpe.h4u;
+package com.lol2kpe.h4u.userlocation;
 
 import android.content.Context;
 import android.location.Location;
@@ -45,7 +45,12 @@ public class UserLocationMonitor{
         return this;
     }
     public Location getLocation(){
-        return this.location != null ? new Location(this.location) : null;
+        return this.location != null ? createUserLocation() : null;
+    }
+
+    private UserLocation createUserLocation(){
+        return new UserLocation(this.location)
+                .setName("You");
     }
 
     private class UserLocationListener implements LocationListener{
