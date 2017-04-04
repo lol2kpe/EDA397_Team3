@@ -22,5 +22,15 @@ public class TestHospital {
         hospital.setName("Lundby");
         assertEquals(hospital.getName(), "Lundby");
     }
+    @Test
+    public void testGetLatitude()throws Exception {
+        Hospital hospital = new Hospital("Sahlgrenska",5,"Akuten", 12.345000, 97.869440, 10,"6:00 - 23:00","Göteborg 4367", "075-8833865");
+        assertEquals(hospital.getLatitude(), (Double)12.345000);
+    }
+    @Test
+    public void testGetLongitude()throws Exception {
+        Hospital hospital = new Hospital("Sahlgrenska",5,"Akuten", 12.345000, 97.869440, 10,"6:00 - 23:00","Göteborg 4367", "075-8833865");
+        assertEquals(hospital.getLongitude(), (Double)97.869440);
+    }
 
 }
