@@ -1,13 +1,12 @@
----
-title: 'Agile Development Processes Project Report'
-author:
-- Johan Andersson
-- David Fogelberg
-- Sam Halali
-- Gunnar Gunnarsson
-- Nandha gopal elangovan
-- Miguel Angel Sanchez Cifo
-- Jonathan Granström
+
+# Authors
+[Johan Andersson](https://github.com/lol2kpe/) \
+[David Fogelberg](https://github.com/davve94)\
+[Sam Halali](https://github.com/samhal)\
+[Gunnar Gunnarsson](https://github.com/GunnarGunnarsson)\
+[Nandha Gopal Elangovan](https://github.com/nandhujit)\
+[Miguel Angel Sanchez Cifo](https://github.com/goma12345)\
+[Jonathan Granström](https://github.com/juntski)
 ---
 
 This is a basic template for the project report. Fill it out over the course of the project.
@@ -67,4 +66,3 @@ Once the project is finished, summarize your experiences.
   to Terese and Magnus. Deadlines are in the course schedule.
 
 - The postmortem part shall be 2000-3000 words long.
-
