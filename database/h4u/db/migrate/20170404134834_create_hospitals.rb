@@ -3,8 +3,8 @@ class CreateHospitals < ActiveRecord::Migration[5.0]
     create_table :hospitals do |t|
       t.string :name
       t.string :hospitalType
-      t.string :latitude
-      t.string :longitude
+      t.float :latitude
+      t.float :longitude
       t.integer :rating
       t.string :comments
       t.string :openingHours

@@ -3,8 +3,8 @@
 one:
   name: MyString
   hospitalType: MyString
-  latitude: MyString
-  longitude: MyString
+  latitude: 1.5
+  longitude: 1.5
   rating: 1
   comments: MyString
   openingHours: MyString
@@ -14,8 +14,8 @@ one:
 two:
   name: MyString
   hospitalType: MyString
-  latitude: MyString
-  longitude: MyString
+  latitude: 1.5
+  longitude: 1.5
   rating: 1
   comments: MyString
   openingHours: MyString

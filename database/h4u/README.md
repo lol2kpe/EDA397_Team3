@@ -17,6 +17,10 @@ after the name.
 Added tables:
 * hospitals
 
+## Table creation code ##
+
+* hospitals
+*rails generate scaffold Hospital name:string hospitalType:string latitude:float longitude:float rating:integer comments:string openingHours:string address:string phoneNumber:string*
 
 ## TODO in readme: 
 
