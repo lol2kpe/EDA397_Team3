@@ -9,13 +9,19 @@
 [Jonathan Granström](https://github.com/juntski)
 ---
 
-This is a basic template for the project report. Fill it out over the course of the project.
 
 # Project Description
-Write a brief description of your software,
-including the target platform(s),
-programming language,
-and what the software will do.
+### Project  Title
+H4U
+
+### Platform
+Android
+### Minimum and target SDK
+5.0
+
+### Description
+
+The H4U app helps a user search for hospitals, pharmacies and doctors including; doctor details, doctor availability and doctor reputation. It will also show the directions to each hospital by showing the route map. The route map will be set from a user’s current location and will show both a visual and descriptive way of the route, which will make it easy for a user to find the hospital location.
 
 # Sprint Log
 Write one log per sprint.
@@ -24,11 +30,10 @@ Write one log per sprint.
 List the features/stories the team commits to finish during the sprint.
 
 ## Work Done
-Log what was accomplished, and how.
 
 Feature | Commits  | Group members | Effort | Practices
 ----------------|----------------|----------------|----------------|----------------
-Name and ID of each feature | Sha1 for the commit(s) that make up the feature | Names of the group members who developed the feature | The development effort expended, in story points or other unit of choice | The agile practices practiced when developing the feature
+[Find user's location](https://github.com/lol2kpe/EDA397_Team3/issues/17) | [66dfdfa](https://github.com/lol2kpe/EDA397_Team3/commit/66dfdfaca710b806abd273740193d9d2314659e7) | [Sam Halali](https://github.com/samhal)<br> [Miguel Angel Sanchez Cifo](https://github.com/goma12345) | 2h | Pair programming
 
 
 ## Reflections
