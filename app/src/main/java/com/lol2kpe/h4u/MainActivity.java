@@ -50,18 +50,15 @@ public class MainActivity extends AppCompatActivity {
 		if (requestCode == PICK_FILTER_OPTIONS_REQUEST) {
 			// Make sure the request was successful
 			if (resultCode == RESULT_OK) {
-				String returnAction = data.getStringExtra("action");
+				String returnAction = data.getStringExtra("status");
 				if (returnAction.equals("set")) {
 					String returnValue = data.getStringExtra("type");
 					Toast.makeText(getApplicationContext(),
                             "Showing type: " + returnValue, Toast.LENGTH_SHORT).show();
 				} else if (returnAction.equals("reset")) {
-					Toast.makeText(getApplicationContext(),
+                    Toast.makeText(getApplicationContext(),
                             "Filter cleared", Toast.LENGTH_SHORT).show();
-				} else if (returnAction.equals("fail")) {
-					Toast.makeText(getApplicationContext(),
-                            "ERROR: Couldn't complete filter action!", Toast.LENGTH_LONG).show();
-				}
+                }
 			}
 			// If the user cancelled, or the request failed, do something...
 			else if (resultCode == RESULT_CANCELED) {

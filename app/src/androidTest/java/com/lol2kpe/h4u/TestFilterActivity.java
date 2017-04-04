@@ -62,5 +62,7 @@ public class TestFilterActivity {
                 .check(matches(notNullValue()));
     }
 
+
+
     // TODO: Implement tests for filter functionality
 }
