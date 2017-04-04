@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lol2kpe.h4u">
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    package="com.lol2kpe.h4u">/>
 
     <application
         android:allowBackup="true"
@@ -12,7 +10,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".DrawerActivity"
-            android:label="@string/title_activity_drawer"
+            android:label="H4U"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
