@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 		@Override
 		public void onErrorResponse(VolleyError volleyError) {
 			//if(volleyError != null) Log.e("MainActivity", volleyError.getMessage());
-			Toast.makeText(MainActivity.this, "Server not reached", Toast.LENGTH_SHORT).show();
+			Toast.makeText(MainActivity.this, "Database error", Toast.LENGTH_SHORT).show();
 		}
 	});
 
