@@ -20,8 +20,8 @@ public class MarkerOptionFactory{
                 .title(hospital.getName())
                 .position(
                         new LatLng(
-                            Double.parseDouble(hospital.getLatitude()),
-                            Double.parseDouble(hospital.getLongitude())
+                            hospital.getLatitude(),
+                            hospital.getLongitude()
                         )
                 )
                 .icon(provideHospitalIcon());
