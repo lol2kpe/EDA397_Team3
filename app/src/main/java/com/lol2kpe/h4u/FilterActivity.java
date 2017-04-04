@@ -26,13 +26,16 @@ import static android.R.id.edit;
 
 public class FilterActivity extends AppCompatActivity {
 
-    public static final String FILTER_PREFERENCES = "filterpref";
+    public static final String FILTER_PREFERENCES = "filterpreferences";
+    private String FILTER_PREFERENCE_TYPE = "type";
 
     private Spinner spinnerType;    // The spinner menu for the "type" filter option
     private ArrayAdapter<CharSequence> adapter;
 
     SharedPreferences filterPreferences;
     SharedPreferences.Editor filterPrefEditor;
+
+    Intent resultIntentData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +63,20 @@ public class FilterActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinnerType.setAdapter(adapter);
 
-        // Setup the filter options
-        setInitFilterOptions();
+        // Set the initial filter selections for the Activity
+        setFilterSelections();
+
+        // Initialize the return Intent
+        resultIntentData = new Intent();
+
     }
 
+    /**
+     * Method overrides the standard onCreateOptionsMenu. Makes sure the layout for the custom
+     * toolbar is used as the menu for the activity.
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -72,11 +85,18 @@ public class FilterActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method is called when an menu item on the toolbar is selected (clicked on). Method receives
+     * the item clicked and uses the proper case. If no case could be found for the item,
+     * the super class is called to handle that situation.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.toolbar_action_clear_filter:
-                clearFilter(item);
+                clearFilterPreferences(item);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -84,56 +104,72 @@ public class FilterActivity extends AppCompatActivity {
 
     }
 
-    public void setInitFilterOptions() {
-        if(filterPreferences.contains("type")) {
-            spinnerType.setSelection(adapter.
-                    getPosition(filterPreferences.getString("type", "")));
+    /**
+     * Sets the initial filter options for the activity. If no saved user choice for a filter option
+     * exists in the SharedPreferences xml-file, the options are set to their default values.
+     * If saved user options exists for a filter option, the filter option is set to whatever value
+     * the user has chosen.
+     */
+    private void setFilterSelections() {
+        if(filterPreferences.contains(FILTER_PREFERENCE_TYPE)) {
+            spinnerType.setSelection(adapter
+                    .getPosition(filterPreferences.getString(FILTER_PREFERENCE_TYPE, "")));
         } else {
             spinnerType.setSelection(0);
         }
     }
 
-    public void clearFilter (MenuItem item) {
-        Intent resultIntent = new Intent();
+
+    /**
+     * Cancels the FilterActivity and returns the user to the MainActivity.
+     * @param view
+     */
+    public void cancelFilterActivity (View view) {
         try {
-            if(item.getItemId() == R.id.toolbar_action_clear_filter) {
-                filterPrefEditor.clear();
+            if (view.getId() == R.id.button_cancel) {
+                setResult(Activity.RESULT_CANCELED, null);
+                finish();
+            } else {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            Log.d("h4u", "cancelFilterActivity was not called by the proper UI element! " +
+                    "Expected call from action: " + R.id.button_cancel);
+            setResult(Activity.RESULT_CANCELED, null);
+            finish();
+        }
+    }
+
+    /**
+     * Writes the user's chosen filter options to the SharedPreferences xml-file.
+     * @param view
+     */
+    public void setFilterPreferences (View view) {
+        try {
+            if(view.getId() == R.id.button_set) {
+                filterPrefEditor.putString(FILTER_PREFERENCE_TYPE,
+                        spinnerType.getSelectedItem().toString());
                 filterPrefEditor.commit();
-                resultIntent.putExtra("status", "reset");
-                setResult(Activity.RESULT_OK, resultIntent);
             } else {
                 throw new IOException();
             }
         } catch (IOException e) {
-            Log.d("h4u",
-                    "IOException caught! clearFilter action wasn't called by clear filter button!");
+            Log.d("h4u", "setFilterOptions was not called by the proper UI element! " +
+                    "Expected call from action: " + R.id.button_set);
             setResult(Activity.RESULT_CANCELED, null);
             finish();
         }
         finish();
     }
 
-    public void setFilter (View view) {
-        Intent resultIntent = new Intent();
-        try {
-            if(view.getId() == R.id.button_cancel) {
-                setResult(Activity.RESULT_CANCELED, null);
-            } else if(view.getId() == R.id.button_set) {
-                filterPrefEditor.putString("type",
-                        spinnerType.getSelectedItem().toString());
-                filterPrefEditor.commit();
-                resultIntent.putExtra("status", "set");
-                resultIntent.putExtra("type",
-                        filterPreferences.getString("type", ""));
-                setResult(Activity.RESULT_OK, resultIntent);
-            } else {
-                throw new IOException();
-            }
-        } catch (IOException e) {
-            Log.d("h4u", "IOException caught! setFilter recieved wrong view!");
-            setResult(Activity.RESULT_CANCELED, null);
-            finish();
-        }
+    /**
+     * Clears the SharedPreference xml-file of any saved user preferences.
+     * @param item
+     */
+    public void clearFilterPreferences (MenuItem item) {
+        filterPrefEditor.clear();
+        filterPrefEditor.commit();
+        setResult(Activity.RESULT_CANCELED, null);
         finish();
     }
 

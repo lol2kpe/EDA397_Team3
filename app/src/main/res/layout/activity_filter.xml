@@ -57,7 +57,7 @@
             android:layout_toLeftOf="@+id/button_set"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:text="@string/activity_filter_cancel"
-            android:onClick="setFilter"/>
+            android:onClick="cancelFilterActivity"/>
 
         <Button
             android:id="@+id/button_set"
@@ -66,7 +66,7 @@
             android:layout_alignParentRight="true"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:text="@string/activity_filter_set"
-            android:onClick="setFilter"/>
+            android:onClick="setFilterPreferences"/>
 
     </RelativeLayout>
 

@@ -23,6 +23,12 @@ public class MainActivity extends AppCompatActivity {
 		setSupportActionBar(toolbar);
 	}
 
+	/**
+	 * Method overrides the standard onCreateOptionsMenu. Makes sure the layout for the custom
+	 * toolbar is used as the menu for the activity.
+	 * @param menu
+	 * @return
+	 */
 	@Override
 	public boolean onCreateOptionsMenu (Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -31,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
 		return super.onCreateOptionsMenu(menu);
 	}
 
+	/**
+	 * Method is called when an menu item on the toolbar is selected (clicked on). Method receives
+	 * the item clicked and uses the proper case. If no case could be found for the item,
+	 * the super class is called to handle that situation.
+	 * @param item
+	 * @return
+	 */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -50,21 +63,12 @@ public class MainActivity extends AppCompatActivity {
 		if (requestCode == PICK_FILTER_OPTIONS_REQUEST) {
 			// Make sure the request was successful
 			if (resultCode == RESULT_OK) {
-				String returnAction = data.getStringExtra("status");
-				if (returnAction.equals("set")) {
-					String returnValue = data.getStringExtra("type");
-					Toast.makeText(getApplicationContext(),
-                            "Showing type: " + returnValue, Toast.LENGTH_SHORT).show();
-				} else if (returnAction.equals("reset")) {
-                    Toast.makeText(getApplicationContext(),
-                            "Filter cleared", Toast.LENGTH_SHORT).show();
-                }
-			}
-			// If the user cancelled, or the request failed, do something...
-			else if (resultCode == RESULT_CANCELED) {
+				String returnValue = data.getStringExtra("type");
 				Toast.makeText(getApplicationContext(),
-                        "Canceled", Toast.LENGTH_LONG). show();
+						"Showing type: " + returnValue, Toast.LENGTH_SHORT).show();
+				// TODO: Use filter data from FilterActivity to display proper items on the map
 			}
 		}
 	}
+
 }
