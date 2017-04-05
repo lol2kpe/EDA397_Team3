@@ -36,15 +36,8 @@ import static org.hamcrest.core.IsNull.notNullValue;
 public class TestMainActivityIntent {
 
     @Rule
-    public IntentsTestRule<MainActivity> mActivityRule =
+    public IntentsTestRule<MainActivity> intentRule =
             new IntentsTestRule<>(MainActivity.class);
-
-    @Test
-    public void testFilterIconIsPresent() {
-        // Check if filter option is present
-        onView(withId(R.id.toolbar_action_filter))
-                .check(matches(notNullValue()));
-    }
 
     @Test
     public void testFilterActivityIsLaunched() {
