@@ -1,6 +1,7 @@
 package com.lol2kpe.h4u;
 
 import android.app.SearchManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,6 +27,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
+    Location location;
+    Location locationMaps;
+    LatLng myLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,10 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
         mapFragment.getMapAsync(this);
+
+        // Location of the user
+        /*UserLocationMonitor monitor = UserLocationMonitor.getMonitor(this.getApplicationContext());
+        location = monitor.getLocation();*/
     }
 
     @Override
@@ -106,9 +114,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
+        /*// Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
+
+        mMap.setMyLocationEnabled(true);
     }
 }
