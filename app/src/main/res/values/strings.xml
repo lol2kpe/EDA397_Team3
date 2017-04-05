@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">h4u</string>
+    <string name="activity_filter_title">Filter</string>
+
+    <!-- Main activity toolbar  -->
+    <string name="toolbar_filter">Filter</string>
+
+    <!-- Filter activity toolbar -->
+    <string name="toolbar_clear_filter">Clear filter</string>
+
+    <!-- Filter activity strings -->
+    <string name="activity_filter_cancel">CANCEL</string>
+    <string name="activity_filter_set">SET</string>
+    <!-- Filter type option -->
+    <string name="activity_filter_option_type">Type</string>
+    <string-array name="activity_filter_option_type_options">
+        <item>All</item>
+        <item>Hospitals</item>
+        <item>Dentists</item>
+    </string-array>
+
+    <!-- Filter preferences xml-file name -->
+    <string name="filter_preferences">filter_preferences</string>
+    <string name="filter_preferences_type">type</string>
+
 </resources>
