@@ -8,7 +8,7 @@
 [Miguel Angel Sanchez Cifo](https://github.com/goma12345)\
 [Jonathan Granström](https://github.com/juntski)
 
-Git repository: https://github.com/lol2kpe/EDA397_Team3
+Git repository: https://github.com/lol2kpe/EDA397_Team3 \
 Issue tracker: https://github.com/lol2kpe/EDA397_Team3/projects/1
 
 ---
