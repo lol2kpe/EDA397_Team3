@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_main);
 		setSupportActionBar(toolbar);
     
-    hospitals = new ArrayList<>();
+        hospitals = new ArrayList<>();
 		fetchData();
 	}
 
@@ -102,47 +102,52 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getString(R.string.filter_preferences_type), "");
 
         if (type.equals("Hospitals")) {
-
-			if(hospitals.isEmpty())
-				Toast.makeText(getApplicationContext(), "No hospitals found", Toast.LENGTH_SHORT).show();
-			else {
+			if(hospitals.isEmpty()) {
+                Toast.makeText(getApplicationContext(), "No hospitals found",
+                        Toast.LENGTH_SHORT).show();
+            } else {
 				// TODO: Clear out current markers
 				Iterator<Hospital> iterator = hospitals.iterator();
 				while(iterator.hasNext()) {
-					// TODO: Add marker
+                    Hospital item = iterator.next();
+                    Toast.makeText(getApplicationContext(), item.getName()
+                            + " Lat: " + item.getLatitude()
+                            + " Long: " + item.getLongitude(),
+                            Toast.LENGTH_SHORT).show();
+                    // TODO: Add marker
 				}
-				Toast.makeText(getApplicationContext(), "Showing all hospitals", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Showing all hospitals",
+                        Toast.LENGTH_SHORT).show();
 				
 			}
         } else if (type.equals("Dentists")) {
 			// TODO: Clear out current markers
-            Toast.makeText(getApplicationContext(), "Could not find any dentists", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Could not find any dentists",
+                    Toast.LENGTH_SHORT).show();
         } else {
-			if(hospitals.isEmpty())
-				Toast.makeText(getApplicationContext(), "No hospitals found", Toast.LENGTH_SHORT).show();
-			else {
-				// TODO: Clear out current markers
-				Iterator<Hospital> iterator = hospitals.iterator();
-				while(iterator.hasNext()) {
-					// TODO: Add marker
-				}
-				Toast.makeText(getApplicationContext(), "Showing all",
-						Toast.LENGTH_SHORT).show();
-
-			}
+            // TODO: Clear out current markers
+            Iterator<Hospital> iterator = hospitals.iterator();
+            while(iterator.hasNext()) {
+                Hospital item = iterator.next();
+                Toast.makeText(getApplicationContext(), item.getName()
+                                + " Lat: " + item.getLatitude()
+                                + " Long: " + item.getLongitude(),
+                        Toast.LENGTH_SHORT).show();
+                // TODO: Add marker
+            }
+            Toast.makeText(getApplicationContext(), "Showing all",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
 	// fetches data from server
-	public List<Hospital>fetchData() {
+	public void fetchData() {
 
 		Hospital sahlgrenska = new Hospital("Sahlgrenska",5,"Emergency", 57.703830518, 11.93582959, 10,"00:00 - 24:00","Göteborg 41753", "075-8833865");
 		Hospital lundby = new Hospital("Lundby",5,"Regular appointments", 57.707663836 , 11.90916303, 10,"08:00 - 22:00","Göteborg 41753", "075-8866465");
 
 		hospitals.add(sahlgrenska);
 		hospitals.add(lundby);
-
-		return hospitals;
 
 		//VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
 	}
