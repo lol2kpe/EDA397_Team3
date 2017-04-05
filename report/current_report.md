@@ -35,23 +35,30 @@ Feature | Commits  | Group members | Effort | Practices
 ----------------|----------------|----------------|----------------|----------------
 [Find user's location](https://github.com/lol2kpe/EDA397_Team3/issues/17) | [66dfdfa](https://github.com/lol2kpe/EDA397_Team3/commit/66dfdfaca710b806abd273740193d9d2314659e7) | [Sam Halali](https://github.com/samhal)<br> [Miguel Angel Sanchez Cifo](https://github.com/goma12345) | 2h | Pair programming
 [Create/start database server](https://github.com/lol2kpe/EDA397_Team3/issues/26) | [c61f98f](https://github.com/lol2kpe/EDA397_Team3/commit/c61f98f2ebdb7bc21d6ce67038241ce2d37bbc53) [d9f984e](https://github.com/lol2kpe/EDA397_Team3/commit/d9f984ede6a61d9ec0dff35d8623c8773bce9f60) [f36f379](https://github.com/lol2kpe/EDA397_Team3/commit/f36f37928e486828a5f7420625c773fe564ac061) | [Johan Andersson](https://github.com/lol2kpe/) | 7h | Simple Design, Continuous Integration
-
+[Seed database with objects](https://github.com/lol2kpe/EDA397_Team3/issues/33) | [31c7c57](https://github.com/lol2kpe/EDA397_Team3/commit/31c7c5754375c60689788dfacc11204cf71d0a7b) | [Johan Andersson](https://github.com/lol2kpe)<br> [David Fogelberg](https://github.com/davve94) | 35m | Pair programming
+[Create Doctor object](https://github.com/lol2kpe/EDA397_Team3/issues/32) | [ff25688](https://github.com/lol2kpe/EDA397_Team3/commit/ff256885bee31e119e5f68b0d068062079cd655f) | [David Fogelberg](https://github.com/davve94) | 1h | -
+[Create Pharmacy object](https://github.com/lol2kpe/EDA397_Team3/issues/31) | [ff25688](https://github.com/lol2kpe/EDA397_Team3/commit/ff256885bee31e119e5f68b0d068062079cd655f) | [David Fogelberg](https://github.com/davve94) | 1h | -
+[Create Hospital object](https://github.com/lol2kpe/EDA397_Team3/issues/30) | [ff25688](https://github.com/lol2kpe/EDA397_Team3/commit/ff256885bee31e119e5f68b0d068062079cd655f) | [David Fogelberg](https://github.com/davve94) | 3h | -
+[Create markers for map](https://github.com/lol2kpe/EDA397_Team3/issues/29) | [ba9e5da](https://github.com/lol2kpe/EDA397_Team3/commit/ba9e5da2a734173cb1295c188187861b148b9aa5) | [Sam Halali](https://github.com/samhal) | 2h | -
+[Add map to main activity](https://github.com/lol2kpe/EDA397_Team3/issues/28) | [b003734](https://github.com/lol2kpe/EDA397_Team3/commit/b003734eac86a67760fd226ad6a25743363e7c96) | [Miguel Angel Sanchez Cifo](https://github.com/goma12345)<br> [Gunnar Gunnarsson](https://github.com/GunnarGunnarsson) | 1h | -
+[Create database contents](https://github.com/lol2kpe/EDA397_Team3/issues/27) | [b003734](https://github.com/lol2kpe/EDA397_Team3/commit/b003734eac86a67760fd226ad6a25743363e7c96) | [Miguel Angel Sanchez Cifo](https://github.com/goma12345)<br> [Gunnar Gunnarsson](https://github.com/GunnarGunnarsson) | 1h | -
 
 ## Reflections
-Reflect on how the work worked.
+Brainstorming was used to gather ideas for the project proposal. After getting the proposal accepted, the same method was used to gather ideas for functionality, these ideas were then formulated into user stories. Another brainstorming session was performed to decompose the most important user stories into tasks.
 
-Discuss any deviations from the sprint commitment.
+The 100$ method was used to prioritize the user stories according to relevance to
+the applications goals. The results of the prioritization can be seen in Figure 1. It was interesting to see how unaligned our estimates were except for those that clearly contributed to the goal.
 
-For each practice practiced:
+Pair programming was used to solve challenging tasks and worked really well in the group, both in the start of the sprint and the end of the sprint. It was used to solve for example fetching data from the database, integrating data with filter and integrating the map with the rest of the functionality.  
 
-- Did your experience correspond to or contradict with what literature claims?
+Testing worked quite good for specific methods however for Android GUI parts it was more challenging. When it came to test-first it was really good when you got used to it but it is also something that we need to work on the next sprint. Sometimes you started writing the functions without writing tests first because you are so used to that kind of programming. 
 
-    - Analysis of why. Mostly interesting if something unexpected happens, but even
-      if everything runs according to plan, reflecting on the underlying mechanisms
-      can be interesting.
+Refactoring was used to improve the code and make it more readable. It is really good to always consider refactoring the code since there is almost always something to improve. 
 
-- How efficient was the practice, given the time it took to use?
-
+We definitely would have liked more time for the planning phase of the project. Within the short span of time that was given from the group formation to the delivery of Sprint 1 only gave enough time to gather the most important tasks and delegate them before starting to implement them. Methods we would have liked to use during the planning phase in the next sprint:
+Analyze dependencies
+Planning poker to estimate work
+Software architectural design
 
 
 # Postmortem
