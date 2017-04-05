@@ -25,6 +25,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -133,13 +134,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        /*// Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
-
         mMap.setMyLocationEnabled(true);
+    }
+
+
+    public void addMapMarker (MarkerOptions marker) {
+        LatLng destination = marker.getPosition();
+        mMap.addMarker(marker.position(destination).title(marker.getTitle()).icon(marker.getIcon()));
+    }
+
+    public void removeAllMarkers () {
+        mMap.clear();
     }
 
     private View.OnClickListener FABonClickListener = new View.OnClickListener() {
@@ -178,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(getApplicationContext(), "No hospitals found",
                         Toast.LENGTH_SHORT).show();
             } else {
-                // TODO: Clear out current markers
+                removeAllMarkers();
                 Iterator<Hospital> iterator = hospitals.iterator();
                 while(iterator.hasNext()) {
                     Hospital item = iterator.next();
@@ -186,18 +191,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     + " Lat: " + item.getLatitude()
                                     + " Long: " + item.getLongitude(),
                             Toast.LENGTH_SHORT).show();
-                    // TODO: Add marker
+                    addMapMarker(MarkerOptionFactory.getMarkerOptions(item));
                 }
                 Toast.makeText(getApplicationContext(), "Showing all hospitals",
                         Toast.LENGTH_SHORT).show();
 
             }
         } else if (type.equals("Dentists")) {
-            // TODO: Clear out current markers
+            removeAllMarkers();
             Toast.makeText(getApplicationContext(), "Could not find any dentists",
                     Toast.LENGTH_SHORT).show();
         } else {
-            // TODO: Clear out current markers
+            removeAllMarkers();
             Iterator<Hospital> iterator = hospitals.iterator();
             while(iterator.hasNext()) {
                 Hospital item = iterator.next();
@@ -205,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 + " Lat: " + item.getLatitude()
                                 + " Long: " + item.getLongitude(),
                         Toast.LENGTH_SHORT).show();
-                // TODO: Add marker
+                addMapMarker(MarkerOptionFactory.getMarkerOptions(item));
             }
             Toast.makeText(getApplicationContext(), "Showing all",
                     Toast.LENGTH_SHORT).show();
