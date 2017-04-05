@@ -10,13 +10,25 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+
 import com.lol2kpe.h4u.markers.MarkerOptionFactory;
 
 import java.util.Iterator;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.lol2kpe.h4u.userlocation.UserLocationMonitor;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
 	static final int PICK_FILTER_OPTIONS_REQUEST = 1;
+
+	private List<Hospital> hospitals;
+	private static String url = "http://lol2kpe.asuscomm.com/hospitals";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
 		//Sets the customized menu_main as the app bar for this activity
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_main);
 		setSupportActionBar(toolbar);
+    
+    hospitals = new ArrayList<>();
+		fetchData();
 	}
 
 	/**
@@ -117,4 +132,34 @@ public class MainActivity extends AppCompatActivity {
 			}
         }
     }
+
+	// fetches data from server
+	public List<Hospital>fetchData() {
+
+		Hospital sahlgrenska = new Hospital("Sahlgrenska",5,"Emergency", 57.703830518, 11.93582959, 10,"00:00 - 24:00","Göteborg 41753", "075-8833865");
+		Hospital lundby = new Hospital("Lundby",5,"Regular appointments", 57.707663836 , 11.90916303, 10,"08:00 - 22:00","Göteborg 41753", "075-8866465");
+
+		hospitals.add(sahlgrenska);
+		hospitals.add(lundby);
+
+		return hospitals;
+
+		//VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
+	}
+
+	final GsonRequest gsonRequest = new GsonRequest(url, Hospital[].class, null, new Response.Listener<Hospital[]>() {
+
+		@Override
+		public void onResponse(Hospital[] hospitalsResponse) {
+			hospitals = Arrays.asList(hospitalsResponse);
+			Toast.makeText(MainActivity.this, "Hospitals refreshed", Toast.LENGTH_SHORT).show();
+		}
+	}, new Response.ErrorListener() {
+		@Override
+		public void onErrorResponse(VolleyError volleyError) {
+			//if(volleyError != null) Log.e("MainActivity", volleyError.getMessage());
+			Toast.makeText(MainActivity.this, "Database error", Toast.LENGTH_SHORT).show();
+		}
+	});
+
 }
