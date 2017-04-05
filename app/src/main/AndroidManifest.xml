@@ -30,11 +30,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DrawerActivity"
+            android:name=".MainActivity"
             android:label="H4U"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LauncherActivity"
             android:label="H4U"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -47,10 +47,10 @@
         <activity
             android:name=".FilterActivity"
             android:label="@string/activity_filter_title"
-            android:parentActivityName=".DrawerActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".DrawerActivity"/>
+                android:value=".MainActivity"/>
         </activity>
 
         <!--

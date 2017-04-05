@@ -7,21 +7,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.lol2kpe.h4u.MainActivity">
 
-    <!-- Adds a Toolbar to the FilterActivity -->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_filter"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
     <RelativeLayout
         android:id="@+id/content_area"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar_filter"
         android:layout_above="@+id/button_area"
         android:paddingTop="16dp"
         android:paddingLeft="16dp"

@@ -34,10 +34,6 @@ public class FilterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
-        // Set the toolbar for the FilterActivity
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_filter);
-        setSupportActionBar(toolbar);
-
         // Enable the up action to the toolbar (the "<-" arrow)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
