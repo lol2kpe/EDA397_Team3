@@ -33,7 +33,7 @@ List the features/stories the team commits to finish during the sprint.
 
 Feature | Commits  | Group members | Effort | Practices
 ----------------|----------------|----------------|----------------|----------------
-[Find user's location](https://github.com/lol2kpe/EDA397_Team3/issues/17) | [66dfdfa](https://github.com/lol2kpe/EDA397_Team3/commit/66dfdfaca710b806abd273740193d9d2314659e7) | [Sam Halali](https://github.com/samhal)<br> [Miguel Angel Sanchez Cifo](https://github.com/goma12345) | 2h | Pair programming
+[Find user's location](https://github.com/lol2kpe/EDA397_Team3/issues/17) | [66dfdfa](https://github.com/lol2kpe/EDA397_Team3/commit/66dfdfaca710b806abd273740193d9d2314659e7) | [Sam Halali](https://github.com/samhal)<br> [Miguel Angel Sanchez Cifo](https://github.com/goma12345) | 2h | Pair programming[Create/start database server](https://github.com/lol2kpe/EDA397_Team3/issues/26) | [c61f98f](https://github.com/lol2kpe/EDA397_Team3/commit/c61f98f2ebdb7bc21d6ce67038241ce2d37bbc53) [d9f984e](https://github.com/lol2kpe/EDA397_Team3/commit/d9f984ede6a61d9ec0dff35d8623c8773bce9f60) [f36f379](https://github.com/lol2kpe/EDA397_Team3/commit/f36f37928e486828a5f7420625c773fe564ac061) | [Johan Andersson](https://github.com/lol2kpe/) | 7h | Simple Design, Continuous Integration
 
 
 ## Reflections
