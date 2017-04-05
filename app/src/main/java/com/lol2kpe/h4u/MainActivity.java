@@ -10,6 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.lol2kpe.h4u.markers.MarkerOptionFactory;
+
+import java.util.Iterator;
+
 public class MainActivity extends AppCompatActivity {
 
 	static final int PICK_FILTER_OPTIONS_REQUEST = 1;
@@ -83,13 +87,34 @@ public class MainActivity extends AppCompatActivity {
                 getResources().getString(R.string.filter_preferences_type), "");
 
         if (type.equals("Hospitals")) {
-            Toast.makeText(getApplicationContext(), "Showing all hospitals", Toast.LENGTH_SHORT).show();
+
+			if(hospitals.isEmpty())
+				Toast.makeText(getApplicationContext(), "No hospitals found", Toast.LENGTH_SHORT).show();
+			else {
+				// TODO: Clear out current markers
+				Iterator<Hospital> iterator = hospitals.iterator();
+				while(iterator.hasNext()) {
+					// TODO: Add marker
+				}
+				Toast.makeText(getApplicationContext(), "Showing all hospitals", Toast.LENGTH_SHORT).show();
+				
+			}
         } else if (type.equals("Dentists")) {
+			// TODO: Clear out current markers
             Toast.makeText(getApplicationContext(), "Could not find any dentists", Toast.LENGTH_SHORT).show();
-            // TODO: Get hospital objects and send each objects to the MarkerFactory
         } else {
-            Toast.makeText(getApplicationContext(), "Showing all",
-                    Toast.LENGTH_SHORT).show();
+			if(hospitals.isEmpty())
+				Toast.makeText(getApplicationContext(), "No hospitals found", Toast.LENGTH_SHORT).show();
+			else {
+				// TODO: Clear out current markers
+				Iterator<Hospital> iterator = hospitals.iterator();
+				while(iterator.hasNext()) {
+					// TODO: Add marker
+				}
+				Toast.makeText(getApplicationContext(), "Showing all",
+						Toast.LENGTH_SHORT).show();
+
+			}
         }
     }
 }

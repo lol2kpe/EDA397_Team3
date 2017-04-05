@@ -112,7 +112,6 @@ public class FilterActivity extends AppCompatActivity {
         }
     }
 
-
     /**
      * Cancels the FilterActivity and returns the user to the MainActivity.
      * @param view
