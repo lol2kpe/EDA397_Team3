@@ -18,13 +18,18 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.lol2kpe.h4u.userlocation.UserLocationMonitor;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+  
 	static final int PICK_FILTER_OPTIONS_REQUEST = 1;
 
 	private List<Hospital> hospitals;
@@ -32,6 +37,27 @@ public class MainActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+    
+    // TODO: Make into LAUNCHER ACTIVITY
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        new CountDownTimer(1000,1000){
+            @Override
+            public void onTick(long millisUntilFinished){}
+
+            @Override
+            public void onFinish(){
+                //set the new Content of your activity
+                //MainActivity.this.setContentView(R.layout.activity_main);
+                Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            }
+        }.start();
+    
+    // ------------------------------------
+    
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		//Sets the customized menu_main as the app bar for this activity
@@ -166,5 +192,4 @@ public class MainActivity extends AppCompatActivity {
 			Toast.makeText(MainActivity.this, "Database error", Toast.LENGTH_SHORT).show();
 		}
 	});
-
 }

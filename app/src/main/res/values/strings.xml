@@ -23,4 +23,12 @@
     <string name="filter_preferences">filter_preferences</string>
     <string name="filter_preferences_type">type</string>
 
+    <string name="title_activity_drawer">DrawerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
