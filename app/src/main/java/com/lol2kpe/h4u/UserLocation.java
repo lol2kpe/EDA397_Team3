@@ -8,14 +8,17 @@ import android.location.Location;
 
 public class UserLocation extends Location {
     private String name = "";
+
     public UserLocation(Location l) {
         super(l);
     }
-    public UserLocation setName(String name){
+
+    public String getName() {
+        return this.name;
+    }
+
+    public UserLocation setName(String name) {
         this.name = name;
         return this;
-    }
-    public String getName(){
-        return this.name;
     }
 }

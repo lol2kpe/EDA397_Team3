@@ -6,17 +6,17 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -34,17 +34,38 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    static final int PICK_FILTER_OPTIONS_REQUEST = 1;
+    private static String url = "http://lol2kpe.asuscomm.com/hospitals";
     Location location;
     Location locationMaps;
     LatLng myLocation;
-
     FloatingActionButton FAB;
-
-    static final int PICK_FILTER_OPTIONS_REQUEST = 1;
-
+    private GoogleMap mMap;
     private List<Hospital> hospitals;
-    private static String url = "http://lol2kpe.asuscomm.com/hospitals";
+    final GsonRequest gsonRequest = new GsonRequest(url, Hospital[].class, null, new Response.Listener<Hospital[]>() {
+
+        @Override
+        public void onResponse(Hospital[] hospitalsResponse) {
+            hospitals = Arrays.asList(hospitalsResponse);
+            Toast.makeText(MainActivity.this, "Hospitals refreshed", Toast.LENGTH_SHORT).show();
+        }
+    }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            //if(volleyError != null) Log.e("MainActivity", volleyError.getMessage());
+            Toast.makeText(MainActivity.this, "Database error", Toast.LENGTH_SHORT).show();
+        }
+    });
+    private View.OnClickListener FABonClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.filter:
+                    Intent intent = new Intent(MainActivity.this, FilterActivity.class);
+                    startActivityForResult(intent, PICK_FILTER_OPTIONS_REQUEST);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,26 +158,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mMap.setMyLocationEnabled(true);
     }
 
-
-    public void addMapMarker (MarkerOptions marker) {
+    public void addMapMarker(MarkerOptions marker) {
         LatLng destination = marker.getPosition();
         mMap.addMarker(marker.position(destination).title(marker.getTitle()).icon(marker.getIcon()));
     }
 
-    public void removeAllMarkers () {
+    public void removeAllMarkers() {
         mMap.clear();
     }
-
-    private View.OnClickListener FABonClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.filter:
-                    Intent intent = new Intent(MainActivity.this, FilterActivity.class);
-                    startActivityForResult(intent, PICK_FILTER_OPTIONS_REQUEST);
-            }
-        }
-    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -179,13 +188,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getResources().getString(R.string.filter_preferences_type), "");
 
         if (type.equals("Hospitals")) {
-            if(hospitals.isEmpty()) {
+            if (hospitals.isEmpty()) {
                 Toast.makeText(getApplicationContext(), "No hospitals found",
                         Toast.LENGTH_SHORT).show();
             } else {
                 removeAllMarkers();
                 Iterator<Hospital> iterator = hospitals.iterator();
-                while(iterator.hasNext()) {
+                while (iterator.hasNext()) {
                     Hospital item = iterator.next();
                     Toast.makeText(getApplicationContext(), item.getName()
                                     + " Lat: " + item.getLatitude()
@@ -204,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             removeAllMarkers();
             Iterator<Hospital> iterator = hospitals.iterator();
-            while(iterator.hasNext()) {
+            while (iterator.hasNext()) {
                 Hospital item = iterator.next();
                 Toast.makeText(getApplicationContext(), item.getName()
                                 + " Lat: " + item.getLatitude()
@@ -220,27 +229,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // fetches data from server
     public void fetchData() {
 
-        Hospital sahlgrenska = new Hospital("Sahlgrenska",5,"Emergency", 57.703830518, 11.93582959, 10,"00:00 - 24:00","Göteborg 41753", "075-8833865");
-        Hospital lundby = new Hospital("Lundby",5,"Regular appointments", 57.707663836 , 11.90916303, 10,"08:00 - 22:00","Göteborg 41753", "075-8866465");
+        Hospital sahlgrenska = new Hospital("Sahlgrenska", 5, "Emergency", 57.703830518, 11.93582959, 10, "00:00 - 24:00", "Göteborg 41753", "075-8833865");
+        Hospital lundby = new Hospital("Lundby", 5, "Regular appointments", 57.707663836, 11.90916303, 10, "08:00 - 22:00", "Göteborg 41753", "075-8866465");
 
         hospitals.add(sahlgrenska);
         hospitals.add(lundby);
 
         //VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
     }
-
-    final GsonRequest gsonRequest = new GsonRequest(url, Hospital[].class, null, new Response.Listener<Hospital[]>() {
-
-        @Override
-        public void onResponse(Hospital[] hospitalsResponse) {
-            hospitals = Arrays.asList(hospitalsResponse);
-            Toast.makeText(MainActivity.this, "Hospitals refreshed", Toast.LENGTH_SHORT).show();
-        }
-    }, new Response.ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            //if(volleyError != null) Log.e("MainActivity", volleyError.getMessage());
-            Toast.makeText(MainActivity.this, "Database error", Toast.LENGTH_SHORT).show();
-        }
-    });
 }

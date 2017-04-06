@@ -11,20 +11,20 @@ public class VolleyHelper {
     private RequestQueue requestQueue;
     private Context context;
 
-    private VolleyHelper(Context context){
+    private VolleyHelper(Context context) {
         this.context = context;
         requestQueue = getRequestQueue();
     }
 
-    public static synchronized VolleyHelper getInstance(Context context){
-        if(INSTANCE == null){
+    public static synchronized VolleyHelper getInstance(Context context) {
+        if (INSTANCE == null) {
             INSTANCE = new VolleyHelper(context);
         }
         return INSTANCE;
     }
 
-    public RequestQueue getRequestQueue(){
-        if(requestQueue == null){
+    public RequestQueue getRequestQueue() {
+        if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
         return requestQueue;

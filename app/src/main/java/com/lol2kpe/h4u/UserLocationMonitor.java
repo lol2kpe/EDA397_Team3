@@ -10,7 +10,7 @@ import android.os.Bundle;
  * Created by sam on 2017-04-03.
  */
 
-public class UserLocationMonitor{
+public class UserLocationMonitor {
     public static final String NETWORK_PROVIDER = LocationManager.NETWORK_PROVIDER;
     public static final String GPS_PROVIDER = LocationManager.GPS_PROVIDER;
     //Get the location as frequently as possible
@@ -20,7 +20,13 @@ public class UserLocationMonitor{
     private LocationManager locationManager;
     private UserLocationListener userLocationListener = new UserLocationListener();
 
-    public static UserLocationMonitor getMonitor(Context context){
+    private UserLocationMonitor(LocationManager locationManager) {
+        this.locationManager = locationManager;
+        //Set the last known location as init value, might be out-of-date
+        this.location = locationManager.getLastKnownLocation(GPS_PROVIDER);
+    }
+
+    public static UserLocationMonitor getMonitor(Context context) {
         LocationManager locationManager = (LocationManager) context
                 .getSystemService(
                         Context.LOCATION_SERVICE
@@ -31,24 +37,20 @@ public class UserLocationMonitor{
                 .addProvider(GPS_PROVIDER);
         return monitor;
     }
-    private UserLocationMonitor(LocationManager locationManager){
-        this.locationManager = locationManager;
-        //Set the last known location as init value, might be out-of-date
-        this.location = locationManager.getLastKnownLocation(GPS_PROVIDER);
-    }
 
-    private UserLocationMonitor addProvider(String provider){
+    private UserLocationMonitor addProvider(String provider) {
         this.locationManager.requestLocationUpdates(provider,
                 MIN_TIME,
                 MIN_DISTANCE,
                 this.userLocationListener);
         return this;
     }
-    public Location getLocation(){
+
+    public Location getLocation() {
         return this.location != null ? new Location(this.location) : null;
     }
 
-    private class UserLocationListener implements LocationListener{
+    private class UserLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location location) {
             UserLocationMonitor.this.location = location;
