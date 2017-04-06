@@ -1,4 +1,4 @@
-package com.lol2kpe.h4u.markers;
+package com.lol2kpe.h4u;
 
 import android.location.Location;
 
@@ -6,9 +6,6 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.lol2kpe.h4u.Hospital;
-import com.lol2kpe.h4u.R;
-import com.lol2kpe.h4u.userlocation.UserLocation;
 
 /**
  * Created by sam on 2017-04-04.
@@ -20,8 +17,8 @@ public class MarkerOptionFactory{
                 .title(hospital.getName())
                 .position(
                         new LatLng(
-                            Double.parseDouble(hospital.getLatitude()),
-                            Double.parseDouble(hospital.getLongitude())
+                                hospital.getLatitude(),
+                                hospital.getLongitude()
                         )
                 )
                 .icon(provideHospitalIcon());

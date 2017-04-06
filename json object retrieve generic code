@@ -1,0 +1,9 @@
+public String parse(String jsonLine) {
+    JsonElement jelement = new JsonParser().parse(jsonLine);
+    JsonObject  jobject = jelement.getAsJsonObject();
+    jobject = jobject.getAsJsonObject("hospital object");
+    JsonArray jarray = jobject.getAsJsonArray("error");
+    jobject = jarray.get(0).getAsJsonObject();
+    String result = jobject.get("hospital.object").toString();
+    return result;
+}
