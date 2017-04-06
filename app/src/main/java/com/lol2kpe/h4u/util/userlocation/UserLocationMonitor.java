@@ -1,4 +1,4 @@
-package com.lol2kpe.h4u;
+package com.lol2kpe.h4u.util.userlocation;
 
 import android.content.Context;
 import android.location.Location;

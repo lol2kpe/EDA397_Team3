@@ -26,6 +26,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.lol2kpe.h4u.data.model.Hospital;
+import com.lol2kpe.h4u.util.markers.MarkerOptionFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;

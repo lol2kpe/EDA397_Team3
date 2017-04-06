@@ -1,5 +1,7 @@
 package com.lol2kpe.h4u;
 
+import com.lol2kpe.h4u.data.model.Hospital;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

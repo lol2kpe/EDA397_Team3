@@ -1,5 +1,7 @@
 package com.lol2kpe.h4u;
 
+import com.lol2kpe.h4u.data.model.Pharmacy;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
