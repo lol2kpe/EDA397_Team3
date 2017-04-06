@@ -1,4 +1,4 @@
-package com.lol2kpe.h4u;
+package com.lol2kpe.h4u.data.model;
 
 import com.lol2kpe.h4u.data.model.Hospital;
 
@@ -27,16 +27,23 @@ public class TestHospital {
         assertEquals(hospital.getName(), "Lundby");
     }
     @Test
-    public void testGetLatitude()throws Exception {
+    public void testGetLatitude() throws Exception {
         Hospital hospital = new Hospital()
                 .setLatitude(12.345000);
         assertEquals(hospital.getLatitude(), 12.345000, 0);
     }
     @Test
-    public void testGetLongitude()throws Exception {
+    public void testGetLongitude() throws Exception {
         Hospital hospital = new Hospital()
                 .setLongitude(97.869440);
         assertEquals(hospital.getLongitude(), 97.869440, 0);
+    }
+
+    @Test
+    public void testProvidesService() throws Exception{
+        Hospital hospital = new Hospital()
+                .addService(Service.EMERGENCY_CARE);
+        hospital.providesService(Service.EMERGENCY_CARE);
     }
 
 }

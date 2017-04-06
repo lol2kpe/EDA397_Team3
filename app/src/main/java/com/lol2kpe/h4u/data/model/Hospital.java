@@ -1,8 +1,12 @@
 package com.lol2kpe.h4u.data.model;
 
-public class Hospital extends Place {
-    private String hospitalType;
+import java.util.HashSet;
+import java.util.Set;
 
+public class Hospital extends Place {
+    private String hospitalType = "";
+    private Set<Service> services = new HashSet<>();
+    private Set<Employee> employees = new HashSet<>();
     public Hospital(Hospital hospital){
         super(hospital);
         this.hospitalType = hospital.hospitalType;
@@ -10,6 +14,15 @@ public class Hospital extends Place {
 
     public Hospital() {
         super();
+    }
+
+    public Set<Service> getServices() {
+        return services;
+    }
+
+    public Hospital setServices(Set<Service> services) {
+        this.services = services;
+        return this;
     }
 
     public String getHospitalType() {
@@ -59,5 +72,14 @@ public class Hospital extends Place {
     public Hospital setId(int id) {
         this.id = id;
         return this;
+    }
+
+    public Hospital addService(Service service) {
+        this.services.add(service);
+        return this;
+    }
+
+    public boolean providesService(Service service){
+        return this.services.contains(service);
     }
 }

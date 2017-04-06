@@ -1,4 +1,4 @@
-package com.lol2kpe.h4u;
+package com.lol2kpe.h4u.data.model;
 
 import com.lol2kpe.h4u.data.model.Pharmacy;
 
