@@ -12,7 +12,21 @@ public abstract class Place {
     protected double longitude = 0;
     protected String phoneNumber = "";
     protected String name = "";
-    protected String id = "";
+    protected int id = 0;
+
+    public Place(){}
+
+    public Place(Place place) {
+        this.rating = place.rating;
+        this.address = place.address;
+        this.openingHours = place.openingHours;
+        this.latitude = place.latitude;
+        this.longitude = place.longitude;
+        this.phoneNumber = place.phoneNumber;
+        this.name = place.name;
+        this.id = place.id;
+    }
+
 
     public String getAddress() {
         return address;
@@ -39,7 +53,7 @@ public abstract class Place {
     }
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

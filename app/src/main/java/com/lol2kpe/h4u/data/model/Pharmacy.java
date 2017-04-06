@@ -1,6 +1,15 @@
 package com.lol2kpe.h4u.data.model;
 
 public class Pharmacy extends Place {
+
+    public Pharmacy(){
+        super();
+    }
+
+    public Pharmacy(Pharmacy pharmacy){
+        super(pharmacy);
+    }
+
     public Pharmacy setRating(int rating) {
         this.rating = rating;
         return this;
@@ -36,7 +45,7 @@ public class Pharmacy extends Place {
         return this;
     }
 
-    public Pharmacy setId(String id) {
+    public Pharmacy setId(int id) {
         this.id = id;
         return this;
     }

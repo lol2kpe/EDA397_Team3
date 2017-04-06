@@ -3,6 +3,15 @@ package com.lol2kpe.h4u.data.model;
 public class Hospital extends Place {
     private String hospitalType;
 
+    public Hospital(Hospital hospital){
+        super(hospital);
+        this.hospitalType = hospital.hospitalType;
+    }
+
+    public Hospital() {
+        super();
+    }
+
     public String getHospitalType() {
         return hospitalType;
     }
@@ -47,7 +56,7 @@ public class Hospital extends Place {
         return this;
     }
 
-    public Hospital setId(String id) {
+    public Hospital setId(int id) {
         this.id = id;
         return this;
     }

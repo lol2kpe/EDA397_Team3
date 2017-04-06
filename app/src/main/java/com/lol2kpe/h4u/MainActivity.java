@@ -230,10 +230,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // fetches data from server
     public void fetchData() {
-
-        Hospital sahlgrenska = new Hospital("Sahlgrenska", 5, "Emergency", 57.703830518, 11.93582959, 10, "00:00 - 24:00", "Göteborg 41753", "075-8833865");
-        Hospital lundby = new Hospital("Lundby", 5, "Regular appointments", 57.707663836, 11.90916303, 10, "08:00 - 22:00", "Göteborg 41753", "075-8866465");
-
+        Hospital sahlgrenska = new Hospital()
+                .setName("Sahlgrenska")
+                .setId(10)
+                .setHospitalType("Emergency")
+                .setLatitude(57.703830518)
+                .setLongitude(11.93582959);
+        Hospital lundby = new Hospital()
+                .setName("Lundby")
+                .setId(10)
+                .setHospitalType("Regular appointments")
+                .setLatitude(57.707663836)
+                .setLongitude(11.90916303);
         hospitals.add(sahlgrenska);
         hospitals.add(lundby);
 
