@@ -37,4 +37,10 @@ public class TestPharmacy {
                 .setLongitude(39.4565804);
         assertEquals(pharmacy.getLongitude(), 39.4565804, 0);
     }
+    @Test
+    public void testProvidesService() throws Exception{
+        Hospital hospital = new Hospital()
+                .addService(Service.PHARMACY);
+        hospital.providesService(Service.PHARMACY);
+    }
 }

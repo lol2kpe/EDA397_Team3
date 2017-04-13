@@ -6,7 +6,17 @@ package com.lol2kpe.h4u.data.model;
 
 public enum Service {
     //TODO add more services
-    EMERGENCY_CARE("Emergency Care");
+    EMERGENCY_CARE("Emergency Care"),
+    HEALTH_CARE("Health Care"),
+    SURGEON("Surgeon"),
+    NURSE("Nurse"),
+    DOCTOR("Doctor"),
+    SPECIALIST("specialist"),
+    PHARMACY("Pharmacy");
+
+
+
+
     private final String displayName;
 
     Service(String s) {
@@ -16,3 +26,4 @@ public enum Service {
         return this.displayName;
     }
 }
+

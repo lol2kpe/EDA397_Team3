@@ -24,5 +24,11 @@ public class TestEmployee {
         employee.setName("Erik");
         assertEquals(employee.getName(), "Erik");
     }
+    @Test
+    public void testProvidesService() throws Exception{
+        Hospital hospital = new Hospital()
+                .addService(Service.SURGEON);
+        hospital.providesService(Service.SURGEON);
+    }
 
 }
