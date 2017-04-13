@@ -1,5 +1,7 @@
 package com.lol2kpe.h4u.data.model;
 
+import xyz.samhal.openinghours.OpeningHours;
+
 /**
  * Created by sam on 4/6/17.
  */
@@ -7,7 +9,7 @@ package com.lol2kpe.h4u.data.model;
 public abstract class Place {
     protected int rating = 0;
     protected String address = "";
-    protected String openingHours = "";
+    protected OpeningHours openingHours = new OpeningHours();
     protected double latitude = 0;
     protected double longitude = 0;
     protected String phoneNumber = "";
@@ -32,7 +34,7 @@ public abstract class Place {
         return address;
     }
 
-    public String getOpeningHours() {
+    public OpeningHours getOpeningHours() {
         return openingHours;
     }
 

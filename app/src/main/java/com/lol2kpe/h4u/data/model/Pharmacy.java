@@ -1,5 +1,7 @@
 package com.lol2kpe.h4u.data.model;
 
+import xyz.samhal.openinghours.OpeningHours;
+
 public class Pharmacy extends Place {
 
     public Pharmacy(){
@@ -20,7 +22,7 @@ public class Pharmacy extends Place {
         return this;
     }
 
-    public Pharmacy setOpeningHours(String openingHours) {
+    public Pharmacy setOpeningHours(OpeningHours openingHours) {
         this.openingHours = openingHours;
         return this;
     }
