@@ -28,6 +28,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.lol2kpe.h4u.data.model.Hospital;
+import com.lol2kpe.h4u.data.model.Place;
 import com.lol2kpe.h4u.util.markers.MarkerOptionFactory;
 
 import java.util.ArrayList;
@@ -45,12 +46,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FloatingActionButton FAB;
     private GoogleMap mMap;
     private List<Hospital> hospitals;
-    final GsonRequest gsonRequest = new GsonRequest(url, Hospital[].class, null, new Response.Listener<Hospital[]>() {
+    private List<Place> places;
+    final GsonRequest gsonRequest = new GsonRequest(url, Place[].class, null, new Response.Listener<Place[]>() {
 
         @Override
-        public void onResponse(Hospital[] hospitalsResponse) {
-            hospitals = Arrays.asList(hospitalsResponse);
-            Toast.makeText(MainActivity.this, "Hospitals refreshed", Toast.LENGTH_SHORT).show();
+        public void onResponse(Place[] placesResponse) {
+            places = Arrays.asList(placesResponse);
+            Toast.makeText(MainActivity.this, "Places are refreshed", Toast.LENGTH_SHORT).show();
         }
     }, new Response.ErrorListener() {
         @Override
@@ -248,6 +250,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         hospitals.add(lundby);
 
         // uncomment this, and database should work
-        // VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
+       // VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
     }
 }
