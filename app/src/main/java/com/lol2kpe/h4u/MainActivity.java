@@ -27,6 +27,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.lol2kpe.h4u.data.model.Hospital;
+import com.lol2kpe.h4u.data.model.Place;
 import com.lol2kpe.h4u.util.markers.MarkerOptionFactory;
 
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
+
+    static final int FILTER_ACTIVITY_REQUEST = 1;
 
     private static String url = "http://lol2kpe.asuscomm.com/hospitals";
     Location location;
@@ -64,10 +67,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             switch (view.getId()) {
                 case R.id.filter:
                     Intent intent = new Intent(MainActivity.this, FilterActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, FILTER_ACTIVITY_REQUEST);
             }
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check if result comes from FilterActivity
+        if (requestCode == FILTER_ACTIVITY_REQUEST) {
+            // Check if request was successful/had results
+            if(resultCode == RESULT_OK) {
+                addMapMarker((ArrayList<Place>)getIntent()
+                        .getSerializableExtra("result"));
+            } else {
+               Toast.makeText(this, "No objects found", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,9 +180,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mMap.setMyLocationEnabled(true);
     }
 
-    public void addMapMarker(MarkerOptions marker) {
-        LatLng destination = marker.getPosition();
-        mMap.addMarker(marker.position(destination).title(marker.getTitle()).icon(marker.getIcon()));
+    private void addMapMarker(ArrayList<Place> objects) {
+        removeAllMarkers();
+        for (Place place : objects) {
+            MarkerOptions marker = MarkerOptionFactory.getMarkerOptions(place);
+            LatLng destination = marker.getPosition();
+            mMap.addMarker(marker.position(destination)
+                    .title(marker.getTitle()).icon(marker.getIcon()));
+        }
     }
 
     public void removeAllMarkers() {
