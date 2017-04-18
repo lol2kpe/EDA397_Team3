@@ -1,5 +1,7 @@
 package com.lol2kpe.h4u;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -17,8 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.stream.Collectors;
 
 /**
  * Created by Jonathan Granström
@@ -39,6 +39,8 @@ public class FilterActivity extends AppCompatActivity {
     public static HashMap <String, Integer> filterSelections;
     private Spinner spinnerType, spinnerOpeningHours, spinnerRating;
 
+    Intent returnIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,13 +51,15 @@ public class FilterActivity extends AppCompatActivity {
 
         // Get the buttons and set their onClickListeners and functionality
         Button cancelButton = (Button)findViewById(R.id.button_cancel);
-        cancelButton.setOnClickListener(view ->
-            finish()
-        );
+        cancelButton.setOnClickListener(view -> {
+            returnIntent = new Intent(this, MainActivity.class);
+            setResult(Activity.RESULT_CANCELED);
+            finish();
+        });
         Button setButton = (Button)findViewById(R.id.button_set);
         setButton.setOnClickListener(view -> {
             storeFilterValues();
-            finish();
+            filter(null);
         });
 
         // Get the spinner objects and set their
@@ -169,6 +173,66 @@ public class FilterActivity extends AppCompatActivity {
         spinnerRating.setSelection(filterSelections.get(RATING));
     }
 
+    private void filter(List<Place> objects) {
+        ArrayList<Place> returnList = new ArrayList<>();
+
+        Iterator<Place> iterator = objects.iterator();
+
+        while(iterator.hasNext()) {
+            Place item = iterator.next();
+            if(checkType(filterSelections.get(TYPE), item))
+                returnList.add(item);
+        }
+        iterator = returnList.iterator();
+        while(iterator.hasNext()) {
+            Place item = iterator.next();
+            if(checkRating(filterSelections.get(RATING), item))
+                iterator.remove();
+        }
+
+
+        returnIntent = new Intent(this, MainActivity.class);
+        if(!returnList.isEmpty()) {
+            returnIntent.putExtra("result", returnList);
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
+        } else {
+            setResult(Activity.RESULT_CANCELED);
+            finish();
+        }
+    }
+
+    private boolean checkType(int pos, Place p) {
+        switch(pos) {
+            case 0:
+                return true;
+            case 1:
+                return p instanceof Hospital;
+            case 2:
+                return p instanceof  Pharmacy;
+            default:
+                return false;
+        }
+    }
+
+    private boolean checkRating(int pos, Place p) {
+        switch(pos) {
+            case 0:
+                return p.getRating() >= 1;
+            case 1:
+                return p.getRating() >= 2;
+            case 2:
+                return p.getRating() >= 3;
+            case 3:
+                return p.getRating() >= 4;
+            case 4:
+                return p.getRating() == 5;
+            default:
+                return false;
+        }
+    }
+
+    /*
     private void filter() {
         // TODO: Get an ACTUAL list of objects to filter
         List<Place> objects = new ArrayList<>();
@@ -193,5 +257,5 @@ public class FilterActivity extends AppCompatActivity {
                 return false;
         }
     }
-
+    */
 }
