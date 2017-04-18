@@ -59,7 +59,7 @@ public class FilterActivity extends AppCompatActivity {
         Button setButton = (Button)findViewById(R.id.button_set);
         setButton.setOnClickListener(view -> {
             storeFilterValues();
-            filter(null);
+            filter();
         });
 
         // Get the spinner objects and set their
@@ -173,23 +173,23 @@ public class FilterActivity extends AppCompatActivity {
         spinnerRating.setSelection(filterSelections.get(RATING));
     }
 
-    private void filter(List<Place> objects) {
-        ArrayList<Place> returnList = new ArrayList<>();
+    private void filter() {
+        ArrayList<Place> returnList = (ArrayList<Place>)getIntent().getSerializableExtra("objects");
 
-        Iterator<Place> iterator = objects.iterator();
+        Iterator<Place> iterator = returnList.iterator();
 
         while(iterator.hasNext()) {
             Place item = iterator.next();
             if(checkType(filterSelections.get(TYPE), item))
                 returnList.add(item);
         }
+
         iterator = returnList.iterator();
         while(iterator.hasNext()) {
             Place item = iterator.next();
             if(checkRating(filterSelections.get(RATING), item))
                 iterator.remove();
         }
-
 
         returnIntent = new Intent(this, MainActivity.class);
         if(!returnList.isEmpty()) {

@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             switch (view.getId()) {
                 case R.id.filter:
                     Intent intent = new Intent(MainActivity.this, FilterActivity.class);
+                    intent.putExtra("objects", new ArrayList<>(places));
                     startActivityForResult(intent, FILTER_ACTIVITY_REQUEST);
             }
         }
