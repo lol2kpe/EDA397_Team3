@@ -1,31 +1,43 @@
 package com.lol2kpe.h4u;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
-import java.io.IOException;
+import com.lol2kpe.h4u.data.model.Hospital;
+import com.lol2kpe.h4u.data.model.Pharmacy;
+import com.lol2kpe.h4u.data.model.Place;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.stream.Collectors;
 
 /**
- * Created by Jonathan Granström on 2017-04-02.
+ * Created by Jonathan Granström
+ * User: Jonathan "juntski" Granström
+ * Date: 2017-04-02
  */
 
 public class FilterActivity extends AppCompatActivity {
 
-    SharedPreferences filterPreferences;
-    SharedPreferences.Editor filterPrefEditor;
-    Intent resultIntentData;
-    private Spinner spinnerType;    // The spinner menu for the "type" filter option
-    private ArrayAdapter<CharSequence> adapter;
+    private final String TYPE = "type";
+    private final String OPENING_HOUR = "openingHour";
+    private final String RATING = "rating";
+
+    private final int DEFAULT_TYPE_VALUE = 0;
+    private final int DEFAULT_OPENING_HOURS_VALUE = 0;
+    private final int DEFAULT_RATING_VALUE = 1;
+
+    public static HashMap <String, Integer> filterSelections;
+    private Spinner spinnerType, spinnerOpeningHours, spinnerRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,57 +47,89 @@ public class FilterActivity extends AppCompatActivity {
         // Enable the up action to the toolbar (the "<-" arrow)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Set the shared preference file and editor
-        filterPreferences = getSharedPreferences(
-                getResources().getString(R.string.filter_preferences), MODE_PRIVATE);
-        filterPrefEditor = filterPreferences.edit();
+        // Get the buttons and set their onClickListeners and functionality
+        Button cancelButton = (Button)findViewById(R.id.button_cancel);
+        cancelButton.setOnClickListener(view ->
+            finish()
+        );
+        Button setButton = (Button)findViewById(R.id.button_set);
+        setButton.setOnClickListener(view -> {
+            storeFilterValues();
+            finish();
+        });
 
-        // Set the spinner for the "type"-option (e.g., Health center, Dentist)
-        spinnerType = (Spinner) findViewById(R.id.spinner_type);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        adapter = ArrayAdapter.createFromResource(this,
-                R.array.activity_filter_option_type_options, android.R.layout.simple_spinner_item);
-        // Specifies the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinnerType.setAdapter(adapter);
+        // Get the spinner objects and set their
+        spinnerType = (Spinner)findViewById(R.id.spinner_type);
+        spinnerOpeningHours = (Spinner)findViewById(R.id.spinner_openinghours);
+        spinnerRating = (Spinner)findViewById(R.id.spinner_rating);
 
-        // Set the initial filter selections for the Activity
-        setFilterSelections();
+        // Create Adapter objects with data items for the Spinner objects
+        ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource(this,
+                R.array.activity_filter_type_options, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapterOpeningHours = ArrayAdapter.createFromResource(this,
+                R.array.activity_filter_openinghours_options, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapterRating = ArrayAdapter.createFromResource(this,
+                R.array.activity_filter_rating_options, android.R.layout.simple_spinner_item);
 
-        // Initialize the return Intent
-        resultIntentData = new Intent();
+        // Set the View for the items in the data set in the Adapter objects
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterOpeningHours.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterRating.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        // Set the Adapter objects to their respective Spinner objects
+        spinnerType.setAdapter(adapterType);
+        spinnerOpeningHours.setAdapter(adapterOpeningHours);
+        spinnerRating.setAdapter(adapterRating);
+
+        // If the app/activity is started for the first time, create a HashMap to store values
+        if(filterSelections == null) {
+            filterSelections = new HashMap<>();
+            // Set the filter options to their default values
+            setDefaultFilterValues();
+            storeFilterValues();
+        }
+        // Otherwise, set the filter options to the values stored in the already existing HashMap
+        else {
+            setFilterValues();
+        }
     }
 
     /**
-     * Method overrides the standard onCreateOptionsMenu. Makes sure the layout for the custom
-     * toolbar is used as the menu for the activity.
+     * The method overrides the standard onCreateOptionsMenu. The method makes sure
+     * the custom XML-file and its contents and layout is added and displayed in the menu
+     * for the FilterActivity. The method then calls the the original onCreateOptionsMenu
+     * to add the standard menu items for the FilterActivity (e.g., activity title).
      *
-     * @param menu
-     * @return
+     * @param menu  The Menu object for the FilterActivity
+     * @return      The original onCreateOptionsMenu method, which adds default menu items to
+     *              the FilterActivity menu.
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Used to instantiate XML-files in to Menu object
         MenuInflater inflater = getMenuInflater();
+        // Inflates a layout from an XML resource file in to the specified Menu object
         inflater.inflate(R.menu.menu_filter, menu);
+        // Call the original method in order to add default items to the menu (e.g., activity title)
         return super.onCreateOptionsMenu(menu);
 
     }
 
     /**
-     * Method is called when an menu item on the toolbar is selected (clicked on). Method receives
-     * the item clicked and uses the proper case. If no case could be found for the item,
-     * the super class is called to handle that situation.
+     * The method overrides the original onOptionsItemSelected in order to specify what
+     * will happen when the additional content added to the menu is interacted with.
+     * If the interacted item isn't part of the additionally added menu content,
+     * the original onOptionsItemSelected method is called to handle that event.
      *
-     * @param item
-     * @return
+     * @param item  The menu item in the FilterActivity menu which has been interacted with
+     * @return      The original onOptionsItemSelected method, which handles interaction with
+     *              default MenuItems.
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.toolbar_action_clear_filter:
-                clearFilterPreferences(item);
+                setDefaultFilterValues();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -94,75 +138,60 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets the initial filter options for the activity. If no saved user choice for a filter option
-     * exists in the SharedPreferences xml-file, the options are set to their default values.
-     * If saved user options exists for a filter option, the filter option is set to whatever value
-     * the user has chosen.
+     * The method sets all the selections of the SpinnerObjects to their default values.
      */
-    private void setFilterSelections() {
-        if (filterPreferences.contains(getResources().getString(R.string.filter_preferences_type))) {
-            spinnerType.setSelection(adapter.getPosition(filterPreferences.getString(
-                    getResources().getString(R.string.filter_preferences_type), "")));
-        } else {
-            spinnerType.setSelection(0);
-        }
+    private void setDefaultFilterValues() {
+        spinnerType.setSelection(DEFAULT_TYPE_VALUE);
+        spinnerOpeningHours.setSelection(DEFAULT_OPENING_HOURS_VALUE);
+        spinnerRating.setSelection(DEFAULT_RATING_VALUE);
     }
 
     /**
-     * Cancels the FilterActivity and returns the user to the MainActivity.
-     *
-     * @param view
+     * The method overwrites all values in the existing HashMap with their respective
+     * value currently selected/displayed by the SpinnerObjects.
      */
-    public void cancelFilterActivity(View view) {
-        try {
-            if (view.getId() == R.id.button_cancel) {
-                setResult(Activity.RESULT_CANCELED, null);
-                finish();
-            } else {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            Log.d("h4u", "cancelFilterActivity was not called by the proper UI element! " +
-                    "Expected call from action: " + R.id.button_cancel);
-            setResult(Activity.RESULT_CANCELED, null);
-            finish();
-        }
+    private void storeFilterValues() {
+        filterSelections.put(
+                TYPE, spinnerType.getSelectedItemPosition());
+        filterSelections.put(
+                OPENING_HOUR, spinnerOpeningHours.getSelectedItemPosition());
+        filterSelections.put(
+                RATING, spinnerRating.getSelectedItemPosition());
     }
 
     /**
-     * Writes the user's chosen filter options to the SharedPreferences xml-file.
-     *
-     * @param view
+     * The method sets all the SpinnerObjects selections to their respective value
+     * stored in the HashMap.
      */
-    public void setFilterPreferences(View view) {
-        try {
-            if (view.getId() == R.id.button_set) {
-                filterPrefEditor.putString(getResources().getString(
-                        R.string.filter_preferences_type), spinnerType.getSelectedItem().toString());
-                filterPrefEditor.commit();
-                setResult(Activity.RESULT_OK, null);
-            } else {
-                throw new IOException();
-            }
-        } catch (IOException e) {
-            Log.d("h4u", "setFilterOptions was not called by the proper UI element! " +
-                    "Expected call from action: " + R.id.button_set);
-            setResult(Activity.RESULT_CANCELED, null);
-            finish();
-        }
-        finish();
+    private void setFilterValues() {
+        spinnerType.setSelection(filterSelections.get(TYPE));
+        spinnerOpeningHours.setSelection(filterSelections.get(OPENING_HOUR));
+        spinnerRating.setSelection(filterSelections.get(RATING));
     }
 
-    /**
-     * Clears the SharedPreference xml-file of any saved user preferences.
-     *
-     * @param item
-     */
-    public void clearFilterPreferences(MenuItem item) {
-        filterPrefEditor.clear();
-        filterPrefEditor.commit();
-        setResult(Activity.RESULT_CANCELED, null);
-        finish();
+    private void filter() {
+        // TODO: Get an ACTUAL list of objects to filter
+        List<Place> objects = new ArrayList<>();
+        int typePos = filterSelections.get(TYPE);
+
+        List<Place> result = objects.stream()
+                .filter(p -> checkType(typePos, p))
+                .filter().collect(Collectors.toList());
+
+        // TODO: Add call to method in MainActivity
+    }
+
+    private boolean checkType(int pos, Place p) {
+        switch(pos) {
+            case 0:
+                return true;
+            case 1:
+                return p instanceof Hospital;
+            case 2:
+                return p instanceof Pharmacy;
+            default:
+                return false;
+        }
     }
 
 }

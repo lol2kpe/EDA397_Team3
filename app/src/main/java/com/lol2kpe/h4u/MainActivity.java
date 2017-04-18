@@ -36,7 +36,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
-    static final int PICK_FILTER_OPTIONS_REQUEST = 1;
     private static String url = "http://lol2kpe.asuscomm.com/hospitals";
     Location location;
     Location locationMaps;
@@ -44,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FloatingActionButton FAB;
     private GoogleMap mMap;
     private List<Hospital> hospitals;
+
     final GsonRequest gsonRequest = new GsonRequest(url, Hospital[].class, null, new Response.Listener<Hospital[]>() {
 
         @Override
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             switch (view.getId()) {
                 case R.id.filter:
                     Intent intent = new Intent(MainActivity.this, FilterActivity.class);
-                    startActivityForResult(intent, PICK_FILTER_OPTIONS_REQUEST);
+                    startActivity(intent);
             }
         }
     };
@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+
+        // Replace the app bar with a custom toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -84,9 +86,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         navigationView.setCheckedItem(R.id.home);
 
+        // Create a Floating Action Button (FAB) which starts the FilterActivity
         FAB = (FloatingActionButton) findViewById(R.id.filter);
         FAB.setOnClickListener(FABonClickListener);
 
@@ -169,65 +171,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mMap.clear();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request MainActivity is responding to
-        if (requestCode == PICK_FILTER_OPTIONS_REQUEST) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                setMarkers();
-            }
-        }
-    }
-
-    /**
-     * Filter the selections made in the FilterActivity.
-     */
-    public void setMarkers() {
-        SharedPreferences filterPrefs = getSharedPreferences(
-                getResources().getString(R.string.filter_preferences), MODE_PRIVATE);
-        String type = filterPrefs.getString(
-                getResources().getString(R.string.filter_preferences_type), "");
-
-        if (type.equals("Hospitals")) {
-            if (hospitals.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "No hospitals found",
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                removeAllMarkers();
-                Iterator<Hospital> iterator = hospitals.iterator();
-                while (iterator.hasNext()) {
-                    Hospital item = iterator.next();
-                    Toast.makeText(getApplicationContext(), item.getName()
-                                    + " Lat: " + item.getLatitude()
-                                    + " Long: " + item.getLongitude(),
-                            Toast.LENGTH_SHORT).show();
-                    addMapMarker(MarkerOptionFactory.getMarkerOptions(item));
-                }
-                Toast.makeText(getApplicationContext(), "Showing all hospitals",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        } else if (type.equals("Dentists")) {
-            removeAllMarkers();
-            Toast.makeText(getApplicationContext(), "Could not find any dentists",
-                    Toast.LENGTH_SHORT).show();
-        } else {
-            removeAllMarkers();
-            Iterator<Hospital> iterator = hospitals.iterator();
-            while (iterator.hasNext()) {
-                Hospital item = iterator.next();
-                Toast.makeText(getApplicationContext(), item.getName()
-                                + " Lat: " + item.getLatitude()
-                                + " Long: " + item.getLongitude(),
-                        Toast.LENGTH_SHORT).show();
-                addMapMarker(MarkerOptionFactory.getMarkerOptions(item));
-            }
-            Toast.makeText(getApplicationContext(), "Showing all",
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-
     // fetches data from server
     public void fetchData() {
         Hospital sahlgrenska = new Hospital()
@@ -247,4 +190,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
     }
+
 }

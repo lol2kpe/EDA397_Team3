@@ -1,33 +1,52 @@
 <resources>
     <string name="app_name">h4u</string>
-    <string name="activity_filter_title">Filter</string>
-
-    <!-- Main activity toolbar  -->
-    <string name="toolbar_filter">Filter</string>
 
     <!-- Filter activity toolbar -->
     <string name="toolbar_clear_filter">Clear filter</string>
 
-    <!-- Filter activity strings -->
+    <!-- Filter activity -->
+    <string name="activity_filter_title">Filter</string>
+    <string name="activity_filter_subtitle">Set filter options</string>
     <string name="activity_filter_cancel">CANCEL</string>
-    <string name="activity_filter_set">SET</string>
-    <!-- Filter type option -->
-    <string name="activity_filter_option_type">Type</string>
-    <string-array name="activity_filter_option_type_options">
-        <item>All</item>
-        <item>Hospitals</item>
-        <item>Dentists</item>
-    </string-array>
-
-    <!-- Filter preferences xml-file name -->
-    <string name="filter_preferences">filter_preferences</string>
-    <string name="filter_preferences_type">type</string>
+    <string name="activity_filter_set">SET FILTER</string>
+        <!-- Filter preferences xml-file -->
+        <string name="filter_preferences">H4UFilterPrefs</string>
+        <string name="filter_preferences_type">type</string>
+        <string name="filter_preferences_openinghours">openinghours</string>
+        <string name="filter_preferences_rating">rating</string>
+        <!-- Filter type option -->
+        <string name="activity_filter_type">Type</string>
+        <string name="type_all">All</string>
+        <string name="type_healthcenters">Hospital</string>
+        <string name="type_pharmacies">Pharmacy</string>
+        <string-array name="activity_filter_type_options">
+            <item>@string/type_all</item>
+            <item>@string/type_healthcenters</item>
+            <item>@string/type_pharmacies</item>
+        </string-array>
+        <!-- Filter opening hours option -->
+        <string name="activity_filter_openinghours">Opening hours</string>
+        <string name="openinghours_all">All</string>
+        <string name="openinghours_opennow">Open now</string>
+        <string name="openinghours_tomorrow">Tomorrow</string>
+        <string-array name="activity_filter_openinghours_options">
+            <item>@string/openinghours_all</item>
+            <item>@string/openinghours_opennow</item>
+            <item>@string/openinghours_tomorrow</item>
+        </string-array>
+        <!-- Filter rating option -->
+        <string name="activity_filter_rating">Minimum rating</string>
+        <string-array name="activity_filter_rating_options">
+            <item>1</item>
+            <item>2</item>
+            <item>3</item>
+            <item>4</item>
+            <item>5</item>
+        </string-array>
 
     <string name="title_activity_drawer">DrawerActivity</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_maps">Map</string>
