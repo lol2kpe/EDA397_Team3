@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +40,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     static final int FILTER_ACTIVITY_REQUEST = 1;
 
-    private static String url = "http://lol2kpe.asuscomm.com/hospitals";
+    private static String url = "http://lol2kpe.asuscomm.com:3001/hospitals.json";
+
     Location location;
     Location locationMaps;
     LatLng myLocation;
@@ -47,17 +49,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private GoogleMap mMap;
     private List<Hospital> hospitals;
 
-    final GsonRequest gsonRequest = new GsonRequest(url, Hospital[].class, null, new Response.Listener<Hospital[]>() {
+    private List<Place> places;
+    final GsonRequest gsonRequest = new GsonRequest(url, Place[].class, null, new Response.Listener<Place[]>() {
 
         @Override
-        public void onResponse(Hospital[] hospitalsResponse) {
-            hospitals = Arrays.asList(hospitalsResponse);
-            Toast.makeText(MainActivity.this, "Hospitals refreshed", Toast.LENGTH_SHORT).show();
+        public void onResponse(Place[] placesResponse) {
+            places = Arrays.asList(placesResponse);
+            Toast.makeText(MainActivity.this, "Places are refreshed", Toast.LENGTH_SHORT).show();
         }
     }, new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError volleyError) {
-            //if(volleyError != null) Log.e("MainActivity", volleyError.getMessage());
+            if(volleyError != null) Log.e("MainActivity", volleyError.getMessage());
             Toast.makeText(MainActivity.this, "Database error", Toast.LENGTH_SHORT).show();
         }
     });
@@ -196,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // fetches data from server
     public void fetchData() {
+
         Hospital sahlgrenska = new Hospital()
                 .setName("Sahlgrenska")
                 .setId(10)
@@ -211,7 +215,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         hospitals.add(sahlgrenska);
         hospitals.add(lundby);
 
-        //VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
+        // uncomment this, and database should work
+       // VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
     }
 
 }
