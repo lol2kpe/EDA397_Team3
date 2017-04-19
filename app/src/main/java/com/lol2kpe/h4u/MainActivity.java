@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             switch (view.getId()) {
                 case R.id.filter:
 
+                    // TODO: Remove once the database/place arraylist works
+
                     ArrayList<Place> tempPlaces = new ArrayList<>();
 
                     tempPlaces.add(new Hospital()
