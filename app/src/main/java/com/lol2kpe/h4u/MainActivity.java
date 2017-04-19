@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
@@ -102,23 +103,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
                     Intent intent = new Intent(MainActivity.this, FilterActivity.class);
-                    intent.putExtra("content", new ArrayList<>(tempPlaces));
+                    intent.putExtra(getResources().getString(R.string.object_data),
+                            new ArrayList<>(tempPlaces));
                     startActivityForResult(intent, FILTER_ACTIVITY_REQUEST);
             }
         }
     };
 
     @Override
+    @SuppressWarnings({"unchecked"})
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check if result comes from FilterActivity
         if (requestCode == FILTER_ACTIVITY_REQUEST) {
             // Check if request was successful/had results
-            if(resultCode == RESULT_OK && data != null) {
-                ArrayList<Place> objects = (ArrayList<Place>)data.getSerializableExtra("result");
-                addMapMarkers(objects);
-                Toast.makeText(this, "Showing results", Toast.LENGTH_SHORT).show();
-            } else {
-               Toast.makeText(this, "No results", Toast.LENGTH_SHORT).show();
+            if(resultCode == RESULT_OK) {
+                if(checkFilteredData(data)) {
+                    ArrayList<Place> objects = (ArrayList<Place>) data
+                            .getSerializableExtra(getResources().getString(R.string.filtered_data));
+                    if (objects.isEmpty()) {
+                        Toast.makeText(this, getResources().getString(R.string.no_results),
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        addMapMarkers(objects);
+                        Toast.makeText(this, getResources().getString(R.string.results),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         }
     }
@@ -229,6 +239,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void removeAllMarkers() {
         mMap.clear();
+    }
+
+    private boolean checkFilteredData(Intent intent) {
+        // Get a map of extended data from the intent
+        Bundle extras = intent.getExtras();
+        // Check if the data from MainActivity is null
+        if (extras == null) {
+            Log.w("NullIntentData", "The intent data received in MainActivity is null");
+            return false;
+        }
+        // Check if the data from MainActivity is empty
+        if(extras.isEmpty()) {
+            Log.w("EmptyIntentData", "The intent data received in MainActivity is empty. " +
+                    "Empty bundle: " + extras.isEmpty());
+            return false;
+        }
+        // Check if the name of the data is the same as the expected name
+        if(!extras.containsKey(getResources().getString(R.string.filtered_data))) {
+            Set keys = extras.keySet();
+            StringBuilder sb = new StringBuilder();
+            Iterator i = keys.iterator();
+            while (i.hasNext()) {
+                String key = (String)i.next();
+                sb.append(" " + key);
+            }
+            Log.e("IntentDataKeyMissing", "Could not find the needed intent data for the" +
+                    " FilterActivity. Expected data name: " +
+                    getResources().getString(R.string.filtered_data) +
+                    ", Found data names: " + sb.toString());
+            return false;
+        }
+        return true;
     }
 
     // fetches data from server

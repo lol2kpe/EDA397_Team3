@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import com.lol2kpe.h4u.data.model.Place;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Created by Jonathan Granström
@@ -154,12 +156,9 @@ public class FilterActivity extends AppCompatActivity {
      * value currently selected/displayed by the SpinnerObjects.
      */
     private void storeFilterValues() {
-        filterSelections.put(
-                TYPE, spinnerType.getSelectedItemPosition());
-        filterSelections.put(
-                OPENING_HOUR, spinnerOpeningHours.getSelectedItemPosition());
-        filterSelections.put(
-                RATING, spinnerRating.getSelectedItemPosition());
+        filterSelections.put(TYPE, spinnerType.getSelectedItemPosition());
+        filterSelections.put(OPENING_HOUR, spinnerOpeningHours.getSelectedItemPosition());
+        filterSelections.put(RATING, spinnerRating.getSelectedItemPosition());
     }
 
     /**
@@ -177,25 +176,69 @@ public class FilterActivity extends AppCompatActivity {
      * Iterator loops for filter alternatives removes invalid objects. The method sends the
      * filtered return list of objects to the returnData method.
      */
+    @SuppressWarnings({"unchecked"})
     private void filter() {
+        // Check the received data from MainActivity
+        if(checkIntentData()) {
 
-        ArrayList<Place> returnList = (ArrayList<Place>)getIntent().getSerializableExtra("content");
-        Iterator<Place> iterator = returnList.iterator();
+            Intent intent = getIntent();
+            ArrayList<Place> returnList = (ArrayList<Place>) intent
+                    .getSerializableExtra(getResources().getString(R.string.object_data));
 
-        while(iterator.hasNext()) {
-            Place item = iterator.next();
-            if(!checkType(filterSelections.get(TYPE), item))
-                iterator.remove();
+            // Type filter
+            Iterator<Place> iterator = returnList.iterator();
+            while (iterator.hasNext()) {
+                Place item = iterator.next();
+                if (!checkType(filterSelections.get(TYPE), item))
+                    iterator.remove();
+            }
+
+            // Rating filter
+            iterator = returnList.iterator();
+            while (iterator.hasNext()) {
+                Place item = iterator.next();
+                if (!checkRating(filterSelections.get(RATING), item))
+                    iterator.remove();
+            }
+            returnData(returnList);
         }
+    }
 
-        iterator = returnList.iterator();
-        while(iterator.hasNext()) {
-            Place item = iterator.next();
-            if(!checkRating(filterSelections.get(RATING), item))
-                iterator.remove();
+    private boolean checkIntentData() {
+        // Get the intent that started the FilterActivity
+        Intent intent = getIntent();
+        // Get a map of extended data from the intent
+        Bundle extras = intent.getExtras();
+        // Check if the data from MainActivity is null
+        if (extras == null) {
+            Log.e("NullIntentData", "The intent data received in FilterActivity is null");
+            setResult(Activity.RESULT_CANCELED);
+            finish();
         }
-
-        returnData(returnList);
+        // Check if the data from MainActivity is empty
+        if(extras.isEmpty()) {
+            Log.e("EmptyIntentData", "The intent data received in FilterActivity is empty. " +
+                    "Empty bundle: " + extras.isEmpty());
+            setResult(Activity.RESULT_CANCELED);
+            finish();
+        }
+        // Check if the name of the data is the same as the expected name
+        if(!extras.containsKey(getResources().getString(R.string.object_data))) {
+            Set keys = extras.keySet();
+            StringBuilder sb = new StringBuilder();
+            Iterator i = keys.iterator();
+            while (i.hasNext()) {
+                String key = (String)i.next();
+                sb.append(" " + key);
+            }
+            Log.e("IntentDataKeyMissing", "Could not find the needed intent data for the" +
+                    " FilterActivity. Expected data name: " +
+                    getResources().getString(R.string.object_data) +
+                    ", Found data names: " + sb.toString());
+            setResult(Activity.RESULT_CANCELED);
+            finish();
+        }
+        return true;
     }
 
     /**
@@ -261,13 +304,8 @@ public class FilterActivity extends AppCompatActivity {
      */
     private void returnData(ArrayList<Place> returnData) {
         returnIntent = new Intent();
-        if(!returnData.isEmpty()) {
-            returnIntent.putExtra("result", returnData);
-            setResult(Activity.RESULT_OK, returnIntent);
-            finish();
-        } else {
-            setResult(Activity.RESULT_CANCELED, returnIntent);
-            finish();
-        }
+        returnIntent.putExtra(getResources().getString(R.string.filtered_data), returnData);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 }
