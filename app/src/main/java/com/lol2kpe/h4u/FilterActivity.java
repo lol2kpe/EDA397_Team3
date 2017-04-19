@@ -103,7 +103,7 @@ public class FilterActivity extends AppCompatActivity {
      * for the FilterActivity. The method then calls the the original onCreateOptionsMenu
      * to add the standard menu items for the FilterActivity (e.g., activity title).
      *
-     * @param menu  The Menu object for the FilterActivity
+     * @param menu  The Menu object for the FilterActivity.
      * @return      The original onCreateOptionsMenu method, which adds default menu items to
      *              the FilterActivity menu.
      */
@@ -124,7 +124,7 @@ public class FilterActivity extends AppCompatActivity {
      * If the interacted item isn't part of the additionally added menu content,
      * the original onOptionsItemSelected method is called to handle that event.
      *
-     * @param item  The menu item in the FilterActivity menu which has been interacted with
+     * @param item  The menu item in the FilterActivity menu which has been interacted with.
      * @return      The original onOptionsItemSelected method, which handles interaction with
      *              default MenuItems.
      */
@@ -172,6 +172,11 @@ public class FilterActivity extends AppCompatActivity {
         spinnerRating.setSelection(filterSelections.get(RATING));
     }
 
+    /**
+     * The method retrives the ArrayList of Place-objects from the MainActivity Intent's extra data.
+     * Iterator loops for filter alternatives removes invalid objects. The method sends the
+     * filtered return list of objects to the returnData method.
+     */
     private void filter() {
 
         ArrayList<Place> returnList = (ArrayList<Place>)getIntent().getSerializableExtra("content");
@@ -190,17 +195,20 @@ public class FilterActivity extends AppCompatActivity {
                 iterator.remove();
         }
 
-        returnIntent = new Intent();
-        if(!returnList.isEmpty()) {
-            returnIntent.putExtra("result", returnList);
-            setResult(Activity.RESULT_OK, returnIntent);
-            finish();
-        } else {
-            setResult(Activity.RESULT_CANCELED, returnIntent);
-            finish();
-        }
+        returnData(returnList);
     }
 
+    /**
+     * The method takes the selected item position of the "Type" spinner and checks
+     * the class of the selected position against the class of the Place object.
+     * The method returns true if the class of the Place object is equal to the class
+     * of the selected rating class of the "Type" spinner.
+     *
+     * @param pos   The current item position of the "Type" spinner.
+     * @param p     The current Place object.
+     * @return      True if the class type of the Place object is equal the current type class
+     *              of the selected spinner item, else returns false.
+     */
     private boolean checkType(int pos, Place p) {
         switch(pos) {
             case 0:
@@ -214,6 +222,18 @@ public class FilterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * The method takes the selected item position of the "Rating" spinner and checks
+     * the rating value of the selected position against the value of the Place object.
+     * The method returns true if the rating value of the Place object is equal or higher
+     * to the rating value of the selected rating value of the "Rating" spinner.
+     *
+     * @param pos   The current item position of the "Rating" spinner.
+     * @param p     The current Place object.
+     * @return      True if the rating value of the Place object is equal or higher than
+     *              the current rating value of the selected rating value of the "Rating"
+     *              spinner, else returns false.
+     */
     private boolean checkRating(int pos, Place p) {
         switch(pos) {
             case 0:
@@ -231,30 +251,23 @@ public class FilterActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    private void filter() {
-        // TODO: Get an ACTUAL list of objects to filter
-        List<Place> objects = new ArrayList<>();
-        int typePos = filterSelections.get(TYPE);
-
-        List<Place> result = objects.stream()
-                .filter(p -> checkType(typePos, p))
-                .filter().collect(Collectors.toList());
-
-        // TODO: Add call to method in MainActivity
-    }
-
-    private boolean checkType(int pos, Place p) {
-        switch(pos) {
-            case 0:
-                return true;
-            case 1:
-                return p instanceof Hospital;
-            case 2:
-                return p instanceof Pharmacy;
-            default:
-                return false;
+    /**
+     * The method checks if the ArrayList is empty. If it isn't, it creates an Intent for
+     * the MainActivity that contains the ArrayList of Place objects, sets the result to
+     * "OK" and ends the FilterActivity. Else, it returns an Intent with no extra data
+     * and sets the result to "Canceled" and ends the FilterActivity.
+     *
+     * @param returnData An ArrayList of Place objects
+     */
+    private void returnData(ArrayList<Place> returnData) {
+        returnIntent = new Intent();
+        if(!returnData.isEmpty()) {
+            returnIntent.putExtra("result", returnData);
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
+        } else {
+            setResult(Activity.RESULT_CANCELED, returnIntent);
+            finish();
         }
     }
-    */
 }

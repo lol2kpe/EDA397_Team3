@@ -28,6 +28,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.lol2kpe.h4u.data.model.Hospital;
+import com.lol2kpe.h4u.data.model.Pharmacy;
 import com.lol2kpe.h4u.data.model.Place;
 import com.lol2kpe.h4u.util.markers.MarkerOptionFactory;
 
@@ -69,8 +70,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.filter:
+
+                    ArrayList<Place> tempPlaces = new ArrayList<>();
+
+                    tempPlaces.add(new Hospital()
+                            .setName("Sahlgrenska")
+                            .setRating(5)
+                            .setLatitude(57.703830518)
+                            .setLongitude(11.93582959)
+                    );
+                    tempPlaces.add(new Hospital()
+                            .setName("Lundby")
+                            .setRating(3)
+                            .setLatitude(57.707663836)
+                            .setLongitude(11.90916303)
+                    );
+                    tempPlaces.add(new Pharmacy()
+                            .setName("Kungens Apotek")
+                            .setRating(4)
+                            .setLatitude(57.707833836)
+                            .setLongitude(11.97916303)
+                    );
+                    tempPlaces.add(new Pharmacy()
+                            .setName("Kronans Apotek")
+                            .setRating(2)
+                            .setLatitude(57.687833836)
+                            .setLongitude(11.97916303)
+                    );
+
+
                     Intent intent = new Intent(MainActivity.this, FilterActivity.class);
-                    intent.putExtra("objects", new ArrayList<>(places));
+                    intent.putExtra("content", new ArrayList<>(tempPlaces));
                     startActivityForResult(intent, FILTER_ACTIVITY_REQUEST);
             }
         }
@@ -81,11 +111,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Check if result comes from FilterActivity
         if (requestCode == FILTER_ACTIVITY_REQUEST) {
             // Check if request was successful/had results
-            if(resultCode == RESULT_OK) {
-                addMapMarker((ArrayList<Place>)getIntent()
-                        .getSerializableExtra("result"));
+            if(resultCode == RESULT_OK && data != null) {
+                ArrayList<Place> objects = (ArrayList<Place>)data.getSerializableExtra("result");
+                addMapMarkers(objects);
+                Toast.makeText(this, "Showing results", Toast.LENGTH_SHORT).show();
             } else {
-               Toast.makeText(this, "No objects found", Toast.LENGTH_LONG).show();
+               Toast.makeText(this, "No results", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -184,7 +215,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mMap.setMyLocationEnabled(true);
     }
 
-    private void addMapMarker(ArrayList<Place> objects) {
+    private void addMapMarkers(ArrayList<Place> objects) {
         removeAllMarkers();
         for (Place place : objects) {
             MarkerOptions marker = MarkerOptionFactory.getMarkerOptions(place);
