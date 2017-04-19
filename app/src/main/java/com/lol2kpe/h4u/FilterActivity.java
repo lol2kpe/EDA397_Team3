@@ -18,7 +18,6 @@ import com.lol2kpe.h4u.data.model.Place;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by Jonathan Granström
@@ -174,30 +173,30 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     private void filter() {
-        ArrayList<Place> returnList = (ArrayList<Place>)getIntent().getSerializableExtra("objects");
 
+        ArrayList<Place> returnList = (ArrayList<Place>)getIntent().getSerializableExtra("content");
         Iterator<Place> iterator = returnList.iterator();
 
         while(iterator.hasNext()) {
             Place item = iterator.next();
-            if(checkType(filterSelections.get(TYPE), item))
-                returnList.add(item);
+            if(!checkType(filterSelections.get(TYPE), item))
+                iterator.remove();
         }
 
         iterator = returnList.iterator();
         while(iterator.hasNext()) {
             Place item = iterator.next();
-            if(checkRating(filterSelections.get(RATING), item))
+            if(!checkRating(filterSelections.get(RATING), item))
                 iterator.remove();
         }
 
-        returnIntent = new Intent(this, MainActivity.class);
+        returnIntent = new Intent();
         if(!returnList.isEmpty()) {
             returnIntent.putExtra("result", returnList);
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
         } else {
-            setResult(Activity.RESULT_CANCELED);
+            setResult(Activity.RESULT_CANCELED, returnIntent);
             finish();
         }
     }

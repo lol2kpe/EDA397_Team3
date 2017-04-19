@@ -6,10 +6,10 @@ import xyz.samhal.openinghours.OpeningHours;
  * Created by sam on 4/6/17.
  */
 
-public abstract class Place {
+public abstract class Place implements java.io.Serializable {
     protected int rating = 0;
     protected String address = "";
-    protected OpeningHours openingHours = new OpeningHours();
+    protected transient OpeningHours openingHours = new OpeningHours();
     protected double latitude = 0;
     protected double longitude = 0;
     protected String phoneNumber = "";
