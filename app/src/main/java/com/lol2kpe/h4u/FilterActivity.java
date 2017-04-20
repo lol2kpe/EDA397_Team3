@@ -12,11 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.lol2kpe.h4u.data.model.Hospital;
-import com.lol2kpe.h4u.data.model.Pharmacy;
 import com.lol2kpe.h4u.data.model.Place;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -27,20 +26,18 @@ import java.util.Set;
  * Date: 2017-04-02
  */
 
+@SuppressWarnings("ConstantConditions")
 public class FilterActivity extends AppCompatActivity {
 
     private final String TYPE = "type";
     private final String OPENING_HOUR = "openingHour";
     private final String RATING = "rating";
 
-    private final int DEFAULT_TYPE_VALUE = 0;
-    private final int DEFAULT_OPENING_HOURS_VALUE = 0;
-    private final int DEFAULT_RATING_VALUE = 1;
-
     public static HashMap <String, Integer> filterSelections;
     private Spinner spinnerType, spinnerOpeningHours, spinnerRating;
 
     Intent returnIntent;
+    ArrayList<Place> returnList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +46,9 @@ public class FilterActivity extends AppCompatActivity {
 
         // Enable the up action to the toolbar (the "<-" arrow)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Get the list of Place objects from MainActivity
+        returnList = getIntentData();
 
         // Get the buttons and set their onClickListeners and functionality
         Button cancelButton = (Button)findViewById(R.id.button_cancel);
@@ -61,30 +61,11 @@ public class FilterActivity extends AppCompatActivity {
         setButton.setOnClickListener(view -> {
             storeFilterValues();
             filter();
+            returnData();
         });
 
-        // Get the spinner objects and set their
-        spinnerType = (Spinner)findViewById(R.id.spinner_type);
-        spinnerOpeningHours = (Spinner)findViewById(R.id.spinner_openinghours);
-        spinnerRating = (Spinner)findViewById(R.id.spinner_rating);
-
-        // Create Adapter objects with data items for the Spinner objects
-        ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource(this,
-                R.array.activity_filter_type_options, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> adapterOpeningHours = ArrayAdapter.createFromResource(this,
-                R.array.activity_filter_openinghours_options, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> adapterRating = ArrayAdapter.createFromResource(this,
-                R.array.activity_filter_rating_options, android.R.layout.simple_spinner_item);
-
-        // Set the View for the items in the data set in the Adapter objects
-        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterOpeningHours.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterRating.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Set the Adapter objects to their respective Spinner objects
-        spinnerType.setAdapter(adapterType);
-        spinnerOpeningHours.setAdapter(adapterOpeningHours);
-        spinnerRating.setAdapter(adapterRating);
+        // Create filter options for the activity
+        createFilterOptions();
 
         // If the app/activity is started for the first time, create a HashMap to store values
         if(filterSelections == null) {
@@ -142,23 +123,45 @@ public class FilterActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * The method sets all the selections of the SpinnerObjects to their default values.
-     */
-    private void setDefaultFilterValues() {
-        spinnerType.setSelection(DEFAULT_TYPE_VALUE);
-        spinnerOpeningHours.setSelection(DEFAULT_OPENING_HOURS_VALUE);
-        spinnerRating.setSelection(DEFAULT_RATING_VALUE);
-    }
+    private void createFilterOptions() {
+        // Get the spinner objects
+        spinnerType = (Spinner)findViewById(R.id.spinner_type);
+        spinnerOpeningHours = (Spinner)findViewById(R.id.spinner_openinghours);
+        spinnerRating = (Spinner)findViewById(R.id.spinner_rating);
 
-    /**
-     * The method overwrites all values in the existing HashMap with their respective
-     * value currently selected/displayed by the SpinnerObjects.
-     */
-    private void storeFilterValues() {
-        filterSelections.put(TYPE, spinnerType.getSelectedItemPosition());
-        filterSelections.put(OPENING_HOUR, spinnerOpeningHours.getSelectedItemPosition());
-        filterSelections.put(RATING, spinnerRating.getSelectedItemPosition());
+        ArrayList<String> types = new ArrayList<>();
+        ArrayList<String> ratings = new ArrayList<>();
+        types.add("All");
+
+        if(!returnList.isEmpty()) {
+            for (Place p : returnList) {
+                String type = p.getClass().getSimpleName();
+                String rating = Integer.toString(p.getRating());
+                if (!types.contains(type))
+                    types.add(type);
+                if (!ratings.contains(rating))
+                    ratings.add(rating);
+            }
+            Collections.sort(types);
+            Collections.sort(ratings);
+        }
+        // Create Adapter objects with data items for the Spinner objects
+        ArrayAdapter<String> adapterType = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, types.toArray(new String[types.size()]));
+        ArrayAdapter<String> adapterRating = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, ratings.toArray(new String[types.size()]));
+        ArrayAdapter<CharSequence> adapterOpeningHours = ArrayAdapter.createFromResource(this,
+                R.array.activity_filter_openinghours_options, android.R.layout.simple_spinner_item);
+
+        // Set the View for the items in the data set in the Adapter objects
+        adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterOpeningHours.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterRating.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Set the Adapter objects to their respective Spinner objects
+        spinnerType.setAdapter(adapterType);
+        spinnerOpeningHours.setAdapter(adapterOpeningHours);
+        spinnerRating.setAdapter(adapterRating);
     }
 
     /**
@@ -172,39 +175,26 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     /**
-     * The method retrives the ArrayList of Place-objects from the MainActivity Intent's extra data.
-     * Iterator loops for filter alternatives removes invalid objects. The method sends the
-     * filtered return list of objects to the returnData method.
+     * The method sets all the selections of the SpinnerObjects to their default values.
      */
-    @SuppressWarnings({"unchecked"})
-    private void filter() {
-        // Check the received data from MainActivity
-        checkIntentData();
+    private void setDefaultFilterValues() {
+        spinnerType.setSelection(0);
+        spinnerOpeningHours.setSelection(0);
+        spinnerRating.setSelection(0);
+    }
 
-        Intent intent = getIntent();
-        ArrayList<Place> returnList = (ArrayList<Place>) intent
-                .getSerializableExtra(getResources().getString(R.string.object_data));
-
-        // Type filter
-        Iterator<Place> iterator = returnList.iterator();
-        while (iterator.hasNext()) {
-            Place item = iterator.next();
-            if (!checkType(filterSelections.get(TYPE), item))
-                iterator.remove();
-        }
-
-        // Rating filter
-        iterator = returnList.iterator();
-        while (iterator.hasNext()) {
-            Place item = iterator.next();
-            if (!checkRating(filterSelections.get(RATING), item))
-                iterator.remove();
-        }
-        returnData(returnList);
+    /**
+     * The method overwrites all values in the existing HashMap with their respective
+     * value currently selected/displayed by the SpinnerObjects.
+     */
+    private void storeFilterValues() {
+        filterSelections.put(TYPE, spinnerType.getSelectedItemPosition());
+        filterSelections.put(OPENING_HOUR, spinnerOpeningHours.getSelectedItemPosition());
+        filterSelections.put(RATING, spinnerRating.getSelectedItemPosition());
     }
 
     @SuppressWarnings({"unchecked"})
-    private void checkIntentData() {
+    private ArrayList<Place> getIntentData() {
         // Get the intent that started the FilterActivity
         Intent intent = getIntent();
         // Get a map of extended data from the intent
@@ -227,17 +217,45 @@ public class FilterActivity extends AppCompatActivity {
                     " FilterActivity. Expected data name: " +
                     getResources().getString(R.string.object_data) +
                     ", Found data names: " + sb.toString());
-            returnData(new ArrayList<>());
+            return new ArrayList<>();
         }
         // Check if the data from MainActivity is empty
         if(extras.isEmpty() ||
                 ((ArrayList<Place>)getIntent().getSerializableExtra(getResources()
                         .getString(R.string.object_data))).isEmpty()) {
             Log.w("EmptyIntentData", "The intent data received in FilterActivity is empty. "
-                    + "Empty bundle: " + extras.isEmpty()
-                    + " Empty data: " + ((ArrayList<Place>)getIntent().getSerializableExtra(getResources()
+                    + "Empty bundle: " + extras.isEmpty() + " Empty data: "
+                    + ((ArrayList<Place>)getIntent().getSerializableExtra(getResources()
                     .getString(R.string.object_data))).isEmpty());
-            returnData(new ArrayList<>());
+            return new ArrayList<>();
+        }
+        return (ArrayList<Place>) intent
+                .getSerializableExtra(getResources().getString(R.string.object_data));
+    }
+
+    /**
+     * The method retrives the ArrayList of Place-objects from the MainActivity Intent's extra data.
+     * Iterator loops for filter alternatives removes invalid objects. The method sends the
+     * filtered return list of objects to the returnData method.
+     */
+    @SuppressWarnings({"unchecked"})
+    private void filter() {
+        if(!returnList.isEmpty()) {
+            // Type filter
+            Iterator<Place> iterator = returnList.iterator();
+            while (iterator.hasNext()) {
+                Place item = iterator.next();
+                if (!checkType(item))
+                    iterator.remove();
+            }
+
+            // Rating filter
+            iterator = returnList.iterator();
+            while (iterator.hasNext()) {
+                Place item = iterator.next();
+                if (!checkRating(item))
+                    iterator.remove();
+            }
         }
     }
 
@@ -247,12 +265,19 @@ public class FilterActivity extends AppCompatActivity {
      * The method returns true if the class of the Place object is equal to the class
      * of the selected rating class of the "Type" spinner.
      *
-     * @param pos   The current item position of the "Type" spinner.
      * @param p     The current Place object.
      * @return      True if the class type of the Place object is equal the current type class
      *              of the selected spinner item, else returns false.
      */
-    private boolean checkType(int pos, Place p) {
+    private boolean checkType(Place p) {
+
+        Log.i("Filter", "Type: " + p.getClass().getSimpleName() + " Selected item: "
+                + spinnerType.getSelectedItem().toString().equals("All"));
+
+        return (spinnerType.getSelectedItem().toString().equals("All") ||
+                spinnerType.getSelectedItem().toString().equals(p.getClass().getSimpleName()));
+
+        /*
         switch(pos) {
             case 0:
                 return true;
@@ -263,6 +288,7 @@ public class FilterActivity extends AppCompatActivity {
             default:
                 return false;
         }
+        */
     }
 
     /**
@@ -271,13 +297,20 @@ public class FilterActivity extends AppCompatActivity {
      * The method returns true if the rating value of the Place object is equal or higher
      * to the rating value of the selected rating value of the "Rating" spinner.
      *
-     * @param pos   The current item position of the "Rating" spinner.
      * @param p     The current Place object.
      * @return      True if the rating value of the Place object is equal or higher than
      *              the current rating value of the selected rating value of the "Rating"
      *              spinner, else returns false.
      */
-    private boolean checkRating(int pos, Place p) {
+    private boolean checkRating(Place p) {
+
+        Log.i("Filter", "Rating: " + Integer.toString(p.getRating()) + " Selected rating: "
+        + spinnerRating.getSelectedItem().toString().equals(Integer.toString(p.getRating())));
+
+        return (spinnerRating.getSelectedItem().toString().equals("All") ||
+                (p.getRating() >= Integer.parseInt(spinnerRating.getSelectedItem().toString())));
+
+        /*
         switch(pos) {
             case 0:
                 return p.getRating() >= 1;
@@ -292,16 +325,15 @@ public class FilterActivity extends AppCompatActivity {
             default:
                 return false;
         }
+        */
     }
 
     /**
      * Returns an ArrayList of filtered Place objects to the MainActivity.
-     *
-     * @param returnData An ArrayList of Place objects
      */
-    private void returnData(ArrayList<Place> returnData) {
-        returnIntent = new Intent();
-        returnIntent.putExtra(getResources().getString(R.string.filtered_data), returnData);
+    private void returnData() {
+        returnIntent = new Intent(this, MainActivity.class);
+        returnIntent.putExtra(getResources().getString(R.string.filtered_data), returnList);
         setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
