@@ -39,7 +39,11 @@ ID | User story
 44 | As a user, I want a login activity, so that I can create a profile or validate my credentials
 43 | As a user, I want to see and change my search radius, so that I can see hospitals in my area
 
-
+### Enhancement
+ID | Enhancement
+----------------|----------------
+49 | As a developer, I want to query the database by filter options, so that I can find the relevant objects to show the user
+50 | As a developer, I want a better class structure, so that it is easier to filter and search for relevant objects
 
 ### Tasks
 ID | Tasks
