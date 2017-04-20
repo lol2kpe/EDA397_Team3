@@ -44,6 +44,7 @@ ID | User story
 ### Tasks
 ID | Tasks
 ----------------|----------------
+48 | Create a "populate map"-function
 51 | User profile creation and login
 54 | Add more services to service class
 55 | Fix database fetch data
