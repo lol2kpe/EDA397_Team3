@@ -2,7 +2,7 @@ package com.lol2kpe.h4u.data.model;
 
 import xyz.samhal.openinghours.OpeningHours;
 
-public class Pharmacy extends Place {
+public class Pharmacy extends Place implements java.io.Serializable {
 
     public Pharmacy(){
         super();

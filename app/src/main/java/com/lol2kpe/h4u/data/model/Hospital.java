@@ -5,7 +5,7 @@ import java.util.Set;
 
 import xyz.samhal.openinghours.OpeningHours;
 
-public class Hospital extends Place {
+public class Hospital extends Place implements java.io.Serializable {
     private String hospitalType = "";
     private Set<Service> services = new HashSet<>();
     private Set<Employee> employees = new HashSet<>();

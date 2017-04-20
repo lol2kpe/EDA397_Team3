@@ -28,6 +28,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.lol2kpe.h4u.data.model.Hospital;
+import com.lol2kpe.h4u.data.model.Pharmacy;
 import com.lol2kpe.h4u.data.model.Place;
 import com.lol2kpe.h4u.util.markers.MarkerOptionFactory;
 
@@ -35,17 +36,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
-    static final int PICK_FILTER_OPTIONS_REQUEST = 1;
+    static final int FILTER_ACTIVITY_REQUEST = 1;
+
     private static String url = "http://lol2kpe.asuscomm.com:3001/hospitals.json";
+
     Location location;
     Location locationMaps;
     LatLng myLocation;
     FloatingActionButton FAB;
     private GoogleMap mMap;
     private List<Hospital> hospitals;
+
     private List<Place> places;
     final GsonRequest gsonRequest = new GsonRequest(url, Place[].class, null, new Response.Listener<Place[]>() {
 
@@ -66,16 +71,76 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.filter:
+
+                    // TODO: Remove once the database/place arraylist works
+
+                    ArrayList<Place> tempPlaces = new ArrayList<>();
+
+                    tempPlaces.add(new Hospital()
+                            .setName("Sahlgrenska")
+                            .setRating(5)
+                            .setLatitude(57.703830518)
+                            .setLongitude(11.93582959)
+                    );
+                    tempPlaces.add(new Hospital()
+                            .setName("Lundby")
+                            .setRating(3)
+                            .setLatitude(57.707663836)
+                            .setLongitude(11.90916303)
+                    );
+                    tempPlaces.add(new Pharmacy()
+                            .setName("Kungens Apotek")
+                            .setRating(4)
+                            .setLatitude(57.707833836)
+                            .setLongitude(11.97916303)
+                    );
+                    tempPlaces.add(new Pharmacy()
+                            .setName("Kronans Apotek")
+                            .setRating(2)
+                            .setLatitude(57.687833836)
+                            .setLongitude(11.97916303)
+                    );
+
+
                     Intent intent = new Intent(MainActivity.this, FilterActivity.class);
-                    startActivityForResult(intent, PICK_FILTER_OPTIONS_REQUEST);
+                    intent.putExtra(getResources().getString(R.string.object_data),
+                            new ArrayList<>(tempPlaces));
+                    startActivityForResult(intent, FILTER_ACTIVITY_REQUEST);
             }
         }
     };
 
     @Override
+    @SuppressWarnings({"unchecked"})
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check if result comes from FilterActivity
+        if (requestCode == FILTER_ACTIVITY_REQUEST) {
+            // Check if request was successful/had results
+            if(resultCode == RESULT_OK) {
+                if(checkFilteredData(data)) {
+                    ArrayList<Place> objects = (ArrayList<Place>) data
+                            .getSerializableExtra(getResources().getString(R.string.filtered_data));
+                    if (objects.isEmpty()) {
+                        removeAllMarkers();
+                        Toast.makeText(this, getResources().getString(R.string.no_results),
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        addMapMarkers(objects);
+                        Toast.makeText(this, getResources().getString(R.string.results),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
+
+        // Replace the app bar with a custom toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -87,9 +152,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         navigationView.setCheckedItem(R.id.home);
 
+        // Create a Floating Action Button (FAB) which starts the FilterActivity
         FAB = (FloatingActionButton) findViewById(R.id.filter);
         FAB.setOnClickListener(FABonClickListener);
 
@@ -163,72 +228,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mMap.setMyLocationEnabled(true);
     }
 
-    public void addMapMarker(MarkerOptions marker) {
-        LatLng destination = marker.getPosition();
-        mMap.addMarker(marker.position(destination).title(marker.getTitle()).icon(marker.getIcon()));
+    private void addMapMarkers(ArrayList<Place> objects) {
+        removeAllMarkers();
+        for (Place place : objects) {
+            MarkerOptions marker = MarkerOptionFactory.getMarkerOptions(place);
+            LatLng destination = marker.getPosition();
+            mMap.addMarker(marker.position(destination)
+                    .title(marker.getTitle()).icon(marker.getIcon()));
+        }
     }
 
     public void removeAllMarkers() {
         mMap.clear();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request MainActivity is responding to
-        if (requestCode == PICK_FILTER_OPTIONS_REQUEST) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                setMarkers();
-            }
+    private boolean checkFilteredData(Intent intent) {
+        // Get a map of extended data from the intent
+        Bundle extras = intent.getExtras();
+        // Check if the data from MainActivity is null
+        if (extras == null) {
+            Log.w("NullIntentData", "The intent data received in MainActivity is null");
+            return false;
         }
-    }
-
-    /**
-     * Filter the selections made in the FilterActivity.
-     */
-    public void setMarkers() {
-        SharedPreferences filterPrefs = getSharedPreferences(
-                getResources().getString(R.string.filter_preferences), MODE_PRIVATE);
-        String type = filterPrefs.getString(
-                getResources().getString(R.string.filter_preferences_type), "");
-
-        if (type.equals("Hospitals")) {
-            if (hospitals.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "No hospitals found",
-                        Toast.LENGTH_SHORT).show();
-            } else {
-                removeAllMarkers();
-                Iterator<Hospital> iterator = hospitals.iterator();
-                while (iterator.hasNext()) {
-                    Hospital item = iterator.next();
-                    Toast.makeText(getApplicationContext(), item.getName()
-                                    + " Lat: " + item.getLatitude()
-                                    + " Long: " + item.getLongitude(),
-                            Toast.LENGTH_SHORT).show();
-                    addMapMarker(MarkerOptionFactory.getMarkerOptions(item));
-                }
-                Toast.makeText(getApplicationContext(), "Showing all hospitals",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        } else if (type.equals("Dentists")) {
-            removeAllMarkers();
-            Toast.makeText(getApplicationContext(), "Could not find any dentists",
-                    Toast.LENGTH_SHORT).show();
-        } else {
-            removeAllMarkers();
-            Iterator<Hospital> iterator = hospitals.iterator();
-            while (iterator.hasNext()) {
-                Hospital item = iterator.next();
-                Toast.makeText(getApplicationContext(), item.getName()
-                                + " Lat: " + item.getLatitude()
-                                + " Long: " + item.getLongitude(),
-                        Toast.LENGTH_SHORT).show();
-                addMapMarker(MarkerOptionFactory.getMarkerOptions(item));
-            }
-            Toast.makeText(getApplicationContext(), "Showing all",
-                    Toast.LENGTH_SHORT).show();
+        // Check if the data from MainActivity is empty
+        if(extras.isEmpty()) {
+            Log.w("EmptyIntentData", "The intent data received in MainActivity is empty. " +
+                    "Empty bundle: " + extras.isEmpty());
+            return false;
         }
+        // Check if the name of the data is the same as the expected name
+        if(!extras.containsKey(getResources().getString(R.string.filtered_data))) {
+            Set keys = extras.keySet();
+            StringBuilder sb = new StringBuilder();
+            Iterator i = keys.iterator();
+            while (i.hasNext()) {
+                String key = (String)i.next();
+                sb.append(" " + key);
+            }
+            Log.e("IntentDataKeyMissing", "Could not find the needed intent data for the" +
+                    " FilterActivity. Expected data name: " +
+                    getResources().getString(R.string.filtered_data) +
+                    ", Found data names: " + sb.toString());
+            return false;
+        }
+        return true;
     }
 
     // fetches data from server
@@ -252,4 +295,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // uncomment this, and database should work
        // VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
     }
+
 }
