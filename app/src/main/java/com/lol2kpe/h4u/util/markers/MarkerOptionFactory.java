@@ -6,6 +6,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.lol2kpe.h4u.data.model.Hospital;
 import com.lol2kpe.h4u.R;
+import com.lol2kpe.h4u.data.model.Pharmacy;
+import com.lol2kpe.h4u.data.model.Place;
 import com.lol2kpe.h4u.util.userlocation.UserLocation;
 
 /**
@@ -13,16 +15,26 @@ import com.lol2kpe.h4u.util.userlocation.UserLocation;
  */
 
 public class MarkerOptionFactory {
-    public static MarkerOptions getMarkerOptions(Hospital hospital) {
-        return new MarkerOptions()
-                .title(hospital.getName())
-                .position(
-                        new LatLng(
-                                hospital.getLatitude(),
-                                hospital.getLongitude()
-                        )
-                )
-                .icon(provideHospitalIcon());
+    public static MarkerOptions getMarkerOptions(Place place) {
+        MarkerOptions options = new MarkerOptions()
+            .title(place.getName())
+            .position(
+                    new LatLng(
+                            place.getLatitude(),
+                            place.getLongitude()
+                    )
+            ).icon(getIcon(place));
+        return options;
+    }
+
+    private static BitmapDescriptor getIcon(Place place) {
+        if(place instanceof Hospital)
+            return BitmapDescriptorFactory.fromResource(R.drawable.ic_local_hospital);
+        if(place instanceof Pharmacy)
+            // TODO: Icon for Pharmacy
+            return BitmapDescriptorFactory.fromResource(R.drawable.ic_local_hospital);
+        else
+            return null;
     }
 
     public static MarkerOptions getMarkerOptions(UserLocation userLocation) {
@@ -34,9 +46,5 @@ public class MarkerOptionFactory {
                         )
                 )
                 .title(userLocation.getName());
-    }
-
-    private static BitmapDescriptor provideHospitalIcon() {
-        return BitmapDescriptorFactory.fromResource(R.drawable.ic_local_hospital);
     }
 }

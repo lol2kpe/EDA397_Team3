@@ -4,31 +4,94 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.lol2kpe.h4u.MainActivity">
 
     <RelativeLayout
-        android:id="@+id/content_area"
+        android:id="@+id/subtitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/button_area"
-        android:paddingTop="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:layout_height="72dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
         <TextView
-            android:id="@+id/text_type"
+            android:id="@+id/filter_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:text="@string/activity_filter_option_type" />
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:text="@string/activity_filter_subtitle"/>
 
-        <Spinner
-            android:id="@+id/spinner_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"/>
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/content_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button_area"
+        android:layout_below="@+id/subtitle"
+        android:baselineAligned="true"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp">
+
+        <LinearLayout
+            android:id="@+id/type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_type"
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:gravity="center"
+                android:text="@string/activity_filter_type" />
+
+            <TextView
+                android:id="@+id/text_openinghours"
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:gravity="center"
+                android:text="@string/activity_filter_openinghours"/>
+
+            <TextView
+                android:id="@+id/text_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:gravity="center"
+                android:text="@string/activity_filter_rating"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/openinghours"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/spinner_type"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"/>
+
+            <Spinner
+                android:id="@+id/spinner_openinghours"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"/>
+
+            <Spinner
+                android:id="@+id/spinner_rating"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/button_area"
@@ -43,19 +106,17 @@
             android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/button_set"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:text="@string/activity_filter_cancel"
-            android:onClick="cancelFilterActivity"/>
+            android:layout_toStartOf="@+id/button_set"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:text="@string/activity_filter_cancel"/>
 
         <Button
             android:id="@+id/button_set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:text="@string/activity_filter_set"
-            android:onClick="setFilterPreferences"/>
+            android:layout_alignParentEnd="true"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:text="@string/activity_filter_set" />
 
     </RelativeLayout>
 
