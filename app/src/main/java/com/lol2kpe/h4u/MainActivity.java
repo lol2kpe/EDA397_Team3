@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     ArrayList<Place> objects = (ArrayList<Place>) data
                             .getSerializableExtra(getResources().getString(R.string.filtered_data));
                     if (objects.isEmpty()) {
+                        removeAllMarkers();
                         Toast.makeText(this, getResources().getString(R.string.no_results),
                                 Toast.LENGTH_SHORT).show();
                     } else {

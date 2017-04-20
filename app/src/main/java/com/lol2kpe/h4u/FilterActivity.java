@@ -179,32 +179,32 @@ public class FilterActivity extends AppCompatActivity {
     @SuppressWarnings({"unchecked"})
     private void filter() {
         // Check the received data from MainActivity
-        if(checkIntentData()) {
+        checkIntentData();
 
-            Intent intent = getIntent();
-            ArrayList<Place> returnList = (ArrayList<Place>) intent
-                    .getSerializableExtra(getResources().getString(R.string.object_data));
+        Intent intent = getIntent();
+        ArrayList<Place> returnList = (ArrayList<Place>) intent
+                .getSerializableExtra(getResources().getString(R.string.object_data));
 
-            // Type filter
-            Iterator<Place> iterator = returnList.iterator();
-            while (iterator.hasNext()) {
-                Place item = iterator.next();
-                if (!checkType(filterSelections.get(TYPE), item))
-                    iterator.remove();
-            }
-
-            // Rating filter
-            iterator = returnList.iterator();
-            while (iterator.hasNext()) {
-                Place item = iterator.next();
-                if (!checkRating(filterSelections.get(RATING), item))
-                    iterator.remove();
-            }
-            returnData(returnList);
+        // Type filter
+        Iterator<Place> iterator = returnList.iterator();
+        while (iterator.hasNext()) {
+            Place item = iterator.next();
+            if (!checkType(filterSelections.get(TYPE), item))
+                iterator.remove();
         }
+
+        // Rating filter
+        iterator = returnList.iterator();
+        while (iterator.hasNext()) {
+            Place item = iterator.next();
+            if (!checkRating(filterSelections.get(RATING), item))
+                iterator.remove();
+        }
+        returnData(returnList);
     }
 
-    private boolean checkIntentData() {
+    @SuppressWarnings({"unchecked"})
+    private void checkIntentData() {
         // Get the intent that started the FilterActivity
         Intent intent = getIntent();
         // Get a map of extended data from the intent
@@ -212,33 +212,33 @@ public class FilterActivity extends AppCompatActivity {
         // Check if the data from MainActivity is null
         if (extras == null) {
             Log.e("NullIntentData", "The intent data received in FilterActivity is null");
-            setResult(Activity.RESULT_CANCELED);
-            finish();
-        }
-        // Check if the data from MainActivity is empty
-        if(extras.isEmpty()) {
-            Log.e("EmptyIntentData", "The intent data received in FilterActivity is empty. " +
-                    "Empty bundle: " + extras.isEmpty());
-            setResult(Activity.RESULT_CANCELED);
-            finish();
+            throw new NullPointerException();
         }
         // Check if the name of the data is the same as the expected name
         if(!extras.containsKey(getResources().getString(R.string.object_data))) {
-            Set keys = extras.keySet();
+            Set<String> keys = extras.keySet();
             StringBuilder sb = new StringBuilder();
-            Iterator i = keys.iterator();
-            while (i.hasNext()) {
-                String key = (String)i.next();
-                sb.append(" " + key);
+
+            for( String key : keys) {
+                sb.append(key);
+                sb.append(" ");
             }
             Log.e("IntentDataKeyMissing", "Could not find the needed intent data for the" +
                     " FilterActivity. Expected data name: " +
                     getResources().getString(R.string.object_data) +
                     ", Found data names: " + sb.toString());
-            setResult(Activity.RESULT_CANCELED);
-            finish();
+            returnData(new ArrayList<>());
         }
-        return true;
+        // Check if the data from MainActivity is empty
+        if(extras.isEmpty() ||
+                ((ArrayList<Place>)getIntent().getSerializableExtra(getResources()
+                        .getString(R.string.object_data))).isEmpty()) {
+            Log.w("EmptyIntentData", "The intent data received in FilterActivity is empty. "
+                    + "Empty bundle: " + extras.isEmpty()
+                    + " Empty data: " + ((ArrayList<Place>)getIntent().getSerializableExtra(getResources()
+                    .getString(R.string.object_data))).isEmpty());
+            returnData(new ArrayList<>());
+        }
     }
 
     /**
@@ -295,10 +295,7 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     /**
-     * The method checks if the ArrayList is empty. If it isn't, it creates an Intent for
-     * the MainActivity that contains the ArrayList of Place objects, sets the result to
-     * "OK" and ends the FilterActivity. Else, it returns an Intent with no extra data
-     * and sets the result to "Canceled" and ends the FilterActivity.
+     * Returns an ArrayList of filtered Place objects to the MainActivity.
      *
      * @param returnData An ArrayList of Place objects
      */
