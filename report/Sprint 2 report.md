@@ -8,7 +8,7 @@
 [Jonathan Granström](https://github.com/juntski)
 
 Git repository: https://github.com/lol2kpe/EDA397_Team3 \
-Issue tracker: 
+Issue tracker: https://github.com/lol2kpe/EDA397_Team3/projects/2
 ---
 
 
@@ -44,8 +44,23 @@ ID | User story
 ### Tasks
 ID | Tasks
 ----------------|----------------
-
-
+51 | User profile creation and login
+54 | Add more services to service class
+55 | Fix database fetch data
+56 | Create dummy data generator
+57 | Change position of filter button to show directions
+58 | Update database fetch for Place
+59 | Create save for user profile
+60 | Implement SQLite for save
+61 | Create better visualiztion of selected objects on the map
+62 | Add "get directions" functionality to selected map object
+63 | Add "problem/injury" filter option
+64 | Add proper search functionality
+65 | Add functionality to user profile
+66 | Add "medicine reminders" functionality
+67 | Add "settings" functionality 
+68 | Add possibility to search by radius (or to set the radius)
+ 
 
 ## Work Done
 
