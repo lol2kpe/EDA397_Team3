@@ -13,48 +13,57 @@ import com.lol2kpe.h4u.data.model.Place;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 
+import static com.lol2kpe.h4u.filter.FilterActivity.OPENING_HOUR;
+import static com.lol2kpe.h4u.filter.FilterActivity.RATING;
+import static com.lol2kpe.h4u.filter.FilterActivity.TYPE;
+import static com.lol2kpe.h4u.filter.FilterActivity.filterSelections;
 import static com.lol2kpe.h4u.filter.FilterActivity.returnList;
 
 /**
- * Created by Jonathan on 2017-04-24.
+ * Created by Jonathan Granström
+ * User: Jonathan "juntski" Granström
+ * Date: 2017-04-24
  */
 public class PlaceFragment extends Fragment {
+    //OnFragmentDataRequestedListener mCallback;
 
-    static HashMap<String, Integer> filterSelections;
-    final String TYPE = "type";
-    final String OPENING_HOUR = "openingHour";
-    final String RATING = "rating";
     Spinner spinnerType, spinnerOpeningHours, spinnerRating;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.place_tab, container, false);
+
         spinnerType = (Spinner) rootView.findViewById(R.id.spinner_type);
         spinnerOpeningHours = (Spinner) rootView.findViewById(R.id.spinner_openinghours);
         spinnerRating = (Spinner) rootView.findViewById(R.id.spinner_rating);
-
         populateSpinner(spinnerType);
         populateSpinner(spinnerOpeningHours);
         populateSpinner(spinnerRating);
-
-        // If the app/activity is started for the first time, create a HashMap to store values
-        if (filterSelections == null) {
-            filterSelections = new HashMap<>();
-            // Set the filter options to their default values
-            setDefaultFilterValues();
-            storeFilterValues();
-        }
-        // Otherwise, set the filter options to the values stored in the already existing HashMap
-        else {
-            setFilterValues();
-        }
+        setFilterSelections();
 
         return rootView;
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+
+    }
+
+    /*
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mCallback = (OnFragmentDataRequestedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentDataRequestedListener");
+        }
+    }
+    */
 
     private void populateSpinner(Spinner spinner) {
         ArrayList<String> items = new ArrayList<>();
@@ -75,7 +84,7 @@ public class PlaceFragment extends Fragment {
             toggleSpinner(spinner);
         }
         // Create Adapter object with data items for the Spinner object
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 getContext(), android.R.layout.simple_spinner_item,
                 items.toArray(new String[items.size()]));
         // Set the View for the items in the data set in the Adapter object
@@ -91,19 +100,10 @@ public class PlaceFragment extends Fragment {
      * The method sets all the SpinnerObjects selections to their respective value
      * stored in the HashMap.
      */
-    void setFilterValues() {
+    void setFilterSelections() {
         spinnerType.setSelection(filterSelections.get(TYPE));
         spinnerOpeningHours.setSelection(filterSelections.get(OPENING_HOUR));
         spinnerRating.setSelection(filterSelections.get(RATING));
-    }
-
-    /**
-     * The method sets all the selections of the SpinnerObjects to their default values.
-     */
-    void setDefaultFilterValues() {
-        spinnerType.setSelection(0);
-        spinnerOpeningHours.setSelection(0);
-        spinnerRating.setSelection(0);
     }
 
     /**
@@ -169,4 +169,10 @@ public class PlaceFragment extends Fragment {
         return (spinnerRating.getSelectedItem().toString().equals("All") ||
                 (p.getRating() >= Integer.parseInt(spinnerRating.getSelectedItem().toString())));
     }
+
+    /*
+    interface OnFragmentDataRequestedListener {
+
+    }
+    */
 }

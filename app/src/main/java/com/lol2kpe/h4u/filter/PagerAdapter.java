@@ -5,14 +5,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 /**
- * Created by Jonathan on 2017-04-24.
+ * Created by Jonathan Granström
+ * User: Jonathan "juntski" Granström
+ * Date: 2017-04-24
  */
-public class PagerAdapter extends FragmentStatePagerAdapter {
-    int mNumOfTabs;
-    PlaceFragment placeFragment;
-    SymptomFragment symptomFragment;
+class PagerAdapter extends FragmentStatePagerAdapter {
+    private int mNumOfTabs;
+    private PlaceFragment placeFragment;
+    private SymptomFragment symptomFragment;
 
-    public PagerAdapter(FragmentManager fm, int NumOfTabs) {
+    PagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
         this.mNumOfTabs = NumOfTabs;
     }
@@ -24,11 +26,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 if (placeFragment == null)
                     placeFragment = new PlaceFragment();
-                return new PlaceFragment();
+                return placeFragment;
             case 1:
-                if (symptomFragment== null)
+                if (symptomFragment == null)
                     symptomFragment = new SymptomFragment();
-                return new SymptomFragment();
+                return symptomFragment;
             default:
                 return null;
         }
