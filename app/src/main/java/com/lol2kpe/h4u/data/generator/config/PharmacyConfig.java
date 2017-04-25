@@ -20,7 +20,7 @@ public class PharmacyConfig extends PlaceConfig {
             "Vårdapoteket"
     };
 
-    public PharmacyConfig() throws FileNotFoundException {
+    public PharmacyConfig() {
         super(Arrays.asList(NAMES));
     }
 }

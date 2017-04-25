@@ -33,7 +33,7 @@ public class HospitalConfig extends PlaceConfig {
             "Länssjukhuset Sundsvall-Härnösand"
     };
 
-    public HospitalConfig() throws FileNotFoundException {
+    public HospitalConfig() {
         super(Arrays.asList(NAMES));
     }
 }

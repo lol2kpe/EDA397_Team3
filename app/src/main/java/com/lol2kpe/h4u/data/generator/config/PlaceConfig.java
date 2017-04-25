@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class PlaceConfig {
     protected List<String> names;
 
-    public PlaceConfig(List<String> names) throws FileNotFoundException {
+    public PlaceConfig(List<String> names) {
         this.names = names;
     }
     public String getName(int i){

@@ -30,7 +30,7 @@ public class DataGenerator implements Iterable<Place>{
     private PharmacyConfig pharmacyConfig = new PharmacyConfig();
     private Random randomGenerator = new Random();
 
-    public DataGenerator() throws FileNotFoundException {
+    public DataGenerator() {
     }
 
     public DataGenerator setPosition(double latitude, double longitude) {
@@ -69,7 +69,7 @@ public class DataGenerator implements Iterable<Place>{
     }
 
     private String generateHospitalName() {
-        return generateName(this.pharmacyConfig);
+        return generateName(this.hospitalConfig);
     }
 
     private int generateRating() {
