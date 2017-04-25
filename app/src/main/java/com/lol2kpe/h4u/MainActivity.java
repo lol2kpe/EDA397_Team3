@@ -234,9 +234,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.med_reminders) {
 
         } else if (id == R.id.settings) {
+        } else if(id == R.id.profile) {
 
+            Toast.makeText(MainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
