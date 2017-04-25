@@ -31,8 +31,7 @@ public class MarkerOptionFactory {
         if(place instanceof Hospital)
             return BitmapDescriptorFactory.fromResource(R.drawable.ic_local_hospital);
         if(place instanceof Pharmacy)
-            // TODO: Icon for Pharmacy
-            return BitmapDescriptorFactory.fromResource(R.drawable.ic_local_hospital);
+            return BitmapDescriptorFactory.fromResource(R.mipmap.ic_local_pharmacy);
         else
             return null;
     }

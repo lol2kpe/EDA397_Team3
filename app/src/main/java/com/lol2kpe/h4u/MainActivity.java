@@ -25,16 +25,24 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.lol2kpe.h4u.data.generator.DataGenerator;
 import com.lol2kpe.h4u.data.model.Hospital;
 import com.lol2kpe.h4u.data.model.Pharmacy;
 import com.lol2kpe.h4u.data.model.Place;
 import com.lol2kpe.h4u.util.markers.MarkerOptionFactory;
+import com.lol2kpe.h4u.util.userlocation.UserLocation;
+import com.lol2kpe.h4u.util.userlocation.UserLocationMonitor;
+
+import com.lol2kpe.h4u.ProfileActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.lol2kpe.h4u.filter.FilterActivity;
@@ -44,14 +52,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     static final int FILTER_ACTIVITY_REQUEST = 1;
 
     private static String url = "http://lol2kpe.asuscomm.com:3001/hospitals.json";
-
-    Location location;
-    Location locationMaps;
-    LatLng myLocation;
+    private UserLocationMonitor locationMonitor;
     FloatingActionButton FAB;
     private GoogleMap mMap;
-    private List<Hospital> hospitals;
-
+    private Map<Marker, Place> markerMap = new HashMap<>();
+    private List<Place> placeData;
     private List<Place> places;
     final GsonRequest gsonRequest = new GsonRequest(url, Place[].class, null, new Response.Listener<Place[]>() {
 
@@ -72,40 +77,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.filter:
-
-                    // TODO: Remove once the database/place arraylist works
-
-                    ArrayList<Place> tempPlaces = new ArrayList<>();
-
-                    tempPlaces.add(new Hospital()
-                            .setName("Sahlgrenska")
-                            .setRating(5)
-                            .setLatitude(57.703830518)
-                            .setLongitude(11.93582959)
-                    );
-                    tempPlaces.add(new Hospital()
-                            .setName("Lundby")
-                            .setRating(3)
-                            .setLatitude(57.707663836)
-                            .setLongitude(11.90916303)
-                    );
-                    tempPlaces.add(new Pharmacy()
-                            .setName("Kungens Apotek")
-                            .setRating(4)
-                            .setLatitude(57.707833836)
-                            .setLongitude(11.97916303)
-                    );
-                    tempPlaces.add(new Pharmacy()
-                            .setName("Kronans Apotek")
-                            .setRating(2)
-                            .setLatitude(57.687833836)
-                            .setLongitude(11.97916303)
-                    );
-
-
+                    List<Place> places1 = fetchData();
                     Intent intent = new Intent(MainActivity.this, FilterActivity.class);
                     intent.putExtra(getResources().getString(R.string.object_data),
-                            new ArrayList<>(tempPlaces));
+                            new ArrayList<>(placeData));
                     startActivityForResult(intent, FILTER_ACTIVITY_REQUEST);
             }
         }
@@ -139,7 +114,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer);
-
+        //User location
+        this.locationMonitor = UserLocationMonitor.getMonitor(this.getApplicationContext());
+        this.placeData = fetchData();
         // Replace the app bar with a custom toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -158,18 +135,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FAB = (FloatingActionButton) findViewById(R.id.filter);
         FAB.setOnClickListener(FABonClickListener);
 
-        hospitals = new ArrayList<>();
-        fetchData();
-
         /********** MAP **********/
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
         mapFragment.getMapAsync(this);
+          // insert my personal places for profile... test code //
 
-        // Location of the user
-        /*UserLocationMonitor monitor = UserLocationMonitor.getMonitor(this.getApplicationContext());
-        location = monitor.getLocation();*/
+     /*   DatabaseHandler db = new DatabaseHandler(this);
+
+        Log.d("Insert: ", "Inserting ..");
+        db.addPlace(new DatabaseUserPlaces("Sahlgrenska", 12.345000, 97.869440));
+
+        Log.d("Reading: ", "Reading all places..");
+        List<DatabaseUserPlaces> userPlaces = db.getAllPlaces();
+
+        for (DatabaseUserPlaces pl : userPlaces) {
+            String log = "Id: " + pl.getId() + " ,Name: " + pl.getName() + " ,Latitude: " + pl.getLatitude() + " ,Longitude: " + pl.getLongitude();
+            Log.d("Name: ", log);
+
+        }
+
+     */
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -214,9 +203,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.med_reminders) {
 
         } else if (id == R.id.settings) {
+        } else if(id == R.id.profile) {
 
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+
+            //Toast.makeText(MainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -224,22 +217,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        mMap.setMyLocationEnabled(true);
+        this.mMap = googleMap;
+        this.mMap.setMyLocationEnabled(true);
+        addMapMarkers(new ArrayList<>(this.placeData));
     }
 
     private void addMapMarkers(ArrayList<Place> objects) {
         removeAllMarkers();
         for (Place place : objects) {
-            MarkerOptions marker = MarkerOptionFactory.getMarkerOptions(place);
-            LatLng destination = marker.getPosition();
-            mMap.addMarker(marker.position(destination)
-                    .title(marker.getTitle()).icon(marker.getIcon()));
+            MarkerOptions markerOptions = MarkerOptionFactory.getMarkerOptions(place);
+            Marker marker = this.mMap.addMarker(markerOptions);
+            this.markerMap.put(marker, place);
         }
     }
 
     public void removeAllMarkers() {
-        mMap.clear();
+        this.mMap.clear();
     }
 
     private boolean checkFilteredData(Intent intent) {
@@ -275,23 +268,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     // fetches data from server
-    public void fetchData() {
-
-        Hospital sahlgrenska = new Hospital()
-                .setName("Sahlgrenska")
-                .setId(10)
-                .setHospitalType("Emergency")
-                .setLatitude(57.703830518)
-                .setLongitude(11.93582959);
-        Hospital lundby = new Hospital()
-                .setName("Lundby")
-                .setId(10)
-                .setHospitalType("Regular appointments")
-                .setLatitude(57.707663836)
-                .setLongitude(11.90916303);
-        hospitals.add(sahlgrenska);
-        hospitals.add(lundby);
-
+    public List<Place> fetchData() {
+        List<Place> data = new ArrayList<>();
+        Location location = this.locationMonitor.getLocation();
+        DataGenerator dg = new DataGenerator()
+                .setPosition(location.getLatitude(), location.getLongitude())
+                .setRadius(25.0)
+                .setNumberOfElements(1000);
+        for (Place p : dg) {
+            data.add(p);
+        }
+        return data;
         // uncomment this, and database should work
        // VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
     }
