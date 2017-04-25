@@ -6,7 +6,7 @@
     android:id="@+id/placefragment">
 
     <RelativeLayout
-        android:id="@+id/subtitle"
+        android:id="@+id/place_subtitle"
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:paddingStart="16dp"
@@ -28,8 +28,7 @@
         android:id="@+id/content_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button_area"
-        android:layout_below="@+id/subtitle"
+        android:layout_below="@+id/place_subtitle"
         android:baselineAligned="true"
         android:orientation="horizontal"
         android:paddingLeft="16dp"

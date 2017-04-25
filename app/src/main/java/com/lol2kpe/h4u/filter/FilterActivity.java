@@ -27,6 +27,7 @@ public class FilterActivity extends AppCompatActivity {
     final static String TYPE = "type";
     final static String OPENING_HOUR = "openingHour";
     final static String RATING = "rating";
+    final static String SYMPTOM = "symptom";
     public static HashMap<String, Integer> filterSelections;
     static ArrayList<Place> returnList;
     Integer currentTab = 0;
@@ -89,7 +90,15 @@ public class FilterActivity extends AppCompatActivity {
                         placeFragment.filter();
                         returnData();
                     }
+                    break;
                 case 1:
+                    currentFragment = adapter.getItem(currentTab);
+                    SymptomFragment symptomFragment = (SymptomFragment) currentFragment;
+                    if (symptomFragment != null) {
+                        symptomFragment.storeFilterValues();
+                        symptomFragment.filter();
+                        returnData();
+                    }
                     break;
                 default:
                     break;
@@ -151,8 +160,14 @@ public class FilterActivity extends AppCompatActivity {
                             setDefaultFilterValues();
                             placeFragment.setFilterSelections();
                         }
-                    case 1:
                         break;
+                    case 1:
+                        currentFragment = adapter.getItem(currentTab);
+                        SymptomFragment symptomFragment = (SymptomFragment) currentFragment;
+                        if (symptomFragment != null) {
+                            setDefaultFilterValues();
+                            symptomFragment.setFilterSelections();
+                        }
                     default:
                         break;
                 }
@@ -220,6 +235,7 @@ public class FilterActivity extends AppCompatActivity {
         filterSelections.put(TYPE, 0);
         filterSelections.put(OPENING_HOUR, 0);
         filterSelections.put(RATING, 0);
+        filterSelections.put(SYMPTOM, 0);
     }
 
     /**

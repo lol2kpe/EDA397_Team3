@@ -4,6 +4,7 @@
     <!-- Filter activity toolbar -->
     <string name="toolbar_clear_filter">Clear filter</string>
 
+
     <!-- Filter activity -->
     <string name="activity_filter_title">Filter</string>
     <string name="activity_filter_placetitle">Filter by place</string>
@@ -39,6 +40,15 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+    <!-- Filter type option -->
+    <string name="activity_filter_symptom">Symptom</string>
+    <string-array name="activity_filter_symptom_options">
+        <item>All</item>
+        <item>Traumatologibrokenlegs Syndrome</item>
+        <item>Headache</item>
+        <item>Sore throat</item>
+    </string-array>
+
     <!-- Main/FilterActivity Intent Names -->
     <string name="object_data">objects</string>
     <string name="filtered_data">result</string>

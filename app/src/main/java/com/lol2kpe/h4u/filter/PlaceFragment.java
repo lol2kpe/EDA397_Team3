@@ -27,7 +27,6 @@ import static com.lol2kpe.h4u.filter.FilterActivity.returnList;
  * Date: 2017-04-24
  */
 public class PlaceFragment extends Fragment {
-    //OnFragmentDataRequestedListener mCallback;
 
     Spinner spinnerType, spinnerOpeningHours, spinnerRating;
 
@@ -46,25 +45,12 @@ public class PlaceFragment extends Fragment {
         return rootView;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-
-    }
-
-    /*
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        try {
-            mCallback = (OnFragmentDataRequestedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentDataRequestedListener");
-        }
-    }
-    */
-
+    /**
+     * Populates the Spinner object with a list of items. The method takes the Spinner object and
+     * based on the type of the Spinner object, retrives relevant information from the list of
+     * Place objects. Creates an empty list if no relevant info could be found, or creates a
+     * @param spinner
+     */
     private void populateSpinner(Spinner spinner) {
         ArrayList<String> items = new ArrayList<>();
         for (Place p : returnList) {
@@ -92,6 +78,10 @@ public class PlaceFragment extends Fragment {
         spinner.setAdapter(adapter);
     }
 
+    /**
+     * Simply toggles the availability of a Spinner
+     * @param spinner The Spinner to enable/disable
+     */
     void toggleSpinner(Spinner spinner) {
         spinner.setEnabled(!spinner.isEnabled());
     }
@@ -169,10 +159,4 @@ public class PlaceFragment extends Fragment {
         return (spinnerRating.getSelectedItem().toString().equals("All") ||
                 (p.getRating() >= Integer.parseInt(spinnerRating.getSelectedItem().toString())));
     }
-
-    /*
-    interface OnFragmentDataRequestedListener {
-
-    }
-    */
 }
