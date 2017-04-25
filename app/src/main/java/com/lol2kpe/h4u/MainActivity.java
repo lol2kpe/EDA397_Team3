@@ -26,6 +26,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.lol2kpe.h4u.data.generator.DataGenerator;
 import com.lol2kpe.h4u.data.model.Hospital;
@@ -37,8 +38,10 @@ import com.lol2kpe.h4u.util.userlocation.UserLocationMonitor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private UserLocationMonitor locationMonitor;
     FloatingActionButton FAB;
     private GoogleMap mMap;
-    private List<Hospital> hospitals;
+    private Map<Marker, Place> markerMap = new HashMap<>();
     private List<Place> placeData;
     private List<Place> places;
     final GsonRequest gsonRequest = new GsonRequest(url, Place[].class, null, new Response.Listener<Place[]>() {
@@ -134,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
         mapFragment.getMapAsync(this);
-
           // insert my personal places for profile... test code //
 
      /*   DatabaseHandler db = new DatabaseHandler(this);
@@ -209,22 +211,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        mMap.setMyLocationEnabled(true);
+        this.mMap = googleMap;
+        this.mMap.setMyLocationEnabled(true);
+        addMapMarkers(new ArrayList<>(this.placeData));
     }
 
     private void addMapMarkers(ArrayList<Place> objects) {
         removeAllMarkers();
         for (Place place : objects) {
-            MarkerOptions marker = MarkerOptionFactory.getMarkerOptions(place);
-            LatLng destination = marker.getPosition();
-            mMap.addMarker(marker.position(destination)
-                    .title(marker.getTitle()).icon(marker.getIcon()));
+            MarkerOptions markerOptions = MarkerOptionFactory.getMarkerOptions(place);
+            Marker marker = this.mMap.addMarker(markerOptions);
+            this.markerMap.put(marker, place);
         }
     }
 
     public void removeAllMarkers() {
-        mMap.clear();
+        this.mMap.clear();
     }
 
     private boolean checkFilteredData(Intent intent) {
