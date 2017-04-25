@@ -27,7 +27,7 @@ public class FilterActivity extends AppCompatActivity {
     final static String TYPE = "type";
     final static String OPENING_HOUR = "openingHour";
     final static String RATING = "rating";
-    static HashMap<String, Integer> filterSelections;
+    public static HashMap<String, Integer> filterSelections;
     static ArrayList<Place> returnList;
     Integer currentTab = 0;
     Intent returnIntent;
