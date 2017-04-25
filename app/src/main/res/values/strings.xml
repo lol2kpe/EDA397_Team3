@@ -6,7 +6,8 @@
 
     <!-- Filter activity -->
     <string name="activity_filter_title">Filter</string>
-    <string name="activity_filter_subtitle">Set filter options</string>
+    <string name="activity_filter_placetitle">Filter by place</string>
+    <string name="activity_filter_symptomtitle">Filter by symptom</string>
     <string name="activity_filter_cancel">CANCEL</string>
     <string name="activity_filter_set">SET FILTER</string>
     <!-- Filter type option -->

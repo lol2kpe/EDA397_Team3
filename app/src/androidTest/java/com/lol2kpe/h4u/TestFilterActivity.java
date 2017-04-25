@@ -12,6 +12,8 @@ import java.util.HashMap;
 
 import org.hamcrest.collection.IsMapContaining;
 
+import com.lol2kpe.h4u.filter.FilterActivity;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -21,7 +23,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
-import static com.lol2kpe.h4u.FilterActivity.filterSelections;
+import static com.lol2kpe.h4u.filter.FilterActivity.filterSelections;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.CoreMatchers.allOf;

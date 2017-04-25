@@ -45,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FilterActivity"
+            android:name=".filter.FilterActivity"
             android:label="@string/activity_filter_title"
             android:parentActivityName=".MainActivity">
             <meta-data

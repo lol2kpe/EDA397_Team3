@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/symptomfragment">
+
+    <RelativeLayout
+        android:id="@+id/symptom_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <TextView
+            android:id="@+id/symptom_subtitletext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:text="@string/activity_filter_symptomtitle"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
