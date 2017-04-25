@@ -38,6 +38,14 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+    <!-- Filter injury type option -->
+    <string-array name="activity_filter_injurytype_options">
+        <item>Bones</item>
+        <item>Skin</item>
+        <item>Muscles</item>
+        <item>Illness</item>
+    </string-array>
+
     <!-- Main/FilterActivity Intent Names -->
     <string name="object_data">objects</string>
     <string name="filtered_data">result</string>
@@ -51,6 +59,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="activity_filter_injurytype">Injury type</string>
 
     <string name="activity_profile">ProfileActivity</string>
 </resources>

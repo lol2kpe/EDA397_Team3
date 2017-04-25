@@ -65,6 +65,13 @@
                 android:gravity="center"
                 android:text="@string/activity_filter_rating"/>
 
+            <TextView
+                android:id="@+id/textInjuryType"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:gravity="center_vertical"
+                android:text="@string/activity_filter_injurytype"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -86,6 +93,11 @@
 
             <Spinner
                 android:id="@+id/spinner_rating"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"/>
+
+            <Spinner
+                android:id="@+id/spinner_injurytype"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"/>
 

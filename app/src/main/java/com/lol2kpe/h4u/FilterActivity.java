@@ -32,13 +32,15 @@ public class FilterActivity extends AppCompatActivity {
     private final String TYPE = "type";
     private final String OPENING_HOUR = "openingHour";
     private final String RATING = "rating";
+	private final String INJURYTYPE = "injuryType";
 
     private final int DEFAULT_TYPE_VALUE = 0;
     private final int DEFAULT_OPENING_HOURS_VALUE = 0;
     private final int DEFAULT_RATING_VALUE = 1;
+	private final int DEFAULT_INJURYTYPE_VALUE = 0;
 
     public static HashMap <String, Integer> filterSelections;
-    private Spinner spinnerType, spinnerOpeningHours, spinnerRating;
+    private Spinner spinnerType, spinnerOpeningHours, spinnerRating, spinnerInjuryType;
 
     Intent returnIntent;
 
@@ -67,6 +69,7 @@ public class FilterActivity extends AppCompatActivity {
         spinnerType = (Spinner)findViewById(R.id.spinner_type);
         spinnerOpeningHours = (Spinner)findViewById(R.id.spinner_openinghours);
         spinnerRating = (Spinner)findViewById(R.id.spinner_rating);
+	    spinnerInjuryType = (Spinner)findViewById(R.id.spinner_injurytype);
 
         // Create Adapter objects with data items for the Spinner objects
         ArrayAdapter<CharSequence> adapterType = ArrayAdapter.createFromResource(this,
@@ -75,16 +78,20 @@ public class FilterActivity extends AppCompatActivity {
                 R.array.activity_filter_openinghours_options, android.R.layout.simple_spinner_item);
         ArrayAdapter<CharSequence> adapterRating = ArrayAdapter.createFromResource(this,
                 R.array.activity_filter_rating_options, android.R.layout.simple_spinner_item);
+	    ArrayAdapter<CharSequence> adapterInjuryType = ArrayAdapter.createFromResource(this,
+			    R.array.activity_filter_injurytype_options, android.R.layout.simple_spinner_item);
 
         // Set the View for the items in the data set in the Adapter objects
         adapterType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterOpeningHours.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapterRating.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    adapterInjuryType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Set the Adapter objects to their respective Spinner objects
         spinnerType.setAdapter(adapterType);
         spinnerOpeningHours.setAdapter(adapterOpeningHours);
         spinnerRating.setAdapter(adapterRating);
+	    spinnerInjuryType.setAdapter(adapterInjuryType);
 
         // If the app/activity is started for the first time, create a HashMap to store values
         if(filterSelections == null) {
@@ -149,6 +156,7 @@ public class FilterActivity extends AppCompatActivity {
         spinnerType.setSelection(DEFAULT_TYPE_VALUE);
         spinnerOpeningHours.setSelection(DEFAULT_OPENING_HOURS_VALUE);
         spinnerRating.setSelection(DEFAULT_RATING_VALUE);
+	    spinnerInjuryType.setSelection(DEFAULT_INJURYTYPE_VALUE);
     }
 
     /**
@@ -159,6 +167,7 @@ public class FilterActivity extends AppCompatActivity {
         filterSelections.put(TYPE, spinnerType.getSelectedItemPosition());
         filterSelections.put(OPENING_HOUR, spinnerOpeningHours.getSelectedItemPosition());
         filterSelections.put(RATING, spinnerRating.getSelectedItemPosition());
+	    filterSelections.put(INJURYTYPE, spinnerInjuryType.getSelectedItemPosition());
     }
 
     /**
@@ -169,6 +178,7 @@ public class FilterActivity extends AppCompatActivity {
         spinnerType.setSelection(filterSelections.get(TYPE));
         spinnerOpeningHours.setSelection(filterSelections.get(OPENING_HOUR));
         spinnerRating.setSelection(filterSelections.get(RATING));
+	    spinnerInjuryType.setSelection(filterSelections.get(INJURYTYPE));
     }
 
     /**
@@ -201,6 +211,15 @@ public class FilterActivity extends AppCompatActivity {
                 iterator.remove();
         }
         returnData(returnList);
+
+	    // Injury type filter
+	    iterator = returnList.iterator();
+	    while (iterator.hasNext()) {
+		    Place item = iterator.next();
+		    if (!checkRating(filterSelections.get(INJURYTYPE), item))
+			    iterator.remove();
+	    }
+	    returnData(returnList);
     }
 
     @SuppressWarnings({"unchecked"})
@@ -259,7 +278,7 @@ public class FilterActivity extends AppCompatActivity {
             case 1:
                 return p instanceof Hospital;
             case 2:
-                return p instanceof  Pharmacy;
+                return p instanceof Pharmacy;
             default:
                 return false;
         }
@@ -293,6 +312,26 @@ public class FilterActivity extends AppCompatActivity {
                 return false;
         }
     }
+
+	/**
+	 * The method takes the selected item position of the "Injury type" spinner and checks
+	 * the rating value of the selected position against the value of the Place object.
+	 * The method returns true if the rating value of the Place object is equal or higher
+	 * to the rating value of the selected rating value of the "Rating" spinner.
+	 *
+	 * @param pos   The current item position of the "Injury Type" spinner.
+	 * @param p     The current Place object.
+	 * @return      True if the rating value of the Place object is equal or higher than
+	 *              the current rating value of the selected rating value of the "Rating"
+	 *              spinner, else returns false.
+	 */
+	private boolean checkInjuryType(int pos, Place p) {
+		switch(pos) {
+            // TODO Implement this
+			default:
+				return false;
+		}
+	}
 
     /**
      * Returns an ArrayList of filtered Place objects to the MainActivity.
