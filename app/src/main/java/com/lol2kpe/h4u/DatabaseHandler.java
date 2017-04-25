@@ -124,7 +124,6 @@ import android.database.sqlite.SQLiteOpenHelper;
                     new String[] { String.valueOf(userPlace.getId()) });
         }
 
-
         // Count all places
         public int getPlaceCount() {
             String countQuery = "SELECT  * FROM " + TABLE_PLACES;
