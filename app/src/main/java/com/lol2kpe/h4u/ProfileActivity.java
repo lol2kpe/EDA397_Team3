@@ -63,7 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
         final Button button = (Button) findViewById(R.id.saveButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                
+
                 //saveLocation("Sahlgrenska", 12.345000, 97.869440);
                 Toast.makeText(ProfileActivity.this, "Button clicked", Toast.LENGTH_SHORT).show();
             }
