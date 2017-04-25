@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.lol2kpe.h4u.data.model.Place;
 
@@ -17,8 +18,10 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         this.place = (Place) getIntent().getExtras().get("object");
         setContentView(R.layout.activity_info);
+        setInformation();
         setTitle(place.getName());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -33,5 +36,39 @@ public class InfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void setInformation() {
+        setAddress();
+        setPhoneNumber();
+        setRating();
+        setOpeningHours();
+    }
+
+    private void setOpeningHours() {
+        String openField = "CLOSED NOW";
+        /*
+            TODO openinghours compabillity
+        if(this.place.getOpeningHours().isOpen()) {
+            openField = "OPEN NOW";
+        }
+        */
+        changeTextField((TextView) findViewById(R.id.openinghour), openField);
+    }
+
+    private void setRating() {
+        changeTextField((TextView) findViewById(R.id.rating), String.valueOf(this.place.getRating()));
+    }
+
+    private void setPhoneNumber() {
+        changeTextField((TextView) findViewById(R.id.phonenumber), this.place.getPhoneNumber());
+    }
+
+    private void setAddress() {
+        changeTextField((TextView) findViewById(R.id.address), this.place.getAddress());
+    }
+
+    private void changeTextField(TextView textView, String content) {
+        textView.append("\t" + content);
     }
 }

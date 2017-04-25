@@ -62,10 +62,19 @@ public class DataGenerator implements Iterable<Place>{
                 .setName(generateHospitalName())
                 .setServices(generateServices())
                 .setOpeningHours(generateOpeningHours())
-                .setRating(generateRating());
+                .setRating(generateRating())
+                .setPhoneNumber(generatePhoneNumber());
         LatLng pos = generatePosition();
         hospital.setLatitude(pos.latitude).setLongitude(pos.longitude);
         return hospital;
+    }
+
+    private String generatePhoneNumber() {
+        String phoneNumber = "+467";
+        for(int i = 0; i < 8; i++){
+            phoneNumber += this.randomGenerator.nextInt(10);
+        }
+        return phoneNumber;
     }
 
     private String generateHospitalName() {
@@ -104,7 +113,8 @@ public class DataGenerator implements Iterable<Place>{
                 .setAddress(generateAddress())
                 .setName(generatePharmacyName())
                 .setOpeningHours(generateOpeningHours())
-                .setRating(generateRating());
+                .setRating(generateRating())
+                .setPhoneNumber(generatePhoneNumber());
         LatLng pos = generatePosition();
         pharmacy.setLatitude(pos.latitude).setLongitude(pos.longitude);
         return pharmacy;
