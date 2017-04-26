@@ -43,17 +43,22 @@ public class SignupActivity extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.signupbutton:
                     try {
-                        if ((pass.getText().toString()).equals(repass.getText().toString())) {
-                            SharedPreferences sp = getSharedPreferences("Signup", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor Ed = sp.edit();
-                            Ed.putString("User", user.getText().toString());
-                            Ed.putString("Password", pass.getText().toString());
-                            Ed.apply();
+                        if (!user.getText().toString().equals("") && !email.getText().toString().equals("") && !phone.getText().toString().equals("") && !pass.getText().toString().equals("") && !repass.getText().toString().equals("")) {
+                            if ((pass.getText().toString()).equals(repass.getText().toString())) {
+                                SharedPreferences sp = getSharedPreferences("Signup", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor Ed = sp.edit();
+                                Ed.putString("User", user.getText().toString());
+                                Ed.putString("Password", pass.getText().toString());
+                                Ed.apply();
 
-                            Intent intent = new Intent(SignupActivity.this, MainActivity.class);
-                            startActivity(intent);
+                                Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finishAffinity();
+                            } else {
+                                Toast.makeText(SignupActivity.this, "Password not valid", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(SignupActivity.this, "Password not valid", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignupActivity.this, "Fill in the fields", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e){Toast.makeText(SignupActivity.this, "Fill in the fields", Toast.LENGTH_SHORT).show();}
             }

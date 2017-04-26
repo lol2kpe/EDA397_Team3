@@ -34,6 +34,6 @@
         app:backgroundTint="?attr/colorPrimary"
         app:fabSize="normal"
         app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="bottom|center_horizontal" />
+        app:layout_anchorGravity="bottom|right" />
 
 </android.support.design.widget.CoordinatorLayout>

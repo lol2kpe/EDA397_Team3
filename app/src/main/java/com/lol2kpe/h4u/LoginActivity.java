@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
                         storedUser = sp1.getString("User", null);
                         storedPass = sp1.getString("Password", null);
 
-                        if ((!storedUser.equals(user.getText().toString())) && (!storedPass.equals(pass.getText().toString()))) {
+                        if ((!storedUser.equals(user.getText().toString())) || (!storedPass.equals(pass.getText().toString()))) {
                             Toast.makeText(LoginActivity.this, "Incorrect user or password", Toast.LENGTH_SHORT).show();
                         } else {
                             if (saveCredentials.isChecked()) {
@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
+                                finishAffinity();
                             }
                         }
                     }catch (Exception e) {}
