@@ -91,4 +91,37 @@ Feature | Commits  | Group members | Effort | Practices
 
 ## Reflections
 
+In this section we describe our experiences of implementing agile methods in our project during sprint 2.
+
+The most important factor was “Managing the Customer and her expectations”, which was also the most challenging one. After the acceptance test for the first sprint, we carried out an analysis session based on the customer’s feedback. We figured out the actual improvements needed for the next acceptance test. In regard to implementation of agile principles, we had some suggestions from Magnus.
+
+After the analysis, we figured out the main problems in sprint one were 
+1. Identifying dependencies in the functionality.
+2. Communication in the group.
+3. Sprint planning.
+
+The sprint started off with a sprint planning meeting, where we discussed and decided about the target backlog. Also we clarified the sprint requirements and proceeded with the user stories and tasks. The major decisions made in first meeting were
+1. Create user stories based on customers feedback, and assign priority to them.
+2. Identify the dependencies between the user stories and tasks.
+
+After the easter break, we had a sprint meeting where we created the task list and delegated the tasks amongst us.
+
+Implementation of agile principles:
+
+In order to manage requirements and organize the activities, we had to make the most out of the time and resources available. We focused on implementing agile methodologies.
+
+The methodology
+1. Iterative and incremental process
+2. Test-first: We started off with test-first development, but it was really hard to do correctly. This mainly comes from the fact that programming in general meant a lot of experimentation and uncertainty before reaching the optimal solution. Creating tests was difficult, as it was hard to predict if they would be valid and properly represent the actual code down the road. The test-first principal did not work well when implementing the save function for the user profile. The reason for this is it was rather difficult to test the local SQLite database without actually inserting real values. When the values had been inserted it was easy to just log everything in the local database and see if everything was saved correctly.
+3. Coding standards: Coding standards were decided at the initial stage of the project. Which was easy to implement by using “Ctrl + Alt + L”.
+4. Pair programming: It is an intense experience, and it requires a bit of time to get used to. Where some pair programming was done, we had to connect the work with other members’ work. However, it worked well when creating a better visualization of selected objects on the map.
+5. Sustainable pace: It worked very well when it came to populating the map with hospitals. However, there are some user stories which were not achieved during this sprint and this could be for having and slow sustainable pace but also miss plan since some user stories took longer than expected. 
+6. Code Refactoring: In order to keep the code clean and flexible a lot of refactoring was done.
+7. Collective code ownership: Every member of the team had the access to change anything in the code to fulfill new requirements, or refactoring odd-looking code. It helped also in enforcing the coding standards.
+8. Simple Design: We have used this method since we had ongoing activities, which may involve refactoring and design decisions. This mitigates the common risk of overdesign. It worked well with certain design patterns.
+9. Continuous-integration: Since we worked separately on same code portion for several times we had time to debug at the end of long integration cycles, so we have used the Continuous-integration principle to produce a clean build of the system for several times.
+10. Testing: In order to verify that the system worked as expected and without breaking the functionality of the code, we carried out extensive testing for each functions.
+
+These were agile principles considered in this sprint, apart from these principles, we had some complementary methods for achieving the project. Our project consists of technical tasks which has design, coding, and testing.We had appropriate methodologies to apply for each task.As the project keep on growing we were able to increase the development speed and improve the functionality. We had sprint meetings which were organized in a scrum fashion to achieve consistency in our team work. In few portions we used available code and libraries instead of writing our own so that we were able to time need to develop.we had few drawbacks due to easter holidays during this sprint, so we had time constraint, there were few tasks been postponed to next spring but we have achieved the prioritised tasks and user stories. With our experience, we believe that “The agile methodologies is to make software development faster and, at the same time, have higher code quality, higher customer satisfaction”. and also we understood that At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behavior accordingly.Thus these are the reflections made from our work in sprint two.
+
 
