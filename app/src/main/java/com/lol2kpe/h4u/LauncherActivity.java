@@ -30,3 +30,4 @@ public class LauncherActivity extends AppCompatActivity {
         }.start();
     }
 }
+
