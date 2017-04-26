@@ -1,0 +1,12 @@
+private void drawCircle( LatLng location ) {
+    CircleOptions options = new CircleOptions();
+    options.center( location );
+    //Radius in meters
+    options.radius( 10 );
+    options.fillColor( getResources()
+        .getColor( R.color.fill_color ) );
+    options.strokeColor( getResources()
+        .getColor( R.color.stroke_color ) );
+    options.strokeWidth( 10 );
+    getMap().addCircle(options);
+}

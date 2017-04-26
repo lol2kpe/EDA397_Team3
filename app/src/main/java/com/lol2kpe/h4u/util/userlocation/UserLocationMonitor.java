@@ -1,6 +1,7 @@
 package com.lol2kpe.h4u.util.userlocation;
 
 import android.content.Context;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,7 +24,7 @@ public class UserLocationMonitor {
     private UserLocationMonitor(LocationManager locationManager) {
         this.locationManager = locationManager;
         //Set the last known location as init value, might be out-of-date
-        this.location = locationManager.getLastKnownLocation(GPS_PROVIDER);
+        this.location = locationManager.getLastKnownLocation(locationManager.getBestProvider(new Criteria(), true));
     }
 
     public static UserLocationMonitor getMonitor(Context context) {
