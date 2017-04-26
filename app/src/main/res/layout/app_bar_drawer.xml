@@ -20,20 +20,20 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <include layout="@layout/content_drawer"
+        android:id="@+id/include" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
         android:layout_margin="16dp"
         android:clickable="true"
         android:src="@drawable/ic_filter"
-        app:layout_anchorGravity="bottom|right"
-        app:layout_anchor="@+id/include"
         app:backgroundTint="?attr/colorPrimary"
-        android:layout_gravity="top|start"
-        app:fabSize="normal"/>
-
-    <include layout="@layout/content_drawer"
-        android:id="@+id/include" />
+        app:fabSize="normal"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom|center_horizontal" />
 
 </android.support.design.widget.CoordinatorLayout>

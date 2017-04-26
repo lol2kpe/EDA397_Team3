@@ -219,6 +219,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onMapReady(GoogleMap googleMap) {
         this.mMap = googleMap;
         this.mMap.setMyLocationEnabled(true);
+        this.mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                intent.putExtra("object", markerMap.get(marker));
+                startActivity(intent);
+                return true;
+            }
+        });
         addMapMarkers(new ArrayList<>(this.placeData));
     }
 

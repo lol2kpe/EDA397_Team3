@@ -38,7 +38,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    testCompile 'junit:junit:4.12'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2') {
         // Necessary if your app targets Marshmallow (since Espresso
@@ -52,7 +51,7 @@ dependencies {
     }
 
     // Support for intent mocking
-    androidTestCompile ('com.android.support.test.espresso:espresso-intents:2.2') {
+    androidTestCompile('com.android.support.test.espresso:espresso-intents:2.2') {
         // Necessary if your app targets Marshmallow (since the test runner
         // hasn't moved to Marshmallow yet)
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -65,4 +64,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.android.support:design:25.3.1'
     compile 'xyz.samhal:opening-hours:0.1'
+    testCompile 'junit:junit:4.12'
 }

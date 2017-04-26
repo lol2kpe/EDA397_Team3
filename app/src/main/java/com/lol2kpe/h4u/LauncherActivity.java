@@ -23,10 +23,11 @@ public class LauncherActivity extends AppCompatActivity {
             public void onFinish() {
                 //set the new Content of your activity
                 //MainActivity.this.setContentView(R.layout.activity_main);
-                Intent intent = new Intent(LauncherActivity.this, MainActivity.class);
+                Intent intent = new Intent(LauncherActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finishAffinity();
             }
         }.start();
     }
 }
+
