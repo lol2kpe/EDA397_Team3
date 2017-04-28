@@ -10,5 +10,12 @@ android:
     - build-tools-25.0.0
     - android-21
     - android-25
+   
+  licenses:
+    - android-sdk-license-.+
+    - '.+'
 
-  before_install: cd app
+  before_install: 
+    cd app
+    - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+    - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
