@@ -3,21 +3,26 @@ jdk: oraclejdk8
 
 android:
   components:
-    - platform-tools
-    - tools
-
-    # The BuildTools version used by your project
-    - build-tools-25.0.0
-    - android-21
-    - android-25
+    - tools # Update preinstalled tools
+    - build-tools-25.0.0 # The BuildTools version used by the project
+    - platform-tools # Update platform-tools
+    - tools # Update new tools
+    
+    - android-21 # Target SDK version
+    - android-25 # Build SDK version
    
   licenses:
     - android-sdk-license-.+
     - '.+'
 
   before_install: 
-    cd app
+    # cd app # Use if travis cannot find project dir automatically.
 
   install:
+    # Update sdk tools to latest version and install/update components
+    - echo yes | sdkmanager "tools"
+    - echo yes | sdkmanager "platforms;android-25" # Latest platform required by SDK tools
+    - echo yes | sdkmanager "extras;android;m2repository"
+    - echo yes | sdkmanager "extras;google;m2repository"
     - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
     - echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
