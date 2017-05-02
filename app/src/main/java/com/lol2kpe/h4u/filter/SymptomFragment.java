@@ -2,6 +2,7 @@ package com.lol2kpe.h4u.filter;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.lol2kpe.h4u.R;
+import com.lol2kpe.h4u.data.model.HospitalSymptom;
+import com.lol2kpe.h4u.data.model.PharmacySymptom;
 import com.lol2kpe.h4u.data.model.Place;
+import com.lol2kpe.h4u.data.model.Symptom;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import static com.lol2kpe.h4u.filter.FilterActivity.OPENING_HOUR;
 import static com.lol2kpe.h4u.filter.FilterActivity.RATING;
@@ -28,17 +35,30 @@ import static com.lol2kpe.h4u.filter.FilterActivity.returnList;
 public class SymptomFragment extends Fragment {
 
     Spinner spinnerSymptom;
+    Map<String, Symptom> symptoms;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.symptom_tab, container, false);
 
+        Set<Symptom> symptoms = new HashSet<>();
+        Collections.addAll(symptoms, HospitalSymptom.values());
+        Collections.addAll(symptoms, PharmacySymptom.values());
+        Log.i("Symptoms", symptoms.toString());
+
+        for(Symptom symptom: symptoms) {
+            checkSymptom();
+        }
+
         spinnerSymptom = (Spinner) rootView.findViewById(R.id.spinner_symptom);
         populateSpinner(spinnerSymptom);
         setFilterSelections();
 
         return rootView;
+    }
+
+    private void checkSymptom() {
     }
 
     /**
