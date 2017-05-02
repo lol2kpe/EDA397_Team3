@@ -4,7 +4,6 @@
     <!-- Filter activity toolbar -->
     <string name="toolbar_clear_filter">Clear filter</string>
 
-
     <!-- Filter activity -->
     <string name="activity_filter_title">Filter</string>
     <string name="activity_filter_placetitle">Filter by place</string>
@@ -40,25 +39,6 @@
         <item>4</item>
         <item>5</item>
     </string-array>
-    <!-- Filter symptom option -->
-    <string name="activity_filter_symptom">Symptom</string>
-    <string name="symptom_all">All</string>
-    <string name="symptom_throat">Sore throat</string>
-    <string name="symptom_fever">Fever</string>
-    <string name="symptom_cough">Cough</string>
-    <string name="symptom_broke">Broken bone</string>
-    <string name="symptom_urine">Urinary disorder</string>
-    <string name="symptom_ear">Ear disorder</string>
-    <string-array name="activity_filter_symptom_options">
-        <item>@string/symptom_all</item>
-        <item>@string/symptom_throat</item>
-        <item>@string/symptom_fever</item>
-        <item>@string/symptom_cough</item>
-        <item>@string/symptom_broke</item>
-        <item>@string/symptom_urine</item>
-        <item>@string/symptom_ear</item>
-    </string-array>
-
     <!-- Main/FilterActivity Intent Names -->
     <string name="object_data">objects</string>
     <string name="filtered_data">result</string>
@@ -73,7 +53,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_maps">Map</string>
 
-    <string name="info_activity_hours_closed">CLOSED NOW</string>
+    <string name="info_activity_hours_closed">CERRADO AHORA</string>
 
     <string name="activity_profile">ProfileActivity</string>
     <string name="title_activity_info">InfoActivity</string>

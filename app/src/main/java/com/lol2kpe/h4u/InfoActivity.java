@@ -46,7 +46,7 @@ public class InfoActivity extends AppCompatActivity {
     }
 
     private void setOpeningHours() {
-        String openField = "CLOSED NOW";
+        String openField = getResources().getString(R.string.info_activity_hours_closed);
         /*
             TODO openinghours compabillity
         if(this.place.getOpeningHours().isOpen()) {
