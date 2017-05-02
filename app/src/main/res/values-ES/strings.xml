@@ -53,7 +53,7 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_maps">Map</string>
 
-    <string name="info_activity_hours_closed">CLOSED NOW</string>
+    <string name="info_activity_hours_closed">CERRADO AHORA</string>
 
     <string name="activity_profile">ProfileActivity</string>
     <string name="title_activity_info">InfoActivity</string>
