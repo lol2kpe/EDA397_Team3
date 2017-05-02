@@ -1,5 +1,10 @@
 package com.lol2kpe.h4u.data.model;
 
+import com.lol2kpe.h4u.filter.SymptomFragment;
+
+import java.util.HashSet;
+import java.util.Set;
+
 import xyz.samhal.openinghours.OpeningHours;
 
 /**
@@ -14,6 +19,7 @@ public abstract class Place implements java.io.Serializable {
     protected double longitude = 0;
     protected String phoneNumber = "";
     protected String name = "";
+    protected Set<Symptom> symptoms = new HashSet<>();
     protected int id = 0;
 
     public Place(){}
@@ -27,6 +33,7 @@ public abstract class Place implements java.io.Serializable {
         this.phoneNumber = place.phoneNumber;
         this.name = place.name;
         this.id = place.id;
+        this.symptoms = symptoms;
     }
 
 
@@ -63,6 +70,10 @@ public abstract class Place implements java.io.Serializable {
         return rating;
     }
 
+    public Set<Symptom> getSymptoms() {
+        return this.symptoms;
+    }
+
     @Override
     public String toString() {
         return this.name + "\n"
@@ -73,5 +84,14 @@ public abstract class Place implements java.io.Serializable {
                 + this.openingHours + "\n"
                 + this.address + "\n"
                 + this.phoneNumber + "\n";
+    }
+
+    public Place addSymptom(Symptom symptom) {
+        this.symptoms.add(symptom);
+        return this;
+    }
+
+    public boolean dealsWith(Symptom symptom) {
+        return this.symptoms.contains(symptom);
     }
 }

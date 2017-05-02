@@ -1,5 +1,7 @@
 package com.lol2kpe.h4u.data.model;
 
+import java.util.Set;
+
 import xyz.samhal.openinghours.OpeningHours;
 
 public class Pharmacy extends Place implements java.io.Serializable {
@@ -49,6 +51,11 @@ public class Pharmacy extends Place implements java.io.Serializable {
 
     public Pharmacy setId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public Pharmacy setSymptoms(Set<Symptom> symptoms) {
+        this.symptoms = symptoms;
         return this;
     }
 }
