@@ -1,32 +1,43 @@
-language: c # not really, but using make
+language: android
+jdk: oraclejdk8
 
-# pandoc is used to generate the output files
-# the pandoc version in the package management system is a tad old though
-# so tables don't turn out nice
-# install a recent version locally
-before_install:
-  - wget https://github.com/jgm/pandoc/releases/download/1.19.2.1/pandoc-1.19.2.1-1-amd64.deb
-  - ar p pandoc-1.19.2.1-1-amd64.deb data.tar.gz | tar zx ./usr/bin/pandoc --strip-components 3
+android:
+  components:
+    - tools # Update preinstalled tools
+    - build-tools-25.0.0 # The BuildTools version used by the project
+    - platform-tools # Update platform-tools
+    - tools # Update new tools
+    
+    - android-21 # Target SDK version
+    - android-25 # Build SDK version
+   
+licenses:
+  - android-sdk-license-.+
+  - '.+'
 
-# pandoc needs LaTeX for pdf output
-# here the versions from the package system are ok
-addons:
-  apt:
-    packages:
-      texlive
-      lmodern
+before_install: 
+  # Use if travis cannot find project dir automatically.
+  # cd app
 
-# the build step, details in the Makefile
-script:
-  PANDOC=./pandoc make all
+  - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning  
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
+ 
+  # Setting up emulator (used by tests)
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
 
-# for tagged versions, deploy the built files to github
-deploy:
-  provider: releases
-  api_key:
-    secure: $GH_TOKEN
-  file_glob: true
-  file: out/*
-  skip_cleanup: true
-  on:
-    tags: true
+install:
+  # List and delete unnecessary components to free space
+  #- sdkmanager --list || true
+
+  # Update sdk tools to latest version and install/update components
+  #- echo yes | sdkmanager "tools"
+  #- echo yes | sdkmanager "platforms;android-25" # Latest platform required by SDK tools
+  #- echo yes | sdkmanager "extras;android;m2repository"
+  #- echo yes | sdkmanager "extras;google;m2repository"
+  #- echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+  #- echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"

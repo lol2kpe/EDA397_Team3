@@ -18,6 +18,10 @@
             android:id="@+id/profile"
             android:icon="@drawable/ic_profile"
             android:title="My profile" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_user"
+            android:title="Log out" />
     </group>
 
 </menu>

@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -209,6 +211,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
 
             //Toast.makeText(MainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.logout){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finishAffinity();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -229,6 +235,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         addMapMarkers(new ArrayList<>(this.placeData));
+
+        LatLng GOT = new LatLng(57.7063625, 11.9365723);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(GOT, 3));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(12), 2000, null);
     }
 
     private void addMapMarkers(ArrayList<Place> objects) {
@@ -282,8 +292,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Location location = this.locationMonitor.getLocation();
         DataGenerator dg = new DataGenerator()
                 .setPosition(location.getLatitude(), location.getLongitude())
-                .setRadius(25.0)
-                .setNumberOfElements(1000);
+                .setRadius(4.0)
+                .setNumberOfElements(20);
         for (Place p : dg) {
             data.add(p);
         }
