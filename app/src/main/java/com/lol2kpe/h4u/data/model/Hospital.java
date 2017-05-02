@@ -7,7 +7,6 @@ import xyz.samhal.openinghours.OpeningHours;
 
 public class Hospital extends Place implements java.io.Serializable {
     private String hospitalType = "";
-    private Set<Service> services = new HashSet<>();
     private Set<Employee> employees = new HashSet<>();
     public Hospital(Hospital hospital){
         super(hospital);
@@ -18,12 +17,8 @@ public class Hospital extends Place implements java.io.Serializable {
         super();
     }
 
-    public Set<Service> getServices() {
-        return services;
-    }
-
-    public Hospital setServices(Set<Service> services) {
-        this.services = services;
+    public Hospital setSymptoms(Set<Symptom> symptoms) {
+        this.symptoms = symptoms;
         return this;
     }
 
@@ -74,14 +69,5 @@ public class Hospital extends Place implements java.io.Serializable {
     public Hospital setId(int id) {
         this.id = id;
         return this;
-    }
-
-    public Hospital addService(Service service) {
-        this.services.add(service);
-        return this;
-    }
-
-    public boolean providesService(Service service){
-        return this.services.contains(service);
     }
 }

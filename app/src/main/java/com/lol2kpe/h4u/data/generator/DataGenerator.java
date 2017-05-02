@@ -5,11 +5,12 @@ import com.lol2kpe.h4u.data.generator.config.HospitalConfig;
 import com.lol2kpe.h4u.data.generator.config.PharmacyConfig;
 import com.lol2kpe.h4u.data.generator.config.PlaceConfig;
 import com.lol2kpe.h4u.data.model.Hospital;
+import com.lol2kpe.h4u.data.model.HospitalSymptom;
 import com.lol2kpe.h4u.data.model.Pharmacy;
+import com.lol2kpe.h4u.data.model.PharmacySymptom;
 import com.lol2kpe.h4u.data.model.Place;
-import com.lol2kpe.h4u.data.model.Service;
+import com.lol2kpe.h4u.data.model.Symptom;
 
-import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
@@ -60,7 +61,7 @@ public class DataGenerator implements Iterable<Place>{
                 .setAddress(generateAddress())
                 .setHospitalType("General")
                 .setName(generateHospitalName())
-                .setServices(generateServices())
+                .setSymptoms(generateHospitalSymptoms())
                 .setOpeningHours(generateOpeningHours())
                 .setRating(generateRating())
                 .setPhoneNumber(generatePhoneNumber());
@@ -95,15 +96,6 @@ public class DataGenerator implements Iterable<Place>{
         return new OpeningHours();
     }
 
-    private Set<Service> generateServices() {
-        Set<Service> serviceSet = new HashSet<>();
-        Service[] services = Service.values();
-        for (int i = 0; i < 3; i++) {
-            serviceSet.add(services[this.randomGenerator.nextInt(services.length)]);
-        }
-        return serviceSet;
-    }
-
     private String generateAddress() {
         return "Hittepågatan " + this.randomGenerator.nextInt(this.numberOfElements);
     }
@@ -114,10 +106,29 @@ public class DataGenerator implements Iterable<Place>{
                 .setName(generatePharmacyName())
                 .setOpeningHours(generateOpeningHours())
                 .setRating(generateRating())
+                .setSymptoms(generatePharmacySymptoms())
                 .setPhoneNumber(generatePhoneNumber());
         LatLng pos = generatePosition();
         pharmacy.setLatitude(pos.latitude).setLongitude(pos.longitude);
         return pharmacy;
+    }
+
+    private Set<Symptom> generatePharmacySymptoms() {
+        Set<Symptom> generatedSymptoms = new HashSet<>();
+        Symptom[] symptoms = PharmacySymptom.values();
+        for(int i = 0; i < 3; i++) {
+            generatedSymptoms.add(symptoms[this.randomGenerator.nextInt(symptoms.length)]);
+        }
+        return generatedSymptoms;
+    }
+
+    private Set<Symptom> generateHospitalSymptoms() {
+        Set<Symptom> generatedSymptoms = new HashSet<>();
+        Symptom[] symptoms = HospitalSymptom.values();
+        for(int i = 0; i < 3; i++) {
+            generatedSymptoms.add(symptoms[this.randomGenerator.nextInt(symptoms.length)]);
+        }
+        return generatedSymptoms;
     }
 
     private String generatePharmacyName() {
