@@ -28,7 +28,7 @@ public class FilterActivity extends AppCompatActivity {
     final static String OPENING_HOUR = "openingHour";
     final static String RATING = "rating";
     final static String SYMPTOM = "symptom";
-    public static HashMap<String, Integer> filterSelections;
+    static HashMap<String, Integer> filterSelections;
     static ArrayList<Place> returnList;
     Integer currentTab = 0;
     Intent returnIntent;
@@ -81,28 +81,26 @@ public class FilterActivity extends AppCompatActivity {
         });
         Button setButton = (Button) findViewById(R.id.button_set);
         setButton.setOnClickListener(view -> {
+            currentFragment = adapter.getItem(currentTab);
             switch (currentTab) {
                 case 0:
-                    currentFragment = adapter.getItem(currentTab);
                     PlaceFragment placeFragment = (PlaceFragment) currentFragment;
                     if (placeFragment != null) {
                         placeFragment.storeFilterValues();
                         placeFragment.filter();
-                        returnData();
                     }
                     break;
                 case 1:
-                    currentFragment = adapter.getItem(currentTab);
                     SymptomFragment symptomFragment = (SymptomFragment) currentFragment;
                     if (symptomFragment != null) {
                         symptomFragment.storeFilterValues();
                         symptomFragment.filter();
-                        returnData();
                     }
                     break;
                 default:
                     break;
             }
+            returnData();
         });
 
         // If the app/activity is started for the first time, create a HashMap to store values
@@ -150,24 +148,19 @@ public class FilterActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        currentFragment = adapter.getItem(currentTab);
+        setDefaultFilterValues();
         switch (item.getItemId()) {
             case R.id.toolbar_action_clear_filter:
                 switch (currentTab) {
                     case 0:
-                        currentFragment = adapter.getItem(currentTab);
                         PlaceFragment placeFragment = (PlaceFragment) currentFragment;
-                        if (placeFragment != null) {
-                            setDefaultFilterValues();
+                        if (placeFragment != null)
                             placeFragment.setFilterSelections();
-                        }
-                        break;
                     case 1:
-                        currentFragment = adapter.getItem(currentTab);
                         SymptomFragment symptomFragment = (SymptomFragment) currentFragment;
-                        if (symptomFragment != null) {
-                            setDefaultFilterValues();
+                        if (symptomFragment != null)
                             symptomFragment.setFilterSelections();
-                        }
                     default:
                         break;
                 }
