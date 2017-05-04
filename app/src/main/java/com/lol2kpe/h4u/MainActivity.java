@@ -1,6 +1,7 @@
 package com.lol2kpe.h4u;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Map<Marker, Place> markerMap = new HashMap<>();
     private List<Place> placeData;
     private List<Place> places;
+    private SearchView searchView;
     final GsonRequest gsonRequest = new GsonRequest(url, Place[].class, null, new Response.Listener<Place[]>() {
 
         @Override
@@ -176,12 +179,66 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.drawer, menu);
+        this.searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
+        this.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
 
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String regexp = ".*" + query.toLowerCase() + ".*";
+                placeData = filterPlaces(regexp, placeData);
+                addMapMarkers(new ArrayList<>(placeData));
+                return false;
+            }
 
+            private List<Place> filterPlaces(String regexp, List<Place> placeData) {
+                List<Place> newPlaces = new ArrayList<Place>();
+                for (Place p : placeData) {
+                    if (p.getName().toLowerCase().matches(regexp) ||
+                            p.getAddress().toLowerCase().matches(regexp)) {
+                        newPlaces.add(p);
+                    }
+                }
+                return newPlaces;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        this.searchView.findViewById(R.id.search_close_btn)
+                .setOnClickListener(new SearchOnClose(this.placeData));
+        this.searchView.setOnQueryTextFocusChangeListener(new SearchOnBack(placeData));
         return true;
+    }
+    private class SearchOnClose implements View.OnClickListener{
+        private final List<Place> oldPlaces;
+
+        public SearchOnClose(List<Place> oldPlaces) {
+            this.oldPlaces = oldPlaces;
+        }
+        @Override
+        public void onClick(View v) {
+            placeData = this.oldPlaces;
+            addMapMarkers(new ArrayList<>(placeData));
+            searchView.setQuery("", false);
+        }
+    }
+
+    private class SearchOnBack implements View.OnFocusChangeListener{
+        private final List<Place> data;
+
+        public SearchOnBack(List<Place> data) {
+            this.data = data;
+        }
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if(!hasFocus) {
+                placeData = this.data;
+                addMapMarkers(new ArrayList<>(placeData));
+                searchView.setIconified(true);
+            }
+        }
     }
 
     @Override
