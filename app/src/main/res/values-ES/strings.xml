@@ -2,36 +2,24 @@
     <string name="app_name">h4u</string>
 
     <!-- Filter activity toolbar -->
-    <string name="toolbar_clear_filter">Clear filter</string>
+    <string name="toolbar_clear_filter">Limpiar filtro</string>
 
     <!-- Filter activity -->
-    <string name="activity_filter_title">Filter</string>
-    <string name="activity_filter_placetitle">Filter by place</string>
-    <string name="activity_filter_symptomtitle">Filter by symptom</string>
-    <string name="activity_filter_cancel">CANCEL</string>
-    <string name="activity_filter_set">SET FILTER</string>
+    <string name="activity_filter_title">Filtrar</string>
+    <string name="activity_filter_placetitle">Filtrar por lugar</string>
+    <string name="activity_filter_symptomtitle">Filtrar por síntoma</string>
+    <string name="activity_filter_cancel">CANCELAR</string>
+    <string name="activity_filter_set">AJUSTAR FILTRO</string>
+    <string name="tab_place">Lugar</string>
+    <string name="tab_symptom">Síntoma</string>
+    <string name="not_available">No disponible</string>
     <!-- Filter type option -->
-    <string name="activity_filter_type">Type</string>
-    <string name="type_all">All</string>
-    <string name="type_healthcenters">Hospital</string>
-    <string name="type_pharmacies">Pharmacy</string>
-    <string-array name="activity_filter_type_options">
-        <item>@string/type_all</item>
-        <item>@string/type_healthcenters</item>
-        <item>@string/type_pharmacies</item>
-    </string-array>
-    <!-- Filter opening hours option -->
-    <string name="activity_filter_openinghours">Opening hours</string>
-    <string name="openinghours_all">All</string>
-    <string name="openinghours_opennow">Open now</string>
-    <string name="openinghours_tomorrow">Tomorrow</string>
-    <string-array name="activity_filter_openinghours_options">
-        <item>@string/openinghours_all</item>
-        <item>@string/openinghours_opennow</item>
-        <item>@string/openinghours_tomorrow</item>
-    </string-array>
+    <string name="activity_filter_type">Tipo</string>
+    <string name="type_all">Todos</string>
+    <string name="type_healthcenters">Hospitales</string>
+    <string name="type_pharmacies">Farmacias</string>
     <!-- Filter rating option -->
-    <string name="activity_filter_rating">Minimum rating</string>
+    <string name="activity_filter_rating">Valoración mínima</string>
     <string-array name="activity_filter_rating_options">
         <item>1</item>
         <item>2</item>
@@ -39,17 +27,29 @@
         <item>4</item>
         <item>5</item>
     </string-array>
+    <!-- Filter symptom option -->
+    <string name="activity_filter_symptom">Síntoma</string>
+    <string name="symptom_all">Todos</string>
+    <string name="symptom_throat">Dolor de garganta</string>
+    <string name="symptom_fever">Fiebre</string>
+    <string name="symptom_cough">Tos</string>
+    <string name="symptom_broke">Traumatología</string>
+    <string name="symptom_urine">Trastorno urinario</string>
+    <string name="symptom_ear">Trastorno auditivo</string>
+    <string name="symptom_cold">Resfriado</string>
+    <string name="symptom_head">Dolor de cabeza</string>
+
     <!-- Main/FilterActivity Intent Names -->
-    <string name="object_data">objects</string>
-    <string name="filtered_data">result</string>
+    <string name="object_data">Objetos</string>
+    <string name="filtered_data">Resultados</string>
     <!-- Filter toast messages -->
-    <string name="results">Showing filter results</string>
-    <string name="no_results">No results found</string>
+    <string name="results">Este es el resultado de tu búsqueda</string>
+    <string name="no_results">No se han encontrado resultados</string>
 
     <string name="title_activity_drawer">DrawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configuración</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_maps">Map</string>
 
@@ -147,4 +147,24 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+
+
+    <string name="invalid_input">Entrada inválida</string>
+    <string name="incorrect_user">Usuario o contraseña incorrectos</string>
+    <string name="password_not">Las contraseñas no coinciden</string>
+    <string name="fill_in">Completa todos los campos</string>
+    <string name="address">Dirección</string>
+    <string name="phone">Teléfono</string>
+    <string name="rating">Valoración</string>
+    <string name="opening_hour">Horario de apertura</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="user">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="save_credentials">Guardar credenciales</string>
+    <string name="email">Correo electrónico</string>
+    <string name="sign_up">Registro</string>
+    <string name="re_password">Reescribir contraseña</string>
+    <string name="home">Inicio</string>
+    <string name="profile">Mi cuenta</string>
+    <string name="log_out">Cerrar sesión</string>
 </resources>

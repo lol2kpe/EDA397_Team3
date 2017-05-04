@@ -259,8 +259,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.home) {
 
-        } else if (id == R.id.med_reminders) {
-
         } else if (id == R.id.settings) {
         } else if(id == R.id.profile) {
 

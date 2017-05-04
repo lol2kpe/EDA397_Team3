@@ -15,7 +15,7 @@
         android:layout_marginTop="47dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="User"
+        android:hint="@string/user"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -23,7 +23,7 @@
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="@string/email"
         android:layout_alignStart="@+id/username"
         android:layout_below="@+id/username"
         android:layout_marginTop="18dp"
@@ -34,7 +34,7 @@
         android:id="@+id/phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Phone"
+        android:hint="@string/phone"
         android:layout_marginTop="18dp"
         android:ems="10"
         android:inputType="phone"
@@ -43,7 +43,7 @@
 
     <EditText
         android:id="@+id/password"
-        android:hint="Password"
+        android:hint="@string/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -55,7 +55,7 @@
     <EditText
         android:id="@+id/repassword"
         android:layout_width="wrap_content"
-        android:hint="Retype password"
+        android:hint="@string/re_password"
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"
         android:ems="10"
@@ -68,7 +68,7 @@
         android:drawableTop="@drawable/ic_signupbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign up"
+        android:text="@string/sign_up"
         android:layout_below="@+id/repassword"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp" />
