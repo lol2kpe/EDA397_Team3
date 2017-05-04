@@ -27,8 +27,6 @@ Favorite locations:
 Save function:
 
 
-
-
  */
 
 public class ProfileActivity extends AppCompatActivity {
@@ -59,6 +57,12 @@ public class ProfileActivity extends AppCompatActivity {
 
         }
     }
+
+    public void deleteLocation(String name) {
+        DatabaseHandler db = new DatabaseHandler(this);
+        db.deleteRow(name);
+    }
+
     public void addListeners(){
         final Button button = (Button) findViewById(R.id.saveButton);
         button.setOnClickListener(new View.OnClickListener() {
