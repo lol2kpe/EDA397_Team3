@@ -27,7 +27,8 @@ public class FilterActivity extends AppCompatActivity {
     final static String TYPE = "type";
     final static String OPENING_HOUR = "openingHour";
     final static String RATING = "rating";
-    public static HashMap<String, Integer> filterSelections;
+    final static String SYMPTOM = "symptom";
+    static HashMap<String, Integer> filterSelections;
     static ArrayList<Place> returnList;
     Integer currentTab = 0;
     Intent returnIntent;
@@ -44,14 +45,15 @@ public class FilterActivity extends AppCompatActivity {
 
         // Add tabs to the FilterActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Place"));
-        tabLayout.addTab(tabLayout.newTab().setText("Symptom"));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.tab_place)));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.tab_symptom)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(currentTab);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -80,20 +82,26 @@ public class FilterActivity extends AppCompatActivity {
         });
         Button setButton = (Button) findViewById(R.id.button_set);
         setButton.setOnClickListener(view -> {
+            currentFragment = adapter.getItem(currentTab);
             switch (currentTab) {
                 case 0:
-                    currentFragment = adapter.getItem(currentTab);
                     PlaceFragment placeFragment = (PlaceFragment) currentFragment;
                     if (placeFragment != null) {
                         placeFragment.storeFilterValues();
                         placeFragment.filter();
-                        returnData();
                     }
+                    break;
                 case 1:
+                    SymptomFragment symptomFragment = (SymptomFragment) currentFragment;
+                    if (symptomFragment != null) {
+                        symptomFragment.storeFilterValues();
+                        symptomFragment.filter();
+                    }
                     break;
                 default:
                     break;
             }
+            returnData();
         });
 
         // If the app/activity is started for the first time, create a HashMap to store values
@@ -143,21 +151,29 @@ public class FilterActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.toolbar_action_clear_filter:
-                switch (currentTab) {
-                    case 0:
-                        currentFragment = adapter.getItem(currentTab);
-                        PlaceFragment placeFragment = (PlaceFragment) currentFragment;
-                        if (placeFragment != null) {
-                            setDefaultFilterValues();
-                            placeFragment.setFilterSelections();
-                        }
-                    case 1:
-                        break;
-                    default:
-                        break;
-                }
+                resetCurrentTab();
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void resetCurrentTab() {
+        setDefaultFilterValues();
+        currentFragment = adapter.getItem(currentTab);
+        Log.i("CurrentTab", " Current tab is: " + Integer.toString(currentTab));
+        switch (currentTab) {
+            case 0:
+                PlaceFragment placeFragment = (PlaceFragment) currentFragment;
+                if (placeFragment != null)
+                    placeFragment.setFilterSelections();
+                break;
+            case 1:
+                SymptomFragment symptomFragment = (SymptomFragment) currentFragment;
+                if (symptomFragment != null)
+                    symptomFragment.setFilterSelections();
+                break;
+            default:
+                break;
         }
     }
 
@@ -220,6 +236,7 @@ public class FilterActivity extends AppCompatActivity {
         filterSelections.put(TYPE, 0);
         filterSelections.put(OPENING_HOUR, 0);
         filterSelections.put(RATING, 0);
+        filterSelections.put(SYMPTOM, 0);
     }
 
     /**

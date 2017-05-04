@@ -9,7 +9,7 @@ public enum Symptom {
     BROKEN_BONE,
     SORE_THROAT,
     COUGH,
-    URNIARY_DISORDER,
+    URINARY_DISORDER,
     EAR_DISORDER,
     HEADACHE,
     COLD;
@@ -18,7 +18,7 @@ public enum Symptom {
             BROKEN_BONE,
             SORE_THROAT,
             COUGH,
-            URNIARY_DISORDER,
+            URINARY_DISORDER,
             EAR_DISORDER
     };
     public final static Symptom[] PHARMACY_SYMPTOMS = {
