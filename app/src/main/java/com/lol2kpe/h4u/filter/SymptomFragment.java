@@ -17,15 +17,21 @@ import com.lol2kpe.h4u.data.model.Symptom;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import static com.lol2kpe.h4u.filter.FilterActivity.OPENING_HOUR;
-import static com.lol2kpe.h4u.filter.FilterActivity.RATING;
+import static com.lol2kpe.h4u.data.model.HospitalSymptom.COUGH;
+import static com.lol2kpe.h4u.data.model.HospitalSymptom.EAR_DISORDER;
+import static com.lol2kpe.h4u.data.model.HospitalSymptom.URINARY_DISORDER;
+import static com.lol2kpe.h4u.data.model.HospitalSymptom.URNIARY_DISORDER;
+import static com.lol2kpe.h4u.data.model.PharmacySymptom.COLD;
+import static com.lol2kpe.h4u.data.model.PharmacySymptom.FEVER;
+import static com.lol2kpe.h4u.data.model.PharmacySymptom.HEADACHE;
+import static com.lol2kpe.h4u.data.model.PharmacySymptom.SORE_THROAT;
 import static com.lol2kpe.h4u.filter.FilterActivity.SYMPTOM;
-import static com.lol2kpe.h4u.filter.FilterActivity.TYPE;
 import static com.lol2kpe.h4u.filter.FilterActivity.filterSelections;
 import static com.lol2kpe.h4u.filter.FilterActivity.returnList;
 
@@ -35,7 +41,7 @@ import static com.lol2kpe.h4u.filter.FilterActivity.returnList;
 public class SymptomFragment extends Fragment {
 
     Spinner spinnerSymptom;
-    Map<String, Symptom> symptoms;
+    Map<String, Symptom> symptomsMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,12 +49,12 @@ public class SymptomFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.symptom_tab, container, false);
 
         Set<Symptom> symptoms = new HashSet<>();
-        Collections.addAll(symptoms, HospitalSymptom.values());
-        Collections.addAll(symptoms, PharmacySymptom.values());
+        Collections.addAll(symptoms, Symptom.values());
         Log.i("Symptoms", symptoms.toString());
+        symptomsMap = new HashMap<>();
 
-        for(Symptom symptom: symptoms) {
-            checkSymptom();
+        for (Symptom symptom : symptoms) {
+            mapSymptom(symptom);
         }
 
         spinnerSymptom = (Spinner) rootView.findViewById(R.id.spinner_symptom);
@@ -58,18 +64,43 @@ public class SymptomFragment extends Fragment {
         return rootView;
     }
 
-    private void checkSymptom() {
+    private void mapSymptom(Symptom symptom) {
+
+        switch(symptom) {
+            case FEVER:
+                symptomsMap.put(getResources().getString(R.string.symptom_fever), FEVER);
+                break;
+            case HEADACHE:
+                break;
+            case COLD:
+                break;
+            case SORE_THROAT:
+                break;
+            case COUGH:
+                break;
+            case URINARY_DISORDER:
+                break;
+            case EAR_DISORDER:
+                break;
+            default:
+                break;
+        }
+
     }
 
     /**
      * Populates the Spinner object with a list of items. The method takes the Spinner object and
      * based on the type of the Spinner object, retrives relevant information from the list of
      * Place objects. Creates an empty list if no relevant info could be found, or creates a
+     *
      * @param spinner
      */
     private void populateSpinner(Spinner spinner) {
         ArrayList<String> items = new ArrayList<>();
         for (Place p : returnList) {
+
+            
+
             String item = null;
             if (spinner == spinnerSymptom)
                 item = p.getClass().getSimpleName();
@@ -94,6 +125,7 @@ public class SymptomFragment extends Fragment {
 
     /**
      * Simply toggles the availability of a Spinner
+     *
      * @param spinner The Spinner to enable/disable
      */
     void toggleSpinner(Spinner spinner) {
@@ -145,9 +177,9 @@ public class SymptomFragment extends Fragment {
      * of the selected item, else returns false.
      */
     private boolean checkSymptom(Place p) {
-        if(spinnerSymptom.getSelectedItem().toString().equals("All"))
+        if (spinnerSymptom.getSelectedItem().toString().equals("All"))
             return true;
-        else if(spinnerSymptom.getSelectedItem().toString().equals("Traumatologibrokenlegs Syndrome") &&
+        else if (spinnerSymptom.getSelectedItem().toString().equals("Traumatologibrokenlegs Syndrome") &&
                 p.getClass().getSimpleName().equals("Hospital"))
             return true;
         else if (spinnerSymptom.getSelectedItem().toString().equals("Headache") &&
