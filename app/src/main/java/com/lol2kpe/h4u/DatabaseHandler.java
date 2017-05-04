@@ -133,6 +133,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
             return cursor.getCount();
         }
+        public void deleteRow(String name) {
+            SQLiteDatabase database = this.getWritableDatabase();
+            database.execSQL("DELETE FROM " + TABLE_PLACES + " WHERE " + KEY_NAME  + "= '" + name + "'");
+            database.close();
+        }
     }
 
 
