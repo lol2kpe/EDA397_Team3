@@ -5,9 +5,7 @@ import com.lol2kpe.h4u.data.generator.config.HospitalConfig;
 import com.lol2kpe.h4u.data.generator.config.PharmacyConfig;
 import com.lol2kpe.h4u.data.generator.config.PlaceConfig;
 import com.lol2kpe.h4u.data.model.Hospital;
-import com.lol2kpe.h4u.data.model.HospitalSymptom;
 import com.lol2kpe.h4u.data.model.Pharmacy;
-import com.lol2kpe.h4u.data.model.PharmacySymptom;
 import com.lol2kpe.h4u.data.model.Place;
 import com.lol2kpe.h4u.data.model.Symptom;
 
@@ -115,7 +113,7 @@ public class DataGenerator implements Iterable<Place>{
 
     private Set<Symptom> generatePharmacySymptoms() {
         Set<Symptom> generatedSymptoms = new HashSet<>();
-        Symptom[] symptoms = PharmacySymptom.values();
+        Symptom[] symptoms = Symptom.PHARMACY_SYMPTOMS;
         for(int i = 0; i < 3; i++) {
             generatedSymptoms.add(symptoms[this.randomGenerator.nextInt(symptoms.length)]);
         }
@@ -124,7 +122,7 @@ public class DataGenerator implements Iterable<Place>{
 
     private Set<Symptom> generateHospitalSymptoms() {
         Set<Symptom> generatedSymptoms = new HashSet<>();
-        Symptom[] symptoms = HospitalSymptom.values();
+        Symptom[] symptoms = Symptom.HOSPITAL_SYMPTOMS;
         for(int i = 0; i < 3; i++) {
             generatedSymptoms.add(symptoms[this.randomGenerator.nextInt(symptoms.length)]);
         }
