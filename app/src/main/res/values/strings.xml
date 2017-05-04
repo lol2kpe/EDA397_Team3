@@ -11,26 +11,13 @@
     <string name="activity_filter_symptomtitle">Filter by symptom</string>
     <string name="activity_filter_cancel">CANCEL</string>
     <string name="activity_filter_set">SET FILTER</string>
+
+    <string name="not_available">Not available</string>
     <!-- Filter type option -->
     <string name="activity_filter_type">Type</string>
     <string name="type_all">All</string>
     <string name="type_healthcenters">Hospital</string>
     <string name="type_pharmacies">Pharmacy</string>
-    <string-array name="activity_filter_type_options">
-        <item>@string/type_all</item>
-        <item>@string/type_healthcenters</item>
-        <item>@string/type_pharmacies</item>
-    </string-array>
-    <!-- Filter opening hours option -->
-    <string name="activity_filter_openinghours">Opening hours</string>
-    <string name="openinghours_all">All</string>
-    <string name="openinghours_opennow">Open now</string>
-    <string name="openinghours_tomorrow">Tomorrow</string>
-    <string-array name="activity_filter_openinghours_options">
-        <item>@string/openinghours_all</item>
-        <item>@string/openinghours_opennow</item>
-        <item>@string/openinghours_tomorrow</item>
-    </string-array>
     <!-- Filter rating option -->
     <string name="activity_filter_rating">Minimum rating</string>
     <string-array name="activity_filter_rating_options">
@@ -49,15 +36,8 @@
     <string name="symptom_broke">Broken bone</string>
     <string name="symptom_urine">Urinary disorder</string>
     <string name="symptom_ear">Ear disorder</string>
-    <string-array name="activity_filter_symptom_options">
-        <item>@string/symptom_all</item>
-        <item>@string/symptom_throat</item>
-        <item>@string/symptom_fever</item>
-        <item>@string/symptom_cough</item>
-        <item>@string/symptom_broke</item>
-        <item>@string/symptom_urine</item>
-        <item>@string/symptom_ear</item>
-    </string-array>
+    <string name="symptom_cold">Cold</string>
+    <string name="symptom_head">Head Ache</string>
 
     <!-- Main/FilterActivity Intent Names -->
     <string name="object_data">objects</string>

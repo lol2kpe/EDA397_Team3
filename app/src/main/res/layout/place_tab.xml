@@ -50,13 +50,6 @@
                 android:text="@string/activity_filter_type" />
 
             <TextView
-                android:id="@+id/text_openinghours"
-                android:layout_width="wrap_content"
-                android:layout_height="72dp"
-                android:gravity="center"
-                android:text="@string/activity_filter_openinghours"/>
-
-            <TextView
                 android:id="@+id/text_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
@@ -74,11 +67,6 @@
 
             <Spinner
                 android:id="@+id/spinner_type"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"/>
-
-            <Spinner
-                android:id="@+id/spinner_openinghours"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"/>
 

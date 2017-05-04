@@ -53,6 +53,7 @@ public class FilterActivity extends AppCompatActivity {
         adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(currentTab);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -148,24 +149,31 @@ public class FilterActivity extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        currentFragment = adapter.getItem(currentTab);
-        setDefaultFilterValues();
         switch (item.getItemId()) {
             case R.id.toolbar_action_clear_filter:
-                switch (currentTab) {
-                    case 0:
-                        PlaceFragment placeFragment = (PlaceFragment) currentFragment;
-                        if (placeFragment != null)
-                            placeFragment.setFilterSelections();
-                    case 1:
-                        SymptomFragment symptomFragment = (SymptomFragment) currentFragment;
-                        if (symptomFragment != null)
-                            symptomFragment.setFilterSelections();
-                    default:
-                        break;
-                }
+                resetCurrentTab();
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void resetCurrentTab() {
+        setDefaultFilterValues();
+        currentFragment = adapter.getItem(currentTab);
+        Log.i("CurrentTab", " Current tab is: " + Integer.toString(currentTab));
+        switch (currentTab) {
+            case 0:
+                PlaceFragment placeFragment = (PlaceFragment) currentFragment;
+                if (placeFragment != null)
+                    placeFragment.setFilterSelections();
+                break;
+            case 1:
+                SymptomFragment symptomFragment = (SymptomFragment) currentFragment;
+                if (symptomFragment != null)
+                    symptomFragment.setFilterSelections();
+                break;
+            default:
+                break;
         }
     }
 

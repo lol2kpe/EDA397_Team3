@@ -10,8 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.lol2kpe.h4u.R;
-import com.lol2kpe.h4u.data.model.HospitalSymptom;
-import com.lol2kpe.h4u.data.model.PharmacySymptom;
 import com.lol2kpe.h4u.data.model.Place;
 import com.lol2kpe.h4u.data.model.Symptom;
 
@@ -23,69 +21,41 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import static com.lol2kpe.h4u.data.model.HospitalSymptom.COUGH;
-import static com.lol2kpe.h4u.data.model.HospitalSymptom.EAR_DISORDER;
-import static com.lol2kpe.h4u.data.model.HospitalSymptom.URINARY_DISORDER;
-import static com.lol2kpe.h4u.data.model.HospitalSymptom.URNIARY_DISORDER;
-import static com.lol2kpe.h4u.data.model.PharmacySymptom.COLD;
-import static com.lol2kpe.h4u.data.model.PharmacySymptom.FEVER;
-import static com.lol2kpe.h4u.data.model.PharmacySymptom.HEADACHE;
-import static com.lol2kpe.h4u.data.model.PharmacySymptom.SORE_THROAT;
 import static com.lol2kpe.h4u.filter.FilterActivity.SYMPTOM;
 import static com.lol2kpe.h4u.filter.FilterActivity.filterSelections;
 import static com.lol2kpe.h4u.filter.FilterActivity.returnList;
 
 /**
- * Created by Jonathan on 2017-04-24.
+ * Created by Jonathan Granström
+ * User: Jonathan "juntski" Granström
+ * Date: 2017-04-24
  */
 public class SymptomFragment extends Fragment {
 
     Spinner spinnerSymptom;
-    Map<String, Symptom> symptomsMap;
+    Set<Symptom> symptoms;
+    Map<Integer, Symptom> symptomsMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.symptom_tab, container, false);
 
-        Set<Symptom> symptoms = new HashSet<>();
-        Collections.addAll(symptoms, Symptom.values());
-        Log.i("Symptoms", symptoms.toString());
-        symptomsMap = new HashMap<>();
-
-        for (Symptom symptom : symptoms) {
-            mapSymptom(symptom);
-        }
-
         spinnerSymptom = (Spinner) rootView.findViewById(R.id.spinner_symptom);
+
+        getSymptoms();
         populateSpinner(spinnerSymptom);
         setFilterSelections();
 
         return rootView;
     }
 
-    private void mapSymptom(Symptom symptom) {
+    private void getSymptoms() {
 
-        switch(symptom) {
-            case FEVER:
-                symptomsMap.put(getResources().getString(R.string.symptom_fever), FEVER);
-                break;
-            case HEADACHE:
-                break;
-            case COLD:
-                break;
-            case SORE_THROAT:
-                break;
-            case COUGH:
-                break;
-            case URINARY_DISORDER:
-                break;
-            case EAR_DISORDER:
-                break;
-            default:
-                break;
-        }
+        symptoms = new HashSet<>();
+        Collections.addAll(symptoms, Symptom.values());
 
+        Log.i("Symptoms", symptoms.toString());
     }
 
     /**
@@ -93,34 +63,83 @@ public class SymptomFragment extends Fragment {
      * based on the type of the Spinner object, retrives relevant information from the list of
      * Place objects. Creates an empty list if no relevant info could be found, or creates a
      *
-     * @param spinner
+     * @param spinner the spinner object to populate with list items
      */
     private void populateSpinner(Spinner spinner) {
+
         ArrayList<String> items = new ArrayList<>();
-        for (Place p : returnList) {
-
-            
-
-            String item = null;
-            if (spinner == spinnerSymptom)
-                item = p.getClass().getSimpleName();
-            if (!items.contains(item) && item != null)
-                items.add(item);
+        // If no symptoms are found, put a notice in the spinner and disable the spinner
+        if (symptoms.isEmpty() && spinnerSymptom.isEnabled()) {
+            toggleSpinner(spinnerSymptom);
+            items.add(getResources().getString(R.string.not_available));
         }
-        if (!items.isEmpty()) {
-            Collections.sort(items);
-            items.add(0, "All");
-        } else {
-            items.add("Not available");
-            toggleSpinner(spinner);
+        // Else, map each symptom
+        else {
+            symptomsMap = new HashMap<>();
+            items.add(getResources().getString(R.string.symptom_all));
+            int i = 1;
+            for (Symptom symptom : symptoms) {
+                symptomsMap.put(i, symptom);
+                items.add(getSymptomString(symptom));
+                i++;
+            }
         }
         // Create Adapter object with data items for the Spinner object
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                getContext(), R.array.activity_filter_symptom_options,
-                android.R.layout.simple_spinner_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                getContext(), android.R.layout.simple_spinner_item, items);
         // Set the View for the items in the data set in the Adapter object
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+    }
+
+    private String getSymptomString(Symptom symptom) {
+
+        switch (symptom) {
+            case FEVER:
+                return getResources().getString(R.string.symptom_fever);
+            case COLD:
+                return getResources().getString(R.string.symptom_cold);
+            case COUGH:
+                return getResources().getString(R.string.symptom_cough);
+            case BROKEN_BONE:
+                return getResources().getString(R.string.symptom_broke);
+            case SORE_THROAT:
+                return getResources().getString(R.string.symptom_throat);
+            case EAR_DISORDER:
+                return getResources().getString(R.string.symptom_ear);
+            case URINARY_DISORDER:
+                return getResources().getString(R.string.symptom_urine);
+            case HEADACHE:
+                return getResources().getString(R.string.symptom_head);
+            default:
+                Log.w("NoSymptomStringFound", "No matching String was found for a symptom: " + symptom.toString());
+                return "Unknown symptom";
+        }
+    }
+
+    /**
+     * The method takes the selected item of the "Type" spinner and compares
+     * its String value against the class of the Place object. The method returns true if the
+     * Place object's class is equal to the String value of the selected item.
+     * Else, the method returns false.
+     *
+     * @param place The current Place object.
+     * @return True if the class of the Place object is equal to the current String value
+     * of the selected item, else returns false.
+     */
+    private boolean checkSymptom(Place place) {
+
+        Set<Symptom> symptoms = place.getSymptoms();
+        Log.i("CheckSymptomInfo", "Place: " + place.getName() +
+                " Symptoms: " + place.getSymptoms().toString() +
+                " Selected symptom: " + symptomsMap.get(spinnerSymptom.getSelectedItemPosition()));
+        if (symptoms.contains(symptomsMap.get(spinnerSymptom.getSelectedItemPosition()))) {
+            return true;
+        } else if (spinnerSymptom.getSelectedItemPosition() == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -129,6 +148,7 @@ public class SymptomFragment extends Fragment {
      * @param spinner The Spinner to enable/disable
      */
     void toggleSpinner(Spinner spinner) {
+
         spinner.setEnabled(!spinner.isEnabled());
     }
 
@@ -137,6 +157,7 @@ public class SymptomFragment extends Fragment {
      * stored in the HashMap.
      */
     void setFilterSelections() {
+
         spinnerSymptom.setSelection(filterSelections.get(SYMPTOM));
     }
 
@@ -145,6 +166,7 @@ public class SymptomFragment extends Fragment {
      * value currently selected/displayed by the SpinnerObjects.
      */
     void storeFilterValues() {
+
         filterSelections.put(SYMPTOM, spinnerSymptom.getSelectedItemPosition());
     }
 
@@ -156,6 +178,7 @@ public class SymptomFragment extends Fragment {
      */
     @SuppressWarnings({"unchecked"})
     void filter() {
+
         if (!returnList.isEmpty()) {
             // Symptom filter
             for (Iterator<Place> i = returnList.iterator(); i.hasNext(); ) {
@@ -164,32 +187,5 @@ public class SymptomFragment extends Fragment {
                     i.remove();
             }
         }
-    }
-
-    /**
-     * The method takes the selected item of the "Type" spinner and compares
-     * its String value against the class of the Place object. The method returns true if the
-     * Place object's class is equal to the String value of the selected item.
-     * Else, the method returns false.
-     *
-     * @param p The current Place object.
-     * @return True if the class of the Place object is equal to the current String value
-     * of the selected item, else returns false.
-     */
-    private boolean checkSymptom(Place p) {
-        if (spinnerSymptom.getSelectedItem().toString().equals("All"))
-            return true;
-        else if (spinnerSymptom.getSelectedItem().toString().equals("Traumatologibrokenlegs Syndrome") &&
-                p.getClass().getSimpleName().equals("Hospital"))
-            return true;
-        else if (spinnerSymptom.getSelectedItem().toString().equals("Headache") &&
-                p.getClass().getSimpleName().equals("Pharmacy"))
-            return true;
-        else if (spinnerSymptom.getSelectedItem().toString().equals("Sore throat") &&
-                p.getClass().getSimpleName().equals("Pharmacy"))
-            return true;
-        else
-            return false;
-
     }
 }

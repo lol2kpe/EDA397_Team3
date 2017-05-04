@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-import static com.lol2kpe.h4u.filter.FilterActivity.OPENING_HOUR;
 import static com.lol2kpe.h4u.filter.FilterActivity.RATING;
 import static com.lol2kpe.h4u.filter.FilterActivity.TYPE;
 import static com.lol2kpe.h4u.filter.FilterActivity.filterSelections;
@@ -28,17 +27,15 @@ import static com.lol2kpe.h4u.filter.FilterActivity.returnList;
  */
 public class PlaceFragment extends Fragment {
 
-    Spinner spinnerType, spinnerOpeningHours, spinnerRating;
+    Spinner spinnerType, spinnerRating;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.place_tab, container, false);
 
         spinnerType = (Spinner) rootView.findViewById(R.id.spinner_type);
-        spinnerOpeningHours = (Spinner) rootView.findViewById(R.id.spinner_openinghours);
         spinnerRating = (Spinner) rootView.findViewById(R.id.spinner_rating);
         populateSpinner(spinnerType);
-        populateSpinner(spinnerOpeningHours);
         populateSpinner(spinnerRating);
         setFilterSelections();
 
@@ -49,7 +46,8 @@ public class PlaceFragment extends Fragment {
      * Populates the Spinner object with a list of items. The method takes the Spinner object and
      * based on the type of the Spinner object, retrives relevant information from the list of
      * Place objects. Creates an empty list if no relevant info could be found, or creates a
-     * @param spinner
+     *
+     * @param spinner the spinner objects to populate with list items
      */
     private void populateSpinner(Spinner spinner) {
         ArrayList<String> items = new ArrayList<>();
@@ -80,6 +78,7 @@ public class PlaceFragment extends Fragment {
 
     /**
      * Simply toggles the availability of a Spinner
+     *
      * @param spinner The Spinner to enable/disable
      */
     void toggleSpinner(Spinner spinner) {
@@ -92,7 +91,6 @@ public class PlaceFragment extends Fragment {
      */
     void setFilterSelections() {
         spinnerType.setSelection(filterSelections.get(TYPE));
-        spinnerOpeningHours.setSelection(filterSelections.get(OPENING_HOUR));
         spinnerRating.setSelection(filterSelections.get(RATING));
     }
 
@@ -102,7 +100,6 @@ public class PlaceFragment extends Fragment {
      */
     void storeFilterValues() {
         filterSelections.put(TYPE, spinnerType.getSelectedItemPosition());
-        filterSelections.put(OPENING_HOUR, spinnerOpeningHours.getSelectedItemPosition());
         filterSelections.put(RATING, spinnerRating.getSelectedItemPosition());
     }
 
