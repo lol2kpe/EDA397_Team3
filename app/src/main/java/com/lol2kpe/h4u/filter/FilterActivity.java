@@ -45,8 +45,8 @@ public class FilterActivity extends AppCompatActivity {
 
         // Add tabs to the FilterActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Place"));
-        tabLayout.addTab(tabLayout.newTab().setText("Symptom"));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.tab_place)));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.tab_symptom)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);

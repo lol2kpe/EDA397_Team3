@@ -2,6 +2,7 @@ package com.lol2kpe.h4u.filter;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,15 @@ import android.widget.Spinner;
 
 import com.lol2kpe.h4u.R;
 import com.lol2kpe.h4u.data.model.Place;
+import com.lol2kpe.h4u.data.model.Places;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import static com.lol2kpe.h4u.filter.FilterActivity.RATING;
 import static com.lol2kpe.h4u.filter.FilterActivity.TYPE;
@@ -28,6 +34,8 @@ import static com.lol2kpe.h4u.filter.FilterActivity.returnList;
 public class PlaceFragment extends Fragment {
 
     Spinner spinnerType, spinnerRating;
+    Set<Places> places;
+    Map<Integer, Places> placesMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,11 +43,22 @@ public class PlaceFragment extends Fragment {
 
         spinnerType = (Spinner) rootView.findViewById(R.id.spinner_type);
         spinnerRating = (Spinner) rootView.findViewById(R.id.spinner_rating);
+
+        getPlaces();
         populateSpinner(spinnerType);
         populateSpinner(spinnerRating);
+
         setFilterSelections();
 
         return rootView;
+    }
+
+    private void getPlaces() {
+
+        places = new HashSet<>();
+        Collections.addAll(places, Places.values());
+
+        Log.i("Places", places.toString());
     }
 
     /**
@@ -51,26 +70,32 @@ public class PlaceFragment extends Fragment {
      */
     private void populateSpinner(Spinner spinner) {
         ArrayList<String> items = new ArrayList<>();
-        for (Place p : returnList) {
-            String item = null;
-            if (spinner == spinnerType)
-                item = p.getClass().getSimpleName();
-            else if (spinner == spinnerRating)
-                item = Integer.toString(p.getRating());
-            if (!items.contains(item) && item != null)
-                items.add(item);
-        }
-        if (!items.isEmpty()) {
-            Collections.sort(items);
-            items.add(0, "All");
-        } else {
-            items.add("Not available");
-            toggleSpinner(spinner);
+
+        if (spinner.equals(spinnerType)) {
+            // If no symptoms are found, put a notice in the spinner and disable the spinner
+            if (places.isEmpty() && spinner.isEnabled()) {
+                toggleSpinner(spinner);
+                items.add(getResources().getString(R.string.not_available));
+            }
+            // Else, map each symptom
+            else {
+                placesMap = new HashMap<>();
+                items.add(getResources().getString(R.string.symptom_all));
+                int i = 1;
+                for (Places place : places) {
+                    placesMap.put(i, place);
+                    items.add(getPlaceString(place));
+                    i++;
+                }
+            }
+        } else if (spinner.equals(spinnerRating)) {
+            for (int i = 1; i <= 5; i++) {
+                items.add(Integer.toString(i));
+            }
         }
         // Create Adapter object with data items for the Spinner object
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                getContext(), android.R.layout.simple_spinner_item,
-                items.toArray(new String[items.size()]));
+                getContext(), android.R.layout.simple_spinner_item, items);
         // Set the View for the items in the data set in the Adapter object
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -127,19 +152,40 @@ public class PlaceFragment extends Fragment {
         }
     }
 
+    private String getPlaceString(Places place) {
+
+        switch (place) {
+            case HOSPITAL:
+                return getResources().getString(R.string.type_healthcenters);
+            case PHARMACY:
+                return getResources().getString(R.string.type_pharmacies);
+            default:
+                Log.w("NoSymptomStringFound", "No matching String was found for a symptom: " + place.toString());
+                return "Unknown symptom";
+        }
+    }
+
     /**
      * The method takes the selected item of the "Type" spinner and compares
      * its String value against the class of the Place object. The method returns true if the
      * Place object's class is equal to the String value of the selected item.
      * Else, the method returns false.
      *
-     * @param p The current Place object.
+     * @param place The current Place object.
      * @return True if the class of the Place object is equal to the current String value
      * of the selected item, else returns false.
      */
-    private boolean checkType(Place p) {
-        return (spinnerType.getSelectedItem().toString().equals("All") ||
-                spinnerType.getSelectedItem().toString().equals(p.getClass().getSimpleName()));
+    private boolean checkType(Place place) {
+        String currentPlace = place.getClass().getSimpleName();
+        Log.i("TYPE", "Current type: " + currentPlace + " Spinner pos: " + Integer.toString(spinnerType.getSelectedItemPosition()));
+        if(currentPlace.equals("Hospital") && spinnerType.getSelectedItemPosition() == 1)
+            return true;
+        else if(currentPlace.equals("Pharmacy") && spinnerType.getSelectedItemPosition() == 2)
+            return true;
+        else if (spinnerType.getSelectedItemPosition() == 0)
+            return true;
+        else
+            return false;
     }
 
     /**
@@ -153,7 +199,6 @@ public class PlaceFragment extends Fragment {
      * the selected item value, else returns false.
      */
     private boolean checkRating(Place p) {
-        return (spinnerRating.getSelectedItem().toString().equals("All") ||
-                (p.getRating() >= Integer.parseInt(spinnerRating.getSelectedItem().toString())));
+        return (p.getRating() >= Integer.parseInt(spinnerRating.getSelectedItem().toString()));
     }
 }

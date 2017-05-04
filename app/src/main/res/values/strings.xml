@@ -11,7 +11,8 @@
     <string name="activity_filter_symptomtitle">Filter by symptom</string>
     <string name="activity_filter_cancel">CANCEL</string>
     <string name="activity_filter_set">SET FILTER</string>
-
+    <string name="tab_place">Place</string>
+    <string name="tab_symptom">Symptom</string>
     <string name="not_available">Not available</string>
     <!-- Filter type option -->
     <string name="activity_filter_type">Type</string>

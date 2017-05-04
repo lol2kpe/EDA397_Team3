@@ -69,8 +69,8 @@ public class SymptomFragment extends Fragment {
 
         ArrayList<String> items = new ArrayList<>();
         // If no symptoms are found, put a notice in the spinner and disable the spinner
-        if (symptoms.isEmpty() && spinnerSymptom.isEnabled()) {
-            toggleSpinner(spinnerSymptom);
+        if (symptoms.isEmpty() && spinner.isEnabled()) {
+            toggleSpinner(spinner);
             items.add(getResources().getString(R.string.not_available));
         }
         // Else, map each symptom
@@ -133,13 +133,8 @@ public class SymptomFragment extends Fragment {
         Log.i("CheckSymptomInfo", "Place: " + place.getName() +
                 " Symptoms: " + place.getSymptoms().toString() +
                 " Selected symptom: " + symptomsMap.get(spinnerSymptom.getSelectedItemPosition()));
-        if (symptoms.contains(symptomsMap.get(spinnerSymptom.getSelectedItemPosition()))) {
-            return true;
-        } else if (spinnerSymptom.getSelectedItemPosition() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return (symptoms.contains(symptomsMap.get(spinnerSymptom.getSelectedItemPosition())) ||
+                spinnerSymptom.getSelectedItemPosition() == 0);
     }
 
     /**
