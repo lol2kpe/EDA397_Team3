@@ -5,8 +5,6 @@ import com.lol2kpe.h4u.filter.SymptomFragment;
 import java.util.HashSet;
 import java.util.Set;
 
-import xyz.samhal.openinghours.OpeningHours;
-
 /**
  * Created by sam on 4/6/17.
  */
@@ -14,7 +12,7 @@ import xyz.samhal.openinghours.OpeningHours;
 public abstract class Place implements java.io.Serializable {
     protected int rating = 0;
     protected String address = "";
-    protected transient OpeningHours openingHours = new OpeningHours();
+    protected String openingHours = "Unavailable";
     protected double latitude = 0;
     protected double longitude = 0;
     protected String phoneNumber = "";
@@ -41,7 +39,7 @@ public abstract class Place implements java.io.Serializable {
         return address;
     }
 
-    public OpeningHours getOpeningHours() {
+    public String getOpeningHours() {
         return openingHours;
     }
 

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 import com.lol2kpe.h4u.MainActivity;
@@ -73,26 +74,32 @@ public class FilterActivity extends AppCompatActivity {
 
         // Get the buttons and set their onClickListeners and functionality
         Button cancelButton = (Button) findViewById(R.id.button_cancel);
-        cancelButton.setOnClickListener(view -> {
-            returnIntent = new Intent(this, MainActivity.class);
-            setResult(Activity.RESULT_CANCELED);
-            finish();
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                returnIntent = new Intent(FilterActivity.this, MainActivity.class);
+                FilterActivity.this.setResult(Activity.RESULT_CANCELED);
+                FilterActivity.this.finish();
+            }
         });
         Button setButton = (Button) findViewById(R.id.button_set);
-        setButton.setOnClickListener(view -> {
-            switch (currentTab) {
-                case 0:
-                    currentFragment = adapter.getItem(currentTab);
-                    PlaceFragment placeFragment = (PlaceFragment) currentFragment;
-                    if (placeFragment != null) {
-                        placeFragment.storeFilterValues();
-                        placeFragment.filter();
-                        returnData();
-                    }
-                case 1:
-                    break;
-                default:
-                    break;
+        setButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (currentTab) {
+                    case 0:
+                        currentFragment = adapter.getItem(currentTab);
+                        PlaceFragment placeFragment = (PlaceFragment) currentFragment;
+                        if (placeFragment != null) {
+                            placeFragment.storeFilterValues();
+                            placeFragment.filter();
+                            FilterActivity.this.returnData();
+                        }
+                    case 1:
+                        break;
+                    default:
+                        break;
+                }
             }
         });
 

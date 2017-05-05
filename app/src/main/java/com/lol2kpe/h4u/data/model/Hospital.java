@@ -3,8 +3,6 @@ package com.lol2kpe.h4u.data.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import xyz.samhal.openinghours.OpeningHours;
-
 public class Hospital extends Place implements java.io.Serializable {
     private String hospitalType = "";
     private Set<Employee> employees = new HashSet<>();
@@ -41,7 +39,7 @@ public class Hospital extends Place implements java.io.Serializable {
         return this;
     }
 
-    public Hospital setOpeningHours(OpeningHours openingHours) {
+    public Hospital setOpeningHours(String openingHours) {
         this.openingHours = openingHours;
         return this;
     }

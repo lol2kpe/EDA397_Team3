@@ -14,8 +14,6 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
-import xyz.samhal.openinghours.OpeningHours;
-
 /**
  * Created by sam on 2017-04-18.
  */
@@ -84,14 +82,14 @@ public class DataGenerator implements Iterable<Place>{
         return this.randomGenerator.nextInt(6);
     }
 
-    private OpeningHours generateOpeningHours() {
+    private String generateOpeningHours() {
         /**
          TODO
         int latest = 24;
         int openingHour = this.randomGenerator.nextInt(latest);
         int closingHour = this.randomGenerator.nextInt(latest - openingHour) + openingHour;
         **/
-        return new OpeningHours();
+        return "";
     }
 
     private String generateAddress() {
