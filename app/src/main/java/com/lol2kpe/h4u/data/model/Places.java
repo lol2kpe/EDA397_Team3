@@ -5,6 +5,6 @@ package com.lol2kpe.h4u.data.model;
  */
 
 public enum Places {
-    HOSPITAL,
-    PHARMACY,
+    Hospital,
+    Pharmacy,
 }
