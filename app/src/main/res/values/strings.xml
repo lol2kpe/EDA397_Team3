@@ -148,4 +148,24 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+
+
+    <string name="invalid_input">Invalid input</string>
+    <string name="incorrect_user">Incorrect user or password</string>
+    <string name="password_not">Password not valid</string>
+    <string name="fill_in">Fill in the fields</string>
+    <string name="address">Address</string>
+    <string name="phone">Phone</string>
+    <string name="rating">Rating</string>
+    <string name="opening_hour">Opening hours</string>
+    <string name="login">Log in</string>
+    <string name="user">User</string>
+    <string name="password">Password</string>
+    <string name="save_credentials">Save credentials</string>
+    <string name="email">Email</string>
+    <string name="sign_up">Sign up</string>
+    <string name="re_password">Retype password</string>
+    <string name="home">Home</string>
+    <string name="profile">My profile</string>
+    <string name="log_out">Log out</string>
 </resources>

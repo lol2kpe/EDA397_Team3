@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_address_field"
-            android:hint="Address"
+            android:hint="@string/address"
             android:textSize="20sp" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_phonenumber_field"
-            android:hint="Phonenumber"
+            android:hint="@string/phone"
             android:textSize="20sp" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_rating_field"
-            android:hint="Rating"
+            android:hint="@string/rating"
             android:textSize="20sp" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_openinghour_field"
-            android:hint="Opening Hour"
+            android:hint="@string/opening_hour"
             android:textSize="20sp" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

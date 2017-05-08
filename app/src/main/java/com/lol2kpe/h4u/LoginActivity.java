@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     try {
                         if ((user.getText().toString().equals("") || (pass.getText().toString().equals("")))) {
-                            Toast.makeText(LoginActivity.this, "Invalid input", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, R.string.invalid_input, Toast.LENGTH_SHORT).show();
                             break;
                         }
 
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                         storedPass = sp1.getString("Password", null);
 
                         if ((!storedUser.equals(user.getText().toString())) || (!storedPass.equals(pass.getText().toString()))) {
-                            Toast.makeText(LoginActivity.this, "Incorrect user or password", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, R.string.incorrect_user, Toast.LENGTH_SHORT).show();
                         } else {
                             if (saveCredentials.isChecked()) {
                                 SharedPreferences sp = getSharedPreferences("LoginSaved", Context.MODE_PRIVATE);
