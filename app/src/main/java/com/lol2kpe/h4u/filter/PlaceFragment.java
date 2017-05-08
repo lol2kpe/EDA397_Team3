@@ -72,15 +72,15 @@ public class PlaceFragment extends Fragment {
         ArrayList<String> items = new ArrayList<>();
 
         if (spinner.equals(spinnerType)) {
-            // If no symptoms are found, put a notice in the spinner and disable the spinner
+            // If no types are found, put a notice in the spinner and disable the spinner
             if (places.isEmpty() && spinner.isEnabled()) {
                 toggleSpinner(spinner);
                 items.add(getResources().getString(R.string.not_available));
             }
-            // Else, map each symptom
+            // Else, map each type
             else {
                 placesMap = new HashMap<>();
-                items.add(getResources().getString(R.string.symptom_all));
+                items.add(getResources().getString(R.string.type_all));
                 int i = 1;
                 for (Places place : places) {
                     placesMap.put(i, place);
@@ -138,10 +138,12 @@ public class PlaceFragment extends Fragment {
     void filter() {
         if (!returnList.isEmpty()) {
             // Type filter
-            for (Iterator<Place> i = returnList.iterator(); i.hasNext(); ) {
-                Place item = i.next();
-                if (!checkType(item))
-                    i.remove();
+            if (spinnerType.getSelectedItemPosition() != 0) {
+                for (Iterator<Place> i = returnList.iterator(); i.hasNext(); ) {
+                    Place item = i.next();
+                    if (!checkType(item))
+                        i.remove();
+                }
             }
             // Rating filter
             for (Iterator<Place> i = returnList.iterator(); i.hasNext(); ) {
@@ -160,8 +162,8 @@ public class PlaceFragment extends Fragment {
             case PHARMACY:
                 return getResources().getString(R.string.type_pharmacies);
             default:
-                Log.w("NoSymptomStringFound", "No matching String was found for a symptom: " + place.toString());
-                return "Unknown symptom";
+                Log.w("NoTypeStringFound", "No matching String was found for a type: " + place.toString());
+                return "Unknown type";
         }
     }
 
@@ -178,11 +180,9 @@ public class PlaceFragment extends Fragment {
     private boolean checkType(Place place) {
         String currentPlace = place.getClass().getSimpleName();
         Log.i("TYPE", "Current type: " + currentPlace + " Spinner pos: " + Integer.toString(spinnerType.getSelectedItemPosition()));
-        if(currentPlace.equals("Hospital") && spinnerType.getSelectedItemPosition() == 1)
+        if (currentPlace.equals("Hospital") && spinnerType.getSelectedItemPosition() == 1)
             return true;
-        else if(currentPlace.equals("Pharmacy") && spinnerType.getSelectedItemPosition() == 2)
-            return true;
-        else if (spinnerType.getSelectedItemPosition() == 0)
+        else if (currentPlace.equals("Pharmacy") && spinnerType.getSelectedItemPosition() == 2)
             return true;
         else
             return false;
