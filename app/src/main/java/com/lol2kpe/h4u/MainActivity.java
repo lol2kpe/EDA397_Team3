@@ -258,8 +258,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.home) {
-
-        } else if (id == R.id.settings) {
+            
         } else if(id == R.id.profile) {
 
             Intent intent = new Intent(this, ProfileActivity.class);
