@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.lol2kpe.h4u.R;
+import com.lol2kpe.h4u.data.model.Hospital;
 import com.lol2kpe.h4u.data.model.Place;
 import com.lol2kpe.h4u.data.model.Places;
 
@@ -21,6 +22,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import static com.lol2kpe.h4u.data.model.Places.Hospital;
 import static com.lol2kpe.h4u.filter.FilterActivity.RATING;
 import static com.lol2kpe.h4u.filter.FilterActivity.TYPE;
 import static com.lol2kpe.h4u.filter.FilterActivity.filterSelections;
@@ -157,9 +159,9 @@ public class PlaceFragment extends Fragment {
     private String getPlaceString(Places place) {
 
         switch (place) {
-            case HOSPITAL:
+            case Hospital:
                 return getResources().getString(R.string.type_healthcenters);
-            case PHARMACY:
+            case Pharmacy:
                 return getResources().getString(R.string.type_pharmacies);
             default:
                 Log.w("NoTypeStringFound", "No matching String was found for a type: " + place.toString());
@@ -180,12 +182,7 @@ public class PlaceFragment extends Fragment {
     private boolean checkType(Place place) {
         String currentPlace = place.getClass().getSimpleName();
         Log.i("TYPE", "Current type: " + currentPlace + " Spinner pos: " + Integer.toString(spinnerType.getSelectedItemPosition()));
-        if (currentPlace.equals("Hospital") && spinnerType.getSelectedItemPosition() == 1)
-            return true;
-        else if (currentPlace.equals("Pharmacy") && spinnerType.getSelectedItemPosition() == 2)
-            return true;
-        else
-            return false;
+        return (currentPlace.equals(placesMap.get(spinnerType.getSelectedItemPosition()).toString()));
     }
 
     /**
