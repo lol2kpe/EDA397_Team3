@@ -1,26 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/symptomfragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/symptomfragment">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/symptom_subtitle"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp">
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp">
 
         <TextView
             android:id="@+id/symptom_subtitletext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:text="@string/activity_filter_symptomtitle"
             android:textColor="#000000"
-            android:text="@string/activity_filter_symptomtitle"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/content_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/symptom_subtitle"
+        android:baselineAligned="true"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <LinearLayout
+            android:id="@+id/type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_symptom"
+                android:layout_width="wrap_content"
+                android:layout_height="72dp"
+                android:gravity="center"
+                android:text="@string/activity_filter_symptom" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/openinghours"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/spinner_symptom"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

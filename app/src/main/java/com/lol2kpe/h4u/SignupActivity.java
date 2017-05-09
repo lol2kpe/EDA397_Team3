@@ -55,12 +55,12 @@ public class SignupActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finishAffinity();
                             } else {
-                                Toast.makeText(SignupActivity.this, "Password not valid", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, R.string.password_not, Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(SignupActivity.this, "Fill in the fields", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignupActivity.this, R.string.fill_in, Toast.LENGTH_SHORT).show();
                         }
-                    } catch (Exception e){Toast.makeText(SignupActivity.this, "Fill in the fields", Toast.LENGTH_SHORT).show();}
+                    } catch (Exception e){Toast.makeText(SignupActivity.this, R.string.fill_in, Toast.LENGTH_SHORT).show();}
             }
         }
     };

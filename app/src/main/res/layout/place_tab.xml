@@ -6,7 +6,7 @@
     android:id="@+id/placefragment">
 
     <RelativeLayout
-        android:id="@+id/subtitle"
+        android:id="@+id/place_subtitle"
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:paddingStart="16dp"
@@ -28,8 +28,7 @@
         android:id="@+id/content_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button_area"
-        android:layout_below="@+id/subtitle"
+        android:layout_below="@+id/place_subtitle"
         android:baselineAligned="true"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
@@ -51,13 +50,6 @@
                 android:text="@string/activity_filter_type" />
 
             <TextView
-                android:id="@+id/text_openinghours"
-                android:layout_width="wrap_content"
-                android:layout_height="72dp"
-                android:gravity="center"
-                android:text="@string/activity_filter_openinghours"/>
-
-            <TextView
                 android:id="@+id/text_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
@@ -75,11 +67,6 @@
 
             <Spinner
                 android:id="@+id/spinner_type"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"/>
-
-            <Spinner
-                android:id="@+id/spinner_openinghours"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"/>
 

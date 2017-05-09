@@ -1,7 +1,11 @@
 package com.lol2kpe.h4u;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,10 +17,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -44,6 +50,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Map<Marker, Place> markerMap = new HashMap<>();
     private List<Place> placeData;
     private List<Place> places;
+    private SearchView searchView;
     final GsonRequest gsonRequest = new GsonRequest(url, Place[].class, null, new Response.Listener<Place[]>() {
 
         @Override
@@ -137,6 +145,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FAB = (FloatingActionButton) findViewById(R.id.filter);
         FAB.setOnClickListener(FABonClickListener);
 
+        updateLan();
+
         /********** MAP **********/
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
@@ -176,12 +186,66 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.drawer, menu);
+        this.searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
+        this.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
 
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.search));
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String regexp = ".*" + query.toLowerCase() + ".*";
+                placeData = filterPlaces(regexp, placeData);
+                addMapMarkers(new ArrayList<>(placeData));
+                return false;
+            }
 
+            private List<Place> filterPlaces(String regexp, List<Place> placeData) {
+                List<Place> newPlaces = new ArrayList<Place>();
+                for (Place p : placeData) {
+                    if (p.getName().toLowerCase().matches(regexp) ||
+                            p.getAddress().toLowerCase().matches(regexp)) {
+                        newPlaces.add(p);
+                    }
+                }
+                return newPlaces;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        this.searchView.findViewById(R.id.search_close_btn)
+                .setOnClickListener(new SearchOnClose(this.placeData));
+        this.searchView.setOnQueryTextFocusChangeListener(new SearchOnBack(placeData));
         return true;
+    }
+    private class SearchOnClose implements View.OnClickListener{
+        private final List<Place> oldPlaces;
+
+        public SearchOnClose(List<Place> oldPlaces) {
+            this.oldPlaces = oldPlaces;
+        }
+        @Override
+        public void onClick(View v) {
+            placeData = this.oldPlaces;
+            addMapMarkers(new ArrayList<>(placeData));
+            searchView.setQuery("", false);
+        }
+    }
+
+    private class SearchOnBack implements View.OnFocusChangeListener{
+        private final List<Place> data;
+
+        public SearchOnBack(List<Place> data) {
+            this.data = data;
+        }
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if(!hasFocus) {
+                placeData = this.data;
+                addMapMarkers(new ArrayList<>(placeData));
+                searchView.setIconified(true);
+            }
+        }
     }
 
     @Override
@@ -202,9 +266,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.home) {
 
-        } else if (id == R.id.med_reminders) {
-
-        } else if (id == R.id.settings) {
         } else if(id == R.id.profile) {
 
             Intent intent = new Intent(this, ProfileActivity.class);
@@ -215,6 +276,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finishAffinity();
+        } else if (id == R.id.settings){
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -290,8 +354,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public List<Place> fetchData() {
         List<Place> data = new ArrayList<>();
         Location location = this.locationMonitor.getLocation();
+        double lat = location != null ? location.getLatitude() : 57.7063625;
+        double lon = location != null ? location.getLongitude() : 11.9365723;
         DataGenerator dg = new DataGenerator()
-                .setPosition(location.getLatitude(), location.getLongitude())
+                .setPosition(lat, lon)
                 .setRadius(4.0)
                 .setNumberOfElements(20);
         for (Place p : dg) {
@@ -302,4 +368,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
        // VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
     }
 
+    private void updateLan(){
+        SharedPreferences sp = getSharedPreferences("Lan", Context.MODE_PRIVATE);
+        String languageSelected = sp.getString("Language", null);
+
+        if(languageSelected == "en")
+            setLocale("en");
+        if(languageSelected == "es")
+            setLocale("es");
+
+        SharedPreferences.Editor Ed = sp.edit();
+        Ed.putString("Language","");
+        Ed.apply();
+    }
+
+    // Auxiliar method to change the language
+    private void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.setLocale(myLocale);
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, MainActivity.class);
+        startActivity(refresh);
+        finish();
+    }
 }

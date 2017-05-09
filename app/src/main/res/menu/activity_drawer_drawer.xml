@@ -5,23 +5,19 @@
         <item
             android:id="@+id/home"
             android:icon="@drawable/ic_home"
-            android:title="Home" />
-        <item
-            android:id="@+id/med_reminders"
-            android:icon="@drawable/ic_med_reminders"
-            android:title="Medicine reminders" />
-        <item
-            android:id="@+id/settings"
-            android:icon="@drawable/ic_settings"
-            android:title="Settings" />
+            android:title="@string/home" />
         <item
             android:id="@+id/profile"
             android:icon="@drawable/ic_profile"
-            android:title="My profile" />
+            android:title="@string/profile" />
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/action_settings" />
         <item
             android:id="@+id/logout"
             android:icon="@drawable/ic_user"
-            android:title="Log out" />
+            android:title="@string/log_out" />
     </group>
 
 </menu>

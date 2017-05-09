@@ -17,62 +17,41 @@ import android.widget.Button;
 import com.lol2kpe.h4u.MainActivity;
 import com.lol2kpe.h4u.R;
 import com.lol2kpe.h4u.data.model.Place;
+import com.lol2kpe.h4u.data.model.Symptom;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * Created by Jonathan Granström
+ * User: Jonathan "juntski" Granström
+ * Date: 2017-03-26
+ */
 @SuppressWarnings("ConstantConditions")
 public class FilterActivity extends AppCompatActivity {
 
-    final static String TYPE = "type";
-    final static String OPENING_HOUR = "openingHour";
-    final static String RATING = "rating";
-    public static HashMap<String, Integer> filterSelections;
+    static EnumMap<KEY, Integer> filterSelections;
     static ArrayList<Place> returnList;
-    Integer currentTab = 0;
     Intent returnIntent;
-    Fragment currentFragment;
-    PagerAdapter adapter;
+    static Integer currentTab = 0;
+    static Fragment currentFragment;
+
+    private ViewPagerAdapter adapter;
+    private ViewPager viewPager;
+
+    enum KEY {
+        TYPE, RATING, SYMPTOM
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
-
         // Enable the up action to the toolbar (the "<-" arrow)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Add tabs to the FilterActivity
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Place"));
-        tabLayout.addTab(tabLayout.newTab().setText("Symptom"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        adapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-                currentTab = tab.getPosition();
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        // Get the buttons and set their onClickListeners and functionality
+        // Set up the buttons and their functionality
         Button cancelButton = (Button) findViewById(R.id.button_cancel);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,33 +65,57 @@ public class FilterActivity extends AppCompatActivity {
         setButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (currentTab) {
-                    case 0:
-                        currentFragment = adapter.getItem(currentTab);
-                        PlaceFragment placeFragment = (PlaceFragment) currentFragment;
-                        if (placeFragment != null) {
-                            placeFragment.storeFilterValues();
-                            placeFragment.filter();
-                            FilterActivity.this.returnData();
-                        }
-                    case 1:
-                        break;
-                    default:
-                        break;
+                currentFragment = adapter.getItem(currentTab);
+                if (currentFragment instanceof PlaceFragment) {
+                    ((PlaceFragment) currentFragment).storeFilterValues();
+                    ((PlaceFragment) currentFragment).filter();
+                    FilterActivity.this.returnData();
+                } else if (currentFragment instanceof SymptomFragment) {
+                    ((SymptomFragment) currentFragment).storeFilterValues();
+                    ((SymptomFragment) currentFragment).filter();
+                    FilterActivity.this.returnData();
                 }
             }
         });
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        setupViewPager(viewPager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                currentTab = tab.getPosition();
+                viewPager.setCurrentItem(currentTab);
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         // If the app/activity is started for the first time, create a HashMap to store values
         if (filterSelections == null) {
-            filterSelections = new HashMap<>();
+            filterSelections = new EnumMap<>(KEY.class);
             // Set the filter options to their default values
             setDefaultFilterValues();
         }
-
         // Get the list of Place objects from MainActivity
         returnList = getIntentData();
+    }
 
+    private void setupViewPager(ViewPager viewPager) {
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new PlaceFragment(), getResources().getString(R.string.tab_place));
+        adapter.addFragment(new SymptomFragment(), getResources().getString(R.string.tab_symptom));
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(currentTab);
     }
 
     /**
@@ -133,7 +136,6 @@ public class FilterActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_filter, menu);
         // Call the original method in order to add default items to the menu (e.g., activity title)
         return super.onCreateOptionsMenu(menu);
-
     }
 
     /**
@@ -150,21 +152,20 @@ public class FilterActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.toolbar_action_clear_filter:
-                switch (currentTab) {
-                    case 0:
-                        currentFragment = adapter.getItem(currentTab);
-                        PlaceFragment placeFragment = (PlaceFragment) currentFragment;
-                        if (placeFragment != null) {
-                            setDefaultFilterValues();
-                            placeFragment.setFilterSelections();
-                        }
-                    case 1:
-                        break;
-                    default:
-                        break;
-                }
+                resetFilter();
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void resetFilter() {
+        setDefaultFilterValues();
+        for (Fragment fragment : adapter.getItems()) {
+            if (fragment instanceof PlaceFragment) {
+                ((PlaceFragment) fragment).setFilterSelections();
+            } else if (fragment instanceof SymptomFragment) {
+                ((SymptomFragment) fragment).setFilterSelections();
+            }
         }
     }
 
@@ -221,12 +222,13 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     /**
-     * The method sets all the selections of the SpinnerObjects to their default values.
+     * Sets all the selections of the SpinnerObjects to their default values.
      */
     void setDefaultFilterValues() {
-        filterSelections.put(TYPE, 0);
-        filterSelections.put(OPENING_HOUR, 0);
-        filterSelections.put(RATING, 0);
+        for (KEY key : KEY.values()) {
+            filterSelections.put(key, 0);
+        }
+        Log.i("INFO", filterSelections.toString());
     }
 
     /**
