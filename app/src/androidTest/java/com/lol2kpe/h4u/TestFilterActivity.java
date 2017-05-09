@@ -38,7 +38,7 @@ import static org.hamcrest.core.IsNull.notNullValue;
 
 @RunWith(AndroidJUnit4.class)
 public class TestFilterActivity {
-
+/*
 
     @Rule
     public ActivityTestRule<FilterActivity> activityTestRule =
@@ -178,4 +178,5 @@ public class TestFilterActivity {
         assertEquals(1, (int)filterSelections.get("openingHour"));
         assertEquals(4, (int)filterSelections.get("rating"));
     }
+    */
 }
