@@ -354,8 +354,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public List<Place> fetchData() {
         List<Place> data = new ArrayList<>();
         Location location = this.locationMonitor.getLocation();
+        double lat = location != null ? location.getLatitude() : 57.7063625;
+        double lon = location != null ? location.getLongitude() : 11.9365723;
         DataGenerator dg = new DataGenerator()
-                .setPosition(location.getLatitude(), location.getLongitude())
+                .setPosition(lat, lon)
                 .setRadius(4.0)
                 .setNumberOfElements(20);
         for (Place p : dg) {
