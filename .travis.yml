@@ -55,4 +55,4 @@ before_script:
   - adb shell input keyevent 23
 
 script:
-  - "./gradlew build connectedCheck --stacktrace --continue"
+  - "./gradlew build connectedCheck --debug"
