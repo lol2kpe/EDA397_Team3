@@ -3,6 +3,7 @@ package com.lol2kpe.h4u.filter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +16,11 @@ import com.lol2kpe.h4u.data.model.Symptom;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
-import static com.lol2kpe.h4u.filter.FilterActivity.SYMPTOM;
+import static com.lol2kpe.h4u.filter.FilterActivity.KEY.SYMPTOM;
 import static com.lol2kpe.h4u.filter.FilterActivity.filterSelections;
 import static com.lol2kpe.h4u.filter.FilterActivity.returnList;
 
@@ -34,7 +33,7 @@ public class SymptomFragment extends Fragment {
 
     Spinner spinnerSymptom;
     Set<Symptom> symptoms;
-    Map<Integer, Symptom> symptomsMap;
+    SparseArray<Symptom> symptomsMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,7 +74,7 @@ public class SymptomFragment extends Fragment {
         }
         // Else, map each symptom
         else {
-            symptomsMap = new HashMap<>();
+            symptomsMap = new SparseArray<>();
             items.add(getResources().getString(R.string.symptom_all));
             int i = 1;
             for (Symptom symptom : symptoms) {

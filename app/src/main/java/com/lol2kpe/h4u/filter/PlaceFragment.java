@@ -3,6 +3,7 @@ package com.lol2kpe.h4u.filter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,21 +11,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.lol2kpe.h4u.R;
-import com.lol2kpe.h4u.data.model.Hospital;
 import com.lol2kpe.h4u.data.model.Place;
-import com.lol2kpe.h4u.data.model.Places;
+import com.lol2kpe.h4u.data.model.Type;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
-import static com.lol2kpe.h4u.data.model.Places.Hospital;
-import static com.lol2kpe.h4u.filter.FilterActivity.RATING;
-import static com.lol2kpe.h4u.filter.FilterActivity.TYPE;
+import static com.lol2kpe.h4u.filter.FilterActivity.KEY.RATING;
+import static com.lol2kpe.h4u.filter.FilterActivity.KEY.TYPE;
 import static com.lol2kpe.h4u.filter.FilterActivity.filterSelections;
 import static com.lol2kpe.h4u.filter.FilterActivity.returnList;
 
@@ -34,10 +31,9 @@ import static com.lol2kpe.h4u.filter.FilterActivity.returnList;
  * Date: 2017-04-24
  */
 public class PlaceFragment extends Fragment {
-
     Spinner spinnerType, spinnerRating;
-    Set<Places> places;
-    Map<Integer, Places> placesMap;
+    Set<Type> places;
+    SparseArray<Type> placesMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,11 +52,8 @@ public class PlaceFragment extends Fragment {
     }
 
     private void getPlaces() {
-
         places = new HashSet<>();
-        Collections.addAll(places, Places.values());
-
-        Log.i("Places", places.toString());
+        Collections.addAll(places, Type.values());
     }
 
     /**
@@ -72,7 +65,6 @@ public class PlaceFragment extends Fragment {
      */
     private void populateSpinner(Spinner spinner) {
         ArrayList<String> items = new ArrayList<>();
-
         if (spinner.equals(spinnerType)) {
             // If no types are found, put a notice in the spinner and disable the spinner
             if (places.isEmpty() && spinner.isEnabled()) {
@@ -81,10 +73,10 @@ public class PlaceFragment extends Fragment {
             }
             // Else, map each type
             else {
-                placesMap = new HashMap<>();
+                placesMap = new SparseArray<>();
                 items.add(getResources().getString(R.string.type_all));
                 int i = 1;
-                for (Places place : places) {
+                for (Type place : places) {
                     placesMap.put(i, place);
                     items.add(getPlaceString(place));
                     i++;
@@ -104,17 +96,17 @@ public class PlaceFragment extends Fragment {
     }
 
     /**
-     * Simply toggles the availability of a Spinner
+     * Simply toggles the availability of a Spinner object
      *
-     * @param spinner The Spinner to enable/disable
+     * @param spinner the Spinner object to enable or disable
      */
     void toggleSpinner(Spinner spinner) {
         spinner.setEnabled(!spinner.isEnabled());
     }
 
     /**
-     * The method sets all the SpinnerObjects selections to their respective value
-     * stored in the HashMap.
+     * Sets all the selections in the Spinner object to their respective value
+     * which is stored in the relevant HashMap.
      */
     void setFilterSelections() {
         spinnerType.setSelection(filterSelections.get(TYPE));
@@ -156,8 +148,7 @@ public class PlaceFragment extends Fragment {
         }
     }
 
-    private String getPlaceString(Places place) {
-
+    private String getPlaceString(Type place) {
         switch (place) {
             case Hospital:
                 return getResources().getString(R.string.type_healthcenters);
@@ -170,32 +161,26 @@ public class PlaceFragment extends Fragment {
     }
 
     /**
-     * The method takes the selected item of the "Type" spinner and compares
-     * its String value against the class of the Place object. The method returns true if the
-     * Place object's class is equal to the String value of the selected item.
-     * Else, the method returns false.
+     * Checks if the type of a Place object
      *
-     * @param place The current Place object.
+     * @param place the Place object to check
      * @return True if the class of the Place object is equal to the current String value
      * of the selected item, else returns false.
      */
     private boolean checkType(Place place) {
         String currentPlace = place.getClass().getSimpleName();
-        Log.i("TYPE", "Current type: " + currentPlace + " Spinner pos: " + Integer.toString(spinnerType.getSelectedItemPosition()));
         return (currentPlace.equals(placesMap.get(spinnerType.getSelectedItemPosition()).toString()));
     }
 
     /**
-     * The method takes the selected item of the "Rating" spinner and compares
-     * its value against the rating value of the Place object. The method returns true if the
-     * Place object's rating value is equal or higher to the rating value of the selected item.
-     * Else, the method returns false.
+     * Checks if the rating value of a Place object is equal or higher than the selected rating value
+     * of the rating spinner.
      *
-     * @param p The current Place object.
-     * @return True if the Place object's rating is equal or higher than
-     * the selected item value, else returns false.
+     * @param place a Place object whose rating is to be checked
+     * @return <code>true</code> if the Place object's rating is equal or higher than the selected
+     * rating; <code>false</code> otherwise
      */
-    private boolean checkRating(Place p) {
-        return (p.getRating() >= Integer.parseInt(spinnerRating.getSelectedItem().toString()));
+    private boolean checkRating(Place place) {
+        return (place.getRating() >= Integer.parseInt(spinnerRating.getSelectedItem().toString()));
     }
 }

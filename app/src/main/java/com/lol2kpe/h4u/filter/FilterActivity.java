@@ -16,50 +16,71 @@ import android.widget.Button;
 import com.lol2kpe.h4u.MainActivity;
 import com.lol2kpe.h4u.R;
 import com.lol2kpe.h4u.data.model.Place;
+import com.lol2kpe.h4u.data.model.Symptom;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * Created by Jonathan Granström
+ * User: Jonathan "juntski" Granström
+ * Date: 2017-03-26
+ */
 @SuppressWarnings("ConstantConditions")
 public class FilterActivity extends AppCompatActivity {
 
-    final static String TYPE = "type";
-    final static String OPENING_HOUR = "openingHour";
-    final static String RATING = "rating";
-    final static String SYMPTOM = "symptom";
-    static HashMap<String, Integer> filterSelections;
+    static EnumMap<KEY, Integer> filterSelections;
     static ArrayList<Place> returnList;
-    Integer currentTab = 0;
     Intent returnIntent;
-    Fragment currentFragment;
-    PagerAdapter adapter;
+    static Integer currentTab = 0;
+    static Fragment currentFragment;
+
+    private ViewPagerAdapter adapter;
+    private ViewPager viewPager;
+
+    enum KEY {
+        TYPE, RATING, SYMPTOM
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
-
         // Enable the up action to the toolbar (the "<-" arrow)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // Add tabs to the FilterActivity
+        // Set up the buttons and their functionality
+        Button cancelButton = (Button) findViewById(R.id.button_cancel);
+        cancelButton.setOnClickListener(view -> {
+            returnIntent = new Intent(this, MainActivity.class);
+            setResult(Activity.RESULT_CANCELED);
+            finish();
+        });
+        Button setButton = (Button) findViewById(R.id.button_set);
+        setButton.setOnClickListener(view -> {
+            currentFragment = adapter.getItem(currentTab);
+            if (currentFragment instanceof PlaceFragment) {
+                ((PlaceFragment) currentFragment).storeFilterValues();
+                ((PlaceFragment) currentFragment).filter();
+                returnData();
+            } else if (currentFragment instanceof SymptomFragment) {
+                ((SymptomFragment) currentFragment).storeFilterValues();
+                ((SymptomFragment) currentFragment).filter();
+                returnData();
+            }
+        });
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        setupViewPager(viewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.tab_place)));
-        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.tab_symptom)));
+        tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        adapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(currentTab);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
                 currentTab = tab.getPosition();
+                viewPager.setCurrentItem(currentTab);
             }
 
             @Override
@@ -72,48 +93,22 @@ public class FilterActivity extends AppCompatActivity {
 
             }
         });
-
-        // Get the buttons and set their onClickListeners and functionality
-        Button cancelButton = (Button) findViewById(R.id.button_cancel);
-        cancelButton.setOnClickListener(view -> {
-            returnIntent = new Intent(this, MainActivity.class);
-            setResult(Activity.RESULT_CANCELED);
-            finish();
-        });
-        Button setButton = (Button) findViewById(R.id.button_set);
-        setButton.setOnClickListener(view -> {
-            currentFragment = adapter.getItem(currentTab);
-            switch (currentTab) {
-                case 0:
-                    PlaceFragment placeFragment = (PlaceFragment) currentFragment;
-                    if (placeFragment != null) {
-                        placeFragment.storeFilterValues();
-                        placeFragment.filter();
-                    }
-                    break;
-                case 1:
-                    SymptomFragment symptomFragment = (SymptomFragment) currentFragment;
-                    if (symptomFragment != null) {
-                        symptomFragment.storeFilterValues();
-                        symptomFragment.filter();
-                    }
-                    break;
-                default:
-                    break;
-            }
-            returnData();
-        });
-
         // If the app/activity is started for the first time, create a HashMap to store values
         if (filterSelections == null) {
-            filterSelections = new HashMap<>();
+            filterSelections = new EnumMap<>(KEY.class);
             // Set the filter options to their default values
             setDefaultFilterValues();
         }
-
         // Get the list of Place objects from MainActivity
         returnList = getIntentData();
+    }
 
+    private void setupViewPager(ViewPager viewPager) {
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new PlaceFragment(), getResources().getString(R.string.tab_place));
+        adapter.addFragment(new SymptomFragment(), getResources().getString(R.string.tab_symptom));
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(currentTab);
     }
 
     /**
@@ -134,7 +129,6 @@ public class FilterActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_filter, menu);
         // Call the original method in order to add default items to the menu (e.g., activity title)
         return super.onCreateOptionsMenu(menu);
-
     }
 
     /**
@@ -151,29 +145,20 @@ public class FilterActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.toolbar_action_clear_filter:
-                resetCurrentTab();
+                resetFilter();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void resetCurrentTab() {
+    private void resetFilter() {
         setDefaultFilterValues();
-        currentFragment = adapter.getItem(currentTab);
-        Log.i("CurrentTab", " Current tab is: " + Integer.toString(currentTab));
-        switch (currentTab) {
-            case 0:
-                PlaceFragment placeFragment = (PlaceFragment) currentFragment;
-                if (placeFragment != null)
-                    placeFragment.setFilterSelections();
-                break;
-            case 1:
-                SymptomFragment symptomFragment = (SymptomFragment) currentFragment;
-                if (symptomFragment != null)
-                    symptomFragment.setFilterSelections();
-                break;
-            default:
-                break;
+        for (Fragment fragment : adapter.getItems()) {
+            if (fragment instanceof PlaceFragment) {
+                ((PlaceFragment) fragment).setFilterSelections();
+            } else if (fragment instanceof SymptomFragment) {
+                ((SymptomFragment) fragment).setFilterSelections();
+            }
         }
     }
 
@@ -230,13 +215,13 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     /**
-     * The method sets all the selections of the SpinnerObjects to their default values.
+     * Sets all the selections of the SpinnerObjects to their default values.
      */
     void setDefaultFilterValues() {
-        filterSelections.put(TYPE, 0);
-        filterSelections.put(OPENING_HOUR, 0);
-        filterSelections.put(RATING, 0);
-        filterSelections.put(SYMPTOM, 0);
+        for (KEY key : KEY.values()) {
+            filterSelections.put(key, 0);
+        }
+        Log.i("INFO", filterSelections.toString());
     }
 
     /**
