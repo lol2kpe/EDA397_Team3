@@ -32,3 +32,22 @@ List the features/stories the team commits to finish during the sprint.
 
 ### User Stories
 ID | User story
+----------------|----------------
+76 | As a user, I want to change the language of the application, so that I can better understand it
+77 | As a user, I want to be able to search for a hospital directly, so that I can more quickly find a specific hospital
+79 | As a user, I want to be able to update my profile, so that I can change or update my information
+80 | As a user, I want to be able to set my favorite hospital, so that I don't have to search/look for that particular hospital all the time
+
+
+### Tasks
+ID | Tasks
+----------------|----------------
+
+## Work Done
+
+Feature | Commits  | Group members | Effort | Practices
+----------------|----------------|----------------|----------------|----------------
+
+
+## Reflections
+
