@@ -167,4 +167,10 @@
     <string name="home">Inicio</string>
     <string name="profile">Mi cuenta</string>
     <string name="log_out">Cerrar sesión</string>
+
+    <string name="language">Idioma</string>
+    <string name="englishSetting">English</string>
+    <string name="spanishSetting">Español</string>
+    <string name="dialogLanguage">Elige un idioma</string>
+    <string name="save_settings">Guardar</string>
 </resources>

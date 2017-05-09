@@ -3,6 +3,9 @@ package com.lol2kpe.h4u;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +17,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,6 +50,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -139,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Create a Floating Action Button (FAB) which starts the FilterActivity
         FAB = (FloatingActionButton) findViewById(R.id.filter);
         FAB.setOnClickListener(FABonClickListener);
+
+        updateLan();
 
         /********** MAP **********/
 
@@ -269,6 +276,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finishAffinity();
+        } else if (id == R.id.settings){
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -356,4 +366,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
        // VolleyHelper.getInstance(getApplicationContext()).addToRequestQueue(gsonRequest);
     }
 
+    private void updateLan(){
+        SharedPreferences sp = getSharedPreferences("Lan", Context.MODE_PRIVATE);
+        String languageSelected = sp.getString("Language", null);
+
+        if(languageSelected == "en")
+            setLocale("en");
+        if(languageSelected == "es")
+            setLocale("es");
+
+        SharedPreferences.Editor Ed = sp.edit();
+        Ed.putString("Language","");
+        Ed.apply();
+    }
+
+    // Auxiliar method to change the language
+    private void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.setLocale(myLocale);
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, MainActivity.class);
+        startActivity(refresh);
+        finish();
+    }
 }

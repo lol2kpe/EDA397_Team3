@@ -168,4 +168,11 @@
     <string name="home">Home</string>
     <string name="profile">My profile</string>
     <string name="log_out">Log out</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <string name="language">Language</string>
+    <string name="englishSetting">English</string>
+    <string name="spanishSetting">Español</string>
+    <string name="dialogLanguage">Choose a language</string>
+    <string name="save_settings">Save</string>
 </resources>
