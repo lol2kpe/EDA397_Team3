@@ -172,11 +172,13 @@
 
     <string name="language">Language</string>
     <string name="englishSetting">English</string>
-    <string name="spanishSetting">Spanish</string>
-    <string name="swedishSetting">Swedish</string>
+    <string name="spanishSetting">Español</string>
+    <string name="swedishSetting">Svenska</string>
     <string name="dialogLanguage">Choose a language</string>
     <string name="save_settings">Save</string>
     <string name="edit_location">Enter a location</string>
     <string name="save_location">Save location</string>
     <string name="show_Location">Show location</string>
+
+    <string name="emergency">Emergency</string>
 </resources>

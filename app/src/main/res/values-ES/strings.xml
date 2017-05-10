@@ -9,7 +9,7 @@
     <string name="activity_filter_placetitle">Filtrar por lugar</string>
     <string name="activity_filter_symptomtitle">Filtrar por síntoma</string>
     <string name="activity_filter_cancel">CANCELAR</string>
-    <string name="activity_filter_set">AJUSTAR FILTRO</string>
+    <string name="activity_filter_set">AJUSTAR</string>
     <string name="tab_place">Lugar</string>
     <string name="tab_symptom">Síntoma</string>
     <string name="not_available">No disponible</string>
@@ -170,12 +170,14 @@
     <string name="title_activity_settings">SettingsActivity</string>
 
     <string name="language">Idioma</string>
-    <string name="englishSetting">Inglés</string>
+    <string name="englishSetting">English</string>
     <string name="spanishSetting">Español</string>
-    <string name="swedishSetting">Sueco</string>
+    <string name="swedishSetting">Svenska</string>
     <string name="dialogLanguage">Elige un idioma</string>
     <string name="save_settings">Guardar</string>
     <string name="edit_location">Introduzca una ubicación</string>
     <string name="save_location">Guardar dirección</string>
     <string name="show_Location">Mostrar ubicación</string>
+
+    <string name="emergency">Emergencia</string>
 </resources>

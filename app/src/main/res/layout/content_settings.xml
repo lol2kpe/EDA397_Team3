@@ -10,12 +10,13 @@
 
     <Button
         android:text="@string/language"
-        android:layout_width="368dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:id="@+id/changeLan"
         android:drawableStart="@drawable/ic_language"
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="8dp"
+        android:layout_marginTop="25dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 

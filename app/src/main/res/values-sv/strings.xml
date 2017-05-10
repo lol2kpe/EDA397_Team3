@@ -171,12 +171,14 @@
     <string name="title_activity_settings">SettingsActivity</string>
 
     <string name="language">Språk</string>
-    <string name="englishSetting">Engelska</string>
-    <string name="spanishSetting">Spanska</string>
+    <string name="englishSetting">English</string>
+    <string name="spanishSetting">Español</string>
     <string name="swedishSetting">Svenska</string>
     <string name="dialogLanguage">Välj språk</string>
     <string name="save_settings">Spara</string>
     <string name="edit_location">Ange en plats</string>
     <string name="save_location">Spara plats</string>
     <string name="show_Location">Visa plats</string>
+
+    <string name="emergency">Nödsituation</string>
 </resources>
