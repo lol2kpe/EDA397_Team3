@@ -42,6 +42,18 @@ ID | User story
 ### Tasks
 ID | Tasks
 ----------------|----------------
+75 |Fix continuous integration builds with Travis CI
+78 |Add emergency call button
+81 |report file
+82 |Connect add favorite place and delete favorite place - profile
+84 |Add search feature
+87 |Translate app into Spanish
+88 |Add app icon
+89 |Refactor the filter to support language change
+90 |Update filter with proper symptom filter functionality
+95 |Add option to change the language manually
+96 |Add swedish language option
+85 |Refarctor place model to support symptoms
 
 ## Work Done
 
