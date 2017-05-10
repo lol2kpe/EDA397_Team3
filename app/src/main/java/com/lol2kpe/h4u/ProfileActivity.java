@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -37,7 +39,11 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         addListeners();
+
         Toast.makeText(ProfileActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+
+       // TextView view = (TextView) findViewById(R.id.viewLocation);
+        //view.append("Favorite Hospital: " + );
     }
 
     public void saveLocation(String name, double latitude, double longitude) {
@@ -68,11 +74,13 @@ public class ProfileActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                //saveLocation("Sahlgrenska", 12.345000, 97.869440);
-                Toast.makeText(ProfileActivity.this, "Button clicked", Toast.LENGTH_SHORT).show();
+                EditText text  = (EditText) findViewById(R.id.textLocation);
+                saveLocation("" + text.getText(), 12.345000, 97.869440);
+                Toast.makeText(ProfileActivity.this, "" + text.getText() , Toast.LENGTH_SHORT).show();
+                TextView view = (TextView) findViewById(R.id.viewLocation);
+                view.append("Favorite Hospital: " + text.getText());
+
             }
         });
     }
-
-
 }

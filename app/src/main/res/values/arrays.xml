@@ -3,5 +3,6 @@
     <string-array name="languagesArray">
         <item>@string/englishSetting</item>
         <item>@string/spanishSetting</item>
+        <item>@string/swedishSetting</item>
     </string-array>
 </resources>

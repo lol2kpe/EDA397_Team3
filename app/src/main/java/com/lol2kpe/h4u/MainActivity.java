@@ -376,6 +376,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setLocale("en");
         if(languageSelected == "es")
             setLocale("es");
+        if(languageSelected == "sv")
+            setLocale("sv");
 
         SharedPreferences.Editor Ed = sp.edit();
         Ed.putString("Language","");

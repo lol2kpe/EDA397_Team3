@@ -66,10 +66,16 @@ public class SettingsActivity extends AppCompatActivity {
                         Ed.apply();
                     }
                     if (which == 1) {
-                        SharedPreferences local2 = getSharedPreferences("Lan", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor Ed2 = local2.edit();
-                        Ed2.putString("Language", "es");
-                        Ed2.apply();
+                        SharedPreferences local = getSharedPreferences("Lan", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor Ed = local.edit();
+                        Ed.putString("Language", "es");
+                        Ed.apply();
+                    }
+                    if (which == 2) {
+                        SharedPreferences local = getSharedPreferences("Lan", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor Ed = local.edit();
+                        Ed.putString("Language", "sv");
+                        Ed.apply();
                     }
                 }
             });
