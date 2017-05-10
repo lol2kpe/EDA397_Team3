@@ -57,6 +57,9 @@ Feature | Commits  | Group members | Effort | Practices
 [Add search feature](https://github.com/lol2kpe/EDA397_Team3/issues/84)|[2fd7048](https://github.com/lol2kpe/EDA397_Team3/commit/2fd7048a78e325ad682f75d277d59bc2670a52fc)|[Sam Halali](https://github.com/samhal)<br>[Miguel Angel Sanchez Cifo](https://github.com/goma12345)|3hr|Simple Design, Refactoring, Pair Programming
 [Add functionality to user profile]()|[2cfc325](https://github.com/lol2kpe/EDA397_Team3/commit/2cfc32514bc474d23c71048af4ee5feec9ebd986) |[David Fogelberg](https://github.com/davve94)|4hr|code refactoring, sustainable pace, collective code ownership
 [Connect add favorite place and delete place profile ]() |[f60d04b](https://github.com/lol2kpe/EDA397_Team3/commit/f60d04bd817a23a800a75b01be4b638d1eb76775) |[David Fogelberg](https://github.com/davve94)|4hr |code refactoring, sustainable pace, collective code ownership
-
+[create report file]() | [3acddab](https://github.com/lol2kpe/EDA397_Team3/commit/3acddab7143e477adaeb7d8f759d028b2a163f2d) |[Nandha Gopal Elangovan](https://github.com/nandhujit)|2hr| Small release
+[Refactor model]() | [56f3a79](https://github.com/lol2kpe/EDA397_Team3/commit/56f3a79eb1560f15a871c3e366e9a90a6e73f0f6) |[Nandha Gopal Elangovan](https://github.com/nandhujit)|2hr|  code Refactoring
+[Add option to change the language manually]() |[0d8d2ef](https://github.com/lol2kpe/EDA397_Team3/commit/0d8d2efc5ec407b11437d0e1fde3d81c0e71142f)|[Miguel Angel Sanchez Cifo](https://github.com/goma12345)|3hr|Simple design, Code refactoring
+[Translate app into Spanish]() |[f114bbf](https://github.com/lol2kpe/EDA397_Team3/commit/f114bbf873d513fb6256c2cc615974fccdc1bb6e) |[Miguel Angel Sanchez Cifo](https://github.com/goma12345)|1hr| Simple design
 ## Reflections
 
