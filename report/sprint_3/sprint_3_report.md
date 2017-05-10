@@ -73,5 +73,6 @@ Feature | Commits  | Group members | Effort | Practices
 [Refactor model]() | [56f3a79](https://github.com/lol2kpe/EDA397_Team3/commit/56f3a79eb1560f15a871c3e366e9a90a6e73f0f6) |[Nandha Gopal Elangovan](https://github.com/nandhujit)|2hr|  code Refactoring
 [Add option to change the language manually]() |[0d8d2ef](https://github.com/lol2kpe/EDA397_Team3/commit/0d8d2efc5ec407b11437d0e1fde3d81c0e71142f)|[Miguel Angel Sanchez Cifo](https://github.com/goma12345)|3hr|Simple design, Code refactoring
 [Translate app into Spanish]() |[f114bbf](https://github.com/lol2kpe/EDA397_Team3/commit/f114bbf873d513fb6256c2cc615974fccdc1bb6e) |[Miguel Angel Sanchez Cifo](https://github.com/goma12345)|1hr| Simple design
+[Add emergency call button](https://github.com/lol2kpe/EDA397_Team3/issues/78)|[a453db5](https://github.com/lol2kpe/EDA397_Team3/commit/a453db57b527969fa8773cb2c77fd09264aff746) |[Gunnar Örn Gunnarsson](https://github.com/GunnarGunnarsson)|2hr |Simple design
 ## Reflections
 
