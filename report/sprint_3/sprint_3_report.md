@@ -53,6 +53,9 @@ Feature | Commits  | Group members | Effort | Practices
 [Add swedish language option #96](https://github.com/lol2kpe/EDA397_Team3/issues/96)|[27e6264](https://github.com/lol2kpe/EDA397_Team3/commit/27e626404a0892cb00a397828b8e3a30a97ff787)|[Johan Andersson](https://github.com/lol2kpe)|2hr|Coding Standards, Small Releases
 [Refactor the filter to support language change](https://github.com/lol2kpe/EDA397_Team3/issues/89)|[38e125a](https://github.com/lol2kpe/EDA397_Team3/commit/38e125a56e981bff0c7bb36eb5a39368aed45a1f)|[Jonathan Granström](https://github.com/juntski)|12hr|Sustainable Pace, Simple Design, Code Refactoring, Collective Code Ownership, Small Releases
 [Update filter with proper symptom filter functionality](https://github.com/lol2kpe/EDA397_Team3/issues/90)|[20565b7](https://github.com/lol2kpe/EDA397_Team3/commit/20565b772a5e43443eec568b298ba054e4410d78)|[Jonathan Granström](https://github.com/juntski)<br>[Sam Halali](https://github.com/samhal)|4hr|Pair Programming, Code Refactoring, Simple Design, Sustainable Pace, Collective Code Ownership, Small Releases
+[Change the Services class into a Symptom class](https://github.com/lol2kpe/EDA397_Team3/issues/54)|[d6c8e9d](https://github.com/lol2kpe/EDA397_Team3/commit/d6c8e9dfb1178870c08f036fb3d26bd18894f266)|[Sam Halali](https://github.com/samhal)|1hr|Simple Design, Refactoring
+[Add search feature](https://github.com/lol2kpe/EDA397_Team3/issues/84)|[2fd7048](https://github.com/lol2kpe/EDA397_Team3/commit/2fd7048a78e325ad682f75d277d59bc2670a52fc)|[Sam Halali](https://github.com/samhal)<br>[Miguel Angel Sanchez Cifo](https://github.com/goma12345)|3hr|Simple Design, Refactoring, Pair Programming
+
 
 ## Reflections
 
