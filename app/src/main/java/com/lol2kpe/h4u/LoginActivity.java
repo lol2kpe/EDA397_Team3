@@ -97,14 +97,16 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                     }catch (Exception e) {}
+                    break;
                 case R.id.emergency:
                     try{
                         Uri callUri = Uri.parse("tel://112");
                         Intent callIntent = new Intent(Intent.ACTION_DIAL,callUri);
                         callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-                        startActivity(callIntent);;
+                        startActivity(callIntent);
                     } catch (Exception e) {
                     }
+                    break;
             }
         }
     };
