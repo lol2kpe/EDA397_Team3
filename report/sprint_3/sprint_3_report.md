@@ -53,7 +53,7 @@ ID | Tasks
 90 |Update filter with proper symptom filter functionality
 95 |Add option to change the language manually
 96 |Add swedish language option
-85 |Refarctor place model to support symptoms
+85 |Refactor place model to support symptoms
 
 ## Work Done
 
