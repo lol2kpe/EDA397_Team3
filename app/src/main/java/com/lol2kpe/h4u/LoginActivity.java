@@ -3,6 +3,9 @@ package com.lol2kpe.h4u;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +17,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 public class LoginActivity extends AppCompatActivity {
 
     String storedUser;
@@ -23,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText pass;
     CheckBox saveCredentials;
     Button login;
+    Button emergency;
     FloatingActionButton fab;
 
     @Override
@@ -35,8 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         saveCredentials = (CheckBox) findViewById(R.id.saveCredentials);
         fab = (FloatingActionButton) findViewById(R.id.signup);
         login = (Button) findViewById(R.id.login);
+        emergency = (Button) findViewById((R.id.emergency));
 
         login.setOnClickListener(loginOncLickListener);
+        emergency.setOnClickListener(loginOncLickListener);
         fab.setOnClickListener(fabOncLickListener);
 
         SharedPreferences sp1 = getSharedPreferences("LoginSaved", Context.MODE_PRIVATE);
@@ -60,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     try {
                         if ((user.getText().toString().equals("") || (pass.getText().toString().equals("")))) {
-                            Toast.makeText(LoginActivity.this, R.string.invalid_input, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Invalid input", Toast.LENGTH_SHORT).show();
                             break;
                         }
 
@@ -69,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                         storedPass = sp1.getString("Password", null);
 
                         if ((!storedUser.equals(user.getText().toString())) || (!storedPass.equals(pass.getText().toString()))) {
-                            Toast.makeText(LoginActivity.this, R.string.incorrect_user, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Incorrect user or password", Toast.LENGTH_SHORT).show();
                         } else {
                             if (saveCredentials.isChecked()) {
                                 SharedPreferences sp = getSharedPreferences("LoginSaved", Context.MODE_PRIVATE);
@@ -93,6 +106,14 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                     }catch (Exception e) {}
+                case R.id.emergency:
+                    try{
+                        Uri callUri = Uri.parse("tel://112");
+                        Intent callIntent = new Intent(Intent.ACTION_DIAL,callUri);
+                        callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+                        startActivity(callIntent);;
+                    } catch (Exception e) {
+                    }
             }
         }
     };

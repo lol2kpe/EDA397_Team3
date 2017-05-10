@@ -8,21 +8,11 @@
     tools:context="com.lol2kpe.h4u.LoginActivity"
     tools:showIn="@layout/activity_login">
 
-    <Button
-        android:text="@string/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/login"
-        android:drawableTop="@drawable/ic_login"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="33dp" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textNoSuggestions"
-        android:hint="@string/user"
+        android:hint="User"
         android:ems="10"
         android:id="@+id/user"
         android:layout_marginTop="39dp"
@@ -34,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:hint="@string/password"
+        android:hint="Password"
         android:ems="10"
         android:id="@+id/pass"
         android:drawableStart="@drawable/ic_pass"
@@ -42,12 +32,21 @@
         android:layout_alignStart="@+id/user" />
 
     <CheckBox
-        android:text="@string/save_credentials"
+        android:text="Save credentials"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/saveCredentials"
         android:layout_marginTop="12dp"
         android:layout_below="@+id/pass"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login"
+        android:drawableTop="@drawable/ic_login"
+        android:layout_below="@+id/saveCredentials"
         android:layout_centerHorizontal="true" />
 
     <ImageView
@@ -59,6 +58,15 @@
         android:layout_marginTop="29dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="emergency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/emergency"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp" />
 
 </RelativeLayout>
 
