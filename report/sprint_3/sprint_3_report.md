@@ -55,7 +55,8 @@ Feature | Commits  | Group members | Effort | Practices
 [Update filter with proper symptom filter functionality](https://github.com/lol2kpe/EDA397_Team3/issues/90)|[20565b7](https://github.com/lol2kpe/EDA397_Team3/commit/20565b772a5e43443eec568b298ba054e4410d78)|[Jonathan Granström](https://github.com/juntski)<br>[Sam Halali](https://github.com/samhal)|4hr|Pair Programming, Code Refactoring, Simple Design, Sustainable Pace, Collective Code Ownership, Small Releases
 [Change the Services class into a Symptom class](https://github.com/lol2kpe/EDA397_Team3/issues/54)|[d6c8e9d](https://github.com/lol2kpe/EDA397_Team3/commit/d6c8e9dfb1178870c08f036fb3d26bd18894f266)|[Sam Halali](https://github.com/samhal)|1hr|Simple Design, Refactoring
 [Add search feature](https://github.com/lol2kpe/EDA397_Team3/issues/84)|[2fd7048](https://github.com/lol2kpe/EDA397_Team3/commit/2fd7048a78e325ad682f75d277d59bc2670a52fc)|[Sam Halali](https://github.com/samhal)<br>[Miguel Angel Sanchez Cifo](https://github.com/goma12345)|3hr|Simple Design, Refactoring, Pair Programming
-
+[Add functionality to user profile]()|[2cfc325](https://github.com/lol2kpe/EDA397_Team3/commit/2cfc32514bc474d23c71048af4ee5feec9ebd986) |[David Fogelberg](https://github.com/davve94)|4hr|code refactoring, sustainable pace, collective code ownership
+[Connect add favorite place ]() |[f60d04b](https://github.com/lol2kpe/EDA397_Team3/commit/f60d04bd817a23a800a75b01be4b638d1eb76775) |[David Fogelberg](https://github.com/davve94)|4hr |code refactoring, sustainable 
 
 ## Reflections
 
