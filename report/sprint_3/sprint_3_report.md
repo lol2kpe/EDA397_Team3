@@ -51,6 +51,8 @@ Feature | Commits  | Group members | Effort | Practices
 [Map does not fill entire screen](https://github.com/lol2kpe/EDA397_Team3/issues/83)|[e434e07](https://github.com/lol2kpe/EDA397_Team3/commit/e434e07f5e4d50fd7c004a3cecd3041838127c69)|[Johan Andersson](https://github.com/lol2kpe)<br>[Miguel Angel Sanchez Cifo](https://github.com/goma12345)|1hr|Pair Programming, Collective Codeownership, Coding Standards, Small Releases
 [Add app icon #88](https://github.com/lol2kpe/EDA397_Team3/issues/88)|[3301033](https://github.com/lol2kpe/EDA397_Team3/commit/3301033515c8cb79a8498244552eda54f0cd6de5)|[Johan Andersson](https://github.com/lol2kpe)|2hr|Coding Standards, Small Releases
 [Add swedish language option #96](https://github.com/lol2kpe/EDA397_Team3/issues/96)|[27e6264](https://github.com/lol2kpe/EDA397_Team3/commit/27e626404a0892cb00a397828b8e3a30a97ff787)|[Johan Andersson](https://github.com/lol2kpe)|2hr|Coding Standards, Small Releases
+[Refactor the filter to support language change](https://github.com/lol2kpe/EDA397_Team3/issues/89)|[38e125a](https://github.com/lol2kpe/EDA397_Team3/commit/38e125a56e981bff0c7bb36eb5a39368aed45a1f)|[Jonathan Granström](https://github.com/juntski)|12hr|Sustainable Pace, Simple Design, Code Refactoring, Collective Code Ownership, Small Releases
+[Update filter with proper symptom filter functionality](https://github.com/lol2kpe/EDA397_Team3/issues/90)|[20565b7](https://github.com/lol2kpe/EDA397_Team3/commit/20565b772a5e43443eec568b298ba054e4410d78)|[Jonathan Granström]((https://github.com/juntski)<br>[Sam]|4hr|Pair Programming, Code Refactoring, Simple Design, Sustainable Pace, Collective Code Ownership, Small Releases
 
 ## Reflections
 
