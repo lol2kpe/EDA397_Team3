@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textNoSuggestions"
-        android:hint="User"
+        android:hint="@string/user"
         android:ems="10"
         android:id="@+id/user"
         android:layout_marginTop="39dp"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:hint="Password"
+        android:hint="@string/password"
         android:ems="10"
         android:id="@+id/pass"
         android:drawableStart="@drawable/ic_pass"
@@ -32,7 +32,7 @@
         android:layout_alignStart="@+id/user" />
 
     <CheckBox
-        android:text="Save credentials"
+        android:text="@string/save_credentials"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/saveCredentials"
@@ -41,7 +41,7 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:text="Login"
+        android:text="@string/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/login"
